@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "Bad_Product.apps.BadProductConfig",
     "Sales.apps.SalesConfig",
     "Logistics.apps.LogisticsConfig",
+    "errortemplate.apps.ErrortemplateConfig",
     "Stock.apps.StockConfig",
     "User.apps.UserConfig",
     
