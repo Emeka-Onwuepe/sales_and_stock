@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "Returned_Product.apps.ReturnedProductConfig",
     "Bad_Product.apps.BadProductConfig",
     "Sales.apps.SalesConfig",
+    "Logistics.apps.LogisticsConfig",
     "Stock.apps.StockConfig",
     "User.apps.UserConfig",
     
