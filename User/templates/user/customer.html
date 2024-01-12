@@ -1,0 +1,30 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Customer</title>{% endblock title %} {% block main %}
+<h1>Customers</h1>
+
+<form action="{% url 'user:customerView' customerId action %}" method="post">
+    {% csrf_token %} {{form}}
+    <button type="submit" class="addbutton">
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+
+<section class="list_items">
+    {% for customer in customers %} {% if not customer.is_super_admin %}
+    <div class="items center">
+        <p class="description">{{customer}}</p>
+
+        {% comment %} <a class="delete" href="{% url 'user:customerView' customer.id 'delete' %}"> <button> Delete</button></a> {% endcomment %}
+        <a href="{% url 'user:customerView' customer.id 'edit' %}"> </a> <button> Edit</button>
+    </div>
+    {% endif %} {% endfor %}
+
+
+</section>
+{% endblock main %} {% block javascript %} {% endblock javascript %}

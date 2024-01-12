@@ -1,0 +1,33 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Sizes</title>{% endblock title %} {% block main %}
+
+<h1>Sizes</h1>
+
+<form action="{% url 'product:sizeView' sizeId action %}" method="post">
+    {% csrf_token %} 
+   {{form}}
+    <button type="submit" class='addbutton'>
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+
+<section class="list_items">
+    {% for size in sizes %}
+    <div class="items">
+        <div class="innerItem">
+        <p class="description" style="margin-right:20px;">{{size}}</p class="description">
+
+        {% comment %} <a class="delete" href="{% url 'product:sizeView' size.id 'delete' %}"><button>Delete</button></a> {% endcomment %}
+        <a href="{% url 'product:sizeView' size.id 'edit' %}"><button>Edit</button></a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock main %}

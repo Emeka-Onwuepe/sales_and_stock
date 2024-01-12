@@ -1,15 +1,13 @@
 from rest_framework import routers
-from knox import views as KnoxView
 from django.urls import path
 from .import views
 router = routers.DefaultRouter()
 
 
-app_name="branch"
+app_name="logistics"
 
-urlpatterns = [
+urlpatterns = [ 
+    path('location/<int:locationId>/<str:action>',views.locationView,name="locationView"), 
     
-    path('<int:branchId>/<str:action>',views.branchView,name="branchView"), 
- 
 ]
 urlpatterns += router.urls

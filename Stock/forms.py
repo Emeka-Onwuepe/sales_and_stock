@@ -10,7 +10,7 @@ class ProductStockForm(forms.ModelForm):
         """Meta definition for ProductStockform."""
 
         model = Product_Stock
-        fields =['qty','branch','size_instance']
+        fields = '__all__'
         
 class ProductStockEditForm(forms.ModelForm):
     """Form definition for ProductStockEdit."""
@@ -28,7 +28,7 @@ class SuitStockForm(forms.ModelForm):
         """Meta definition for SuitStockform."""
 
         model = Suit_Stock
-        fields =['qty','branch','size_instance']
+        fields ='__all__'
         
 class SuitStockEditForm(forms.ModelForm):
     """Form definition for SuitStockEdit."""
@@ -46,7 +46,7 @@ class TopsStockForm(forms.ModelForm):
         """Meta definition for TopsStockform."""
 
         model = Tops_Stock
-        fields =['qty','branch','size_instance']
+        fields ='__all__'
         
 class TopsStockEditForm(forms.ModelForm):
     """Form definition for TopsStockEdit."""

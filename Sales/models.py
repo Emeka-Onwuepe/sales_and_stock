@@ -12,13 +12,11 @@ class Items(models.Model):
     SUIT = 'suit'
     FOOT_WEARS = 'foot_wears'
     TOP = 'top'
-    DOWN  = 'down'
     PRODUCT = 'product'
 
     P_GROUP = {SUIT:'suit',
                FOOT_WEARS:'foot_wears',
                TOP :'top',
-            #    DOWN :'down',
                PRODUCT :'product',
                 } 
     

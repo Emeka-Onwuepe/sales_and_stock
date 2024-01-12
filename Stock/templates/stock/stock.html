@@ -1,0 +1,85 @@
+{% extends 'sales/sales.html' %} {% load static %} {% block title %}
+<title>Stock</title>{% endblock title %} {% block main %}
+<h1>Stock</h1>
+<h3>{{branch}}</h3>
+
+<form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
+    {% csrf_token %} 
+    {{form}}
+
+    <button type="submit">
+            
+            {% if action == "add" %}
+                ADD
+            {% else %}
+                UPDATE
+            {% endif %}
+                
+        </button>
+</form>
+
+
+
+<div class="list_items">
+    {% for stock in stocks %}
+    <div class="items center">
+
+        <p> {{stock.product}} </p>
+        <p> {{stock.size_instance}} </p>
+        <div>
+            <p class="description">{{stock.date}} --- ({{stock.qty}}) </p>
+            <a class="delete" href="{% url 'stock:stockView' stock.id branchId 'delete' pgroup %}"><button>Delete</button></a>
+            <a href="{% url 'stock:stockView' stock.id branchId 'edit' pgroup %}"><button>Edit</button></a>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+<div style="margin-top: 30px;" id="salesList" class="tablecontainer">
+    <table id="stock-table">
+        <thead>
+            <th>SN</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Current Qty</th>
+            <th>Returned Qty</th>
+            <th>Bad Qty</th>
+            <th>Add Stock</th>
+        </thead>
+        <tbody>
+
+            {% for branch_product in branch.Branch_Suit.all %} 
+            <p>hello</p>
+            <p>{{branch_product}}</p>
+            <tr>
+                <td class="sn"></td>
+                <td>{{branch_product.product.product_type.category}}</td>
+                <td>{{branch_product.product.product_type.name}}</td>
+                <td>{{branch_product.product.color}}</td>
+                <td>{{branch_product.product.size}}</td>
+                <td>{{branch_product.current_qty}}</td>
+                <td>{{branch_product.returned_qty}}</td>
+                <td>{{branch_product.bad_qty}}</td>
+                <td>
+                    <form action="{% url 'stock:stockView' stockId branchId action %}" method="post">
+                        {% csrf_token %}
+                        <label for="id_qty">Qty:</label>
+                        <input type="number" name="qty" required="" id="id_qty">
+                        <input type="hidden" name="product" value="{{branch_product.product.id}}">
+                        <button type="submit"> Add</button>
+                    </form>
+
+                </td>
+            </tr>
+             {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>
+
+{% endblock main %} {% block javascript %}
+<script src="{% static 'javascript/stock.js' %}"></script>
+{% endblock javascript %}

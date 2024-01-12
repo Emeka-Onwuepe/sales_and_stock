@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('logistics/',include("Logistics.urls" , namespace='logistics')),
     path('user/',include("User.urls" , namespace='user')),
     path('branch/',include("Branch.urls", namespace='branch')),
     path('product/',include("Product.urls",namespace='product')),

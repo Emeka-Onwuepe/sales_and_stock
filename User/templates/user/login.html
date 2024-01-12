@@ -1,0 +1,20 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>LOGIN</title>{% endblock title %} {% block main %} {% if message %} {{message}} {% endif %}
+<div class="resetform">
+    {% if request.GET.next %}
+    <form action="{% url 'user:loginRedirect' request.GET.next %}"
+     method="post" id="loginForm">
+        {% csrf_token %} {{form}}
+        <button type="submit" id="loginButton" class="addbutton">Login</button>
+    </form>
+    {% else %}
+    <form action="{% url 'user:loginView' %}"
+    method="post" id="loginForm">
+       {% csrf_token %} {{form}}
+       <button type="submit" id="loginButton" class="addbutton">Login</button>
+    </form>
+    {% endif %}
+</div>
+
+{% endblock main %} {% block javascript %} 
+{% endblock javascript %}

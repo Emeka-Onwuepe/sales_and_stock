@@ -1,0 +1,30 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Category</title>{% endblock title %} {% block main %}
+<h1>Category</h1>
+<form style="margin-bottom: 30px;" enctype="multipart/form-data" action="{% url 'product:categoryView' categoryId action %}" method="post">
+    {% csrf_token %} {{form}}
+    <button class="addbutton" type="submit">
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+<section class="list_items">
+
+    {% for category in categories %}
+    <div class="items ">
+        <div class="innerItem">
+        <p class="description" style="margin-right:20px;">{{category.name}}</p>
+
+        {% comment %} <a class="delete" href="{% url 'product:categoryView' category.id 'delete' %}"> <button>Delete</button></a> {% endcomment %}
+        <a href="{% url 'product:categoryView' category.id 'edit' %}"> <button>Edit</button></a>
+        </div>
+    </div>
+    {% endfor %}
+
+</section>
+{% endblock main %}

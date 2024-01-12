@@ -1,0 +1,38 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Product</title>{% endblock title %} {% block main %}
+<h1>{{pgroup|upper}}</h1>
+
+<form action="{% url 'product:productView' productId action pgroup %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class='addbutton'>
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+
+
+
+{% comment %} <form action="/product/product/0/add" enctype="multipart/form-data" method="post">
+
+</form> {% endcomment %}
+
+
+
+<section class="list_items">
+    {% for product in products %}
+    <div class="items center">
+        <p class='description'>{{product}}</p>
+
+        {% comment %} <a class="delete" href="{% url 'product:productView' product.id 'delete' pgroup %}"><button>Delete</button></a>  {% endcomment %}
+        <a href="{% url 'product:productView' product.id 'edit' pgroup %}"><button>Edit</button></a>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock main %}

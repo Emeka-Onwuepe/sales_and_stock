@@ -34,9 +34,6 @@ class ProductTypeForm(forms.ModelForm):
         
 class ProductForm(forms.ModelForm):
     """Form definition for Product."""
-    branches = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                queryset=Branch.objects.all(),required=False)
-    
     sizes = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                                 queryset=Size.objects.all(),required=False)
     
@@ -48,11 +45,9 @@ class ProductForm(forms.ModelForm):
         
 class SuitForm(forms.ModelForm):
     """Form definition for Suit."""
-    branches = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                queryset=Branch.objects.all(),required=False)
-    
     sizes = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                queryset=Size.objects.all(),required=False)
+                                                queryset=Size.objects.all(),
+                                                required=False)
     
     class Meta:
         """Meta definition for Suitform."""
@@ -62,9 +57,6 @@ class SuitForm(forms.ModelForm):
         
 class TopForm(forms.ModelForm):
     """Form definition for Top."""
-    branches = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                queryset=Branch.objects.all(),required=False)
-    
     sizes = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
                                                 queryset=Size.objects.all(),required=False)
     

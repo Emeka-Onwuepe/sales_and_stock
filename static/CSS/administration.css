@@ -334,7 +334,8 @@ th {
         background-color: #B36624;
         width: 210px;
         /* height: calc(100vh - 474px); */
-        height: 72vh;
+        /* height: 72vh; */
+        height: 85vh;
         display: block;
         overflow-y: scroll;
         /* border: 2px solid green; */

@@ -1,0 +1,39 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Branches</title>{% endblock title %} {% block main %}
+<h1>Branches</h1>
+<form action="{% url 'branch:branchView' branchID action %}" method="post">
+    {% csrf_token %} {{form}}
+    <button type="submit" class="submit addbutton">
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+
+<section class="list_items">
+  
+    {% for branch in branches %}
+    <div class="items">
+        <div class="innerItem">
+            <p style="margin-right:20px;">{{branch.name}}</p>
+            {% comment %} <a class="delete" href="{% url 'branch:branchView' branch.id 'delete' %}">
+                <button>
+                    Delete
+                    </button>
+            </a> {% endcomment %}
+            <a href="{% url 'branch:branchView' branch.id 'edit' %}">
+                <button >
+                    Edit
+                    </button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+
+{% endblock main %}

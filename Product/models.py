@@ -27,13 +27,11 @@ class Product_Type(models.Model):
     SUITS = 'suits'
     FOOT_WEARS = 'foot_wears'
     TOP = 'top'
-    DOWN  = 'down'
     PRODUCT = 'product'
 
     P_GROUP = {SUITS:'suits',
                FOOT_WEARS:'foot_wears',
                TOP :'top',
-            #    DOWN :'down',
                PRODUCT :'product',
                 } 
 

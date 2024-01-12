@@ -1,0 +1,71 @@
+{% extends 'sales/sales.html' %} {% load static %} {% block title %}
+<title>Returned Product</title>{% endblock title %} {% block main %}
+<h1>Returned Products</h1>
+
+<form name="Form" action="{% url 'product:returnedProductView' returnedProductId action %}" method="post">
+    {% csrf_token %} {% if action == "add" %}
+    <label for="id_product">Product:</label>
+    <select name="product" required="" id="id_product">
+        <option value="" selected="">---------</option>
+        {% for product in request.user.branch.products_branches.all  %}
+        
+        {% if product.multipleSIzes %}
+         
+         {% for size  in product.multipleSIzes.all  %}
+         <option value="{{product.id}}-{{size.id}}">{{product.product_type.name}} - {{product.color}} - &#8358 <span class="amount">{{size.price}}</span> - size:{{size.size}}</option>
+         {% endfor %}    
+            
+        {% else %}
+        <option value="{{product.id}}">{{product.product_type.name}} - {{product.color}} - &#8358 <span class="amount">{{product.price}}</span> - size:{{product.size}}</option>
+        {% endif %} 
+        {% endfor %}
+</select> {% else %}
+    <label for="id_product">Product:</label>
+    <input type="text" name="product" value="{{instance.product.product_type}}" id="id_product" readonly>
+
+    <label for="id_size_instance">Size_instance:</label>
+    <input type="text" name="size_instance" value="{{instance.size_instance}}" id="id_size_instance" readonly> {% endif %}
+
+    <input type="hidden" name="branch" value="{{request.user.branch_id}}">
+
+    <label for="id_qty">Qty:</label>
+    <input type="number" name="qty" required="" id="id_qty" value="{{instance.qty}}">
+    <label for="id_unit_price">Unit_price:</label>
+    <input type="text" name="unit_price" required="" id="id_unit_price" value="{{instance.unit_price}}">
+    <label for="id_total_price">Total_price:</label>
+    <input type="text" name="total_price" required="" id="id_total_price" value="{{instance.total_price}}">
+    <label for="id_date_of_purchase">Date_of_purchase:</label>
+    <input type="date" name="date_of_purchase" required="" id="id_date_of_purchase" value="{{instance.date_of_purchase|date:'Y-m-d'}}">
+    <label for="id_date_of_return">Date_of_return: </label>
+    <input type="date" name="date_of_return" required="" id="id_date_of_return" value="{{instance.date_of_return|date:'Y-m-d'}}">
+    <button id="button" class='addbutton' type="submit">
+        
+        {% if action == "add" %}
+            ADD
+        {% else %}
+            UPDATE
+        {% endif %}
+            
+    </button>
+</form>
+
+{% for branch in branches %}
+<h3 class="reduceMarginBottom">{{branch}}</h3>
+<section class="list_items">
+    {% for returnedProduct in branch.returned_product_branch.all %}
+    <div class="items center">
+        {% if returnedProduct.size_instance %}
+        <p class="description">{{returnedProduct.branch}} - {{returnedProduct.product.product_type}} - {{returnedProduct.product.color}} - {{returnedProduct.size_instance.size}} - ({{returnedProduct.date_of_return|date:'Y-m-d'}}) - {{returnedProduct.qty}} - &#8358 <span class="amount">{{returnedProduct.total_price}}</span>
+        </p>
+        {% else %}
+        <p class="description">{{returnedProduct.branch}} - {{returnedProduct.product}} - ({{returnedProduct.date_of_return|date:'Y-m-d'}}) - {{returnedProduct.qty}} - &#8358
+            <span class="amount">{{returnedProduct.total_price}}</span></p>
+        {% endif %}
+        <a class="delete" href="{% url 'product:returnedProductView' returnedProduct.id 'delete' %}"><button>Delete</button></a>
+        <a href="{% url 'product:returnedProductView' returnedProduct.id 'edit' %}"><button>Edit</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endfor %} {% endblock main %} {% block javascript %}
+<script src="{% static 'javascript/returnedProduct.js' %}"></script>
+{% endblock javascript %}
