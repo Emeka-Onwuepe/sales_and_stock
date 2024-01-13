@@ -22,6 +22,7 @@
 
 <div class="list_items">
     {% for stock in stocks %}
+    
     <div class="items center">
 
         <p> {{stock.product}} </p>
@@ -54,9 +55,9 @@
             {% for branch_product in branch_stock %} 
             <tr>
                 <td class="sn"></td>
-                <td>{{branch_product.branch_suit.product.product_type.category}}</td>
-                <td>{{branch_product.branch_suit.product.product_type.name}}</td>
-                <td>{{branch_product.branch_suit.product.color}}</td>
+                <td>{{branch_product.branch_instance.product.product_type.category}}</td>
+                <td>{{branch_product.branch_instance.product.product_type.name}}</td>
+                <td>{{branch_product.branch_instance.product.color}}</td>
                 <td>{{branch_product.size.size}}</td>
                 <td>{{branch_product.current_qty}}</td>
                 <td>{{branch_product.returned_qty}}</td>
@@ -66,7 +67,7 @@
                         {% csrf_token %}
                         <label for="id_qty">Qty:</label>
                         <input type="number" name="qty" required="" id="id_qty">
-                        <input type="hidden" name="product" value="{{branch_product.branch_suit.product.id}}">
+                        <input type="hidden" name="product" value="{{branch_product.branch_instance.product.id}}">
                         <input type="hidden" name="size_instance" value="{{branch_product.size.id}}">
                         <input type="hidden" name="branch" value="{{branchId}}">
                         <button type="submit"> Add</button>

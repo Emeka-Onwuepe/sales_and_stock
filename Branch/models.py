@@ -44,7 +44,7 @@ class Product_Size(models.Model):
     """Model definition for product_Size."""
 
     # TODO: Define fields here
-    branch_product = models.ForeignKey(Branch_Product, verbose_name="branch_product",
+    branch_instance = models.ForeignKey(Branch_Product, verbose_name="branch_product",
                                        related_name = 'branch_product_size',
                                        on_delete=models.CASCADE)
     size = models.ForeignKey("Product.Size", related_name='branch_product_sizes',
@@ -61,7 +61,7 @@ class Product_Size(models.Model):
 
     def __str__(self):
         """Unicode representation of product_Size."""
-        return f'{self.branch_product} - {self.size}'
+        return f'{self.branch_instance} - {self.size}'
 
 
 class Branch_Suit(models.Model):
@@ -89,7 +89,7 @@ class Suit_Size(models.Model):
     """Model definition for Suit_size."""
 
     # TODO: Define fields here
-    branch_suit = models.ForeignKey(Branch_Suit, verbose_name="Branch_Suit",
+    branch_instance = models.ForeignKey(Branch_Suit, verbose_name="Branch_Suit",
                                     related_name = 'branch_suit_size',
                                        on_delete=models.CASCADE)
     # Suit_size = models.CharField('product size',max_length=25)
@@ -107,7 +107,7 @@ class Suit_Size(models.Model):
 
     def __str__(self):
         """Unicode representation of Suit_size."""
-        return f'{self.branch_suit} - {self.size}'
+        return f'{self.branch_instance} - {self.size}'
 
 
 class Branch_Tops(models.Model):
@@ -136,7 +136,7 @@ class Tops_Size(models.Model):
     """Model definition for Top_Size."""
 
     # TODO: Define fields here
-    branch_tops = models.ForeignKey(Branch_Tops, verbose_name="Branch_Tops",
+    branch_instance = models.ForeignKey(Branch_Tops, verbose_name="Branch_Tops",
                                     related_name = 'branch_tops_size',
                                        on_delete=models.CASCADE)
     # Top_Size = models.CharField('product size',max_length=25)
@@ -154,4 +154,4 @@ class Tops_Size(models.Model):
 
     def __str__(self):
         """Unicode representation of Top_Size."""
-        return f'{self.branch_tops} - {self.size}'
+        return f'{self.branch_instance} - {self.size}'

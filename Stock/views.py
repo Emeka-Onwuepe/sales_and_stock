@@ -2,104 +2,20 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from Branch.models import Branch, Branch_Product, Suit_Size
+from Branch.models import Branch, Branch_Product, Product_Size, Suit_Size, Tops_Size
 from Product.models import Product, Size
 from Stock.forms import ProductStockEditForm, ProductStockForm, SuitStockEditForm, SuitStockForm, TopsStockEditForm, TopsStockForm
 
-from Stock.models import Product_Stock, Stock, Suit_Stock, Tops_Stock
+from Stock.models import Product_Stock, Suit_Stock, Tops_Stock
 
 # Create your views here.
 
-# @login_required(login_url="user:loginView")
-# def stockView(request,stockId,branchId,action,pgroup):
-    
-#     branch = Branch.objects.get(pk=branchId)
-    
-#     stock_list = []
-    
-#     for branch_product in branch.branch_product_branch.all():
-           
-#         dic = {}    
-#         if branch_product.is_multiple_sized:
-#             for multiple_size in branch_product.multiple_size_set.all():
-#                 dic["product"] = branch_product.product
-#                 dic['size'] = multiple_size.size
-#                 stocks = Stock.objects.filter(product= branch_product.product.id,
-#                                               branch = branch_product.branchId,
-#                                               size_instance = multiple_size.size.id)[0:1]
-#                 if stocks:         
-#                     dic['stock'] = stocks
-#                     stock_list.append(dic)
-#                 dic = {}
-#         else:
-#             dic["product"] =branch_product.product
-#             dic['size'] = None
-#             stocks = Stock.objects.filter(product= branch_product.product.id,
-#                                               branch = branch_product.branchId)[0:1]
-#             if stocks:
-#                 dic['stock'] = stocks
-#                 stock_list.append(dic)  
-            
-#             dic = {}
-            
-    
-#     if stockId != 0:   
-#         stock_instance = Stock.objects.get(id=stockId)
-    
-#     if request.method == "POST" and action == "add":
-#         data= request.POST
-#         product_size = data['product'].split("-")
-#         if len(product_size)>1:
-#             productId,sizeId = product_size
-#             product = Product.objects.get(pk=int(productId))
-#             size = Size.objects.get(pk = int(sizeId))
-#             Stock.objects.create(product=product,branch=branch,
-#                                  size_instance=size,qty=int(data['qty']))
-#         else:
-#             product = Product.objects.get(pk=int(data['product']))
-#             Stock.objects.create(product=product,branch=branch,qty=int(data['qty']))
-        
-#         return HttpResponseRedirect(reverse('stock:stockView',
-#             kwargs={"action":"view","stockId":0,'branchId':branchId}))
-       
-            
-#     if action == "edit":
-#         if request.method == "POST":
-#             form = ProductStockEditForm(data= request.POST,instance=stock_instance)
-#             if form.is_valid():
-#                 form.save()
-#                 return HttpResponseRedirect(reverse('stock:stockView',
-#                         kwargs={"action":"view","stockId":0,'branchId':branchId}))
-#             else:
-#                 return render(request,"stock/stock.html",
-#                   {"form":form,"stockId":stock_instance.id,
-#                    "action":"edit",'branch':branch,"instance":stock_instance,
-#                    "stock_list":stock_list})
-#         else:
-#             return render(request,"stock/stock.html",
-#                   {"form":ProductStockEditForm(instance=stock_instance),
-#                    "stockId":stock_instance.id,"action":"edit",
-#                    "instance":stock_instance,'branch':branch,
-#                    "stock_list":stock_list})
-    
-#     if action == "delete":
-#         stock_instance.delete()
-#         return HttpResponseRedirect(reverse('stock:stockView',
-#             kwargs={"action":"view","stockId":0,'branchId':branchId}))
-                 
-#     return render(request,"stock/stock.html",
-#                   {"stockId":0,"action":"add",'branch':branch,
-#                    "stock_list":stock_list})
-    
-    
-    
-
 @login_required(login_url="user:loginView")
 def stockView(request,stockId,branchId,action,pgroup):
-    mapper = {'product':[Product_Stock,ProductStockForm,ProductStockEditForm],
-              'suits':[Suit_Stock,SuitStockForm,SuitStockEditForm],
-              'top':[Tops_Stock,TopsStockForm,TopsStockEditForm],
-              'foot_wears':[Product_Stock,ProductStockForm,ProductStockEditForm],
+    mapper = {'product':[Product_Stock,ProductStockForm,Product_Size],
+              'suits':[Suit_Stock,SuitStockForm,Suit_Size],
+              'top':[Tops_Stock,TopsStockForm,Tops_Size],
+              'foot_wears':[Product_Stock,ProductStockForm,Product_Size],
     
               }
     branch = Branch.objects.get(pk=branchId)
@@ -151,8 +67,8 @@ def stockView(request,stockId,branchId,action,pgroup):
         return HttpResponseRedirect(reverse('stock:stockView',
             kwargs={"action":"view","stockId":0,'pgroup':pgroup,'branchId':branchId}))
     branch_stock = None
-    if pgroup == 'suits':  
-        branch_stock = Suit_Size.objects.filter(branch_suit__branch = branch)
+     
+    branch_stock = mapper[pgroup][2].objects.filter(branch_instance__branch = branch)
     
     stocks = mapper[pgroup][0].objects.all()[:10]
     return render(request,"stock/stock.html",
@@ -164,3 +80,38 @@ def stockView(request,stockId,branchId,action,pgroup):
                    'branch':branch,
                     'form':form,
                    'pgroup':pgroup})
+    
+
+@login_required(login_url="user:loginView")
+def getStockView(request):
+    
+    mapper = {'product':[Product_Size],
+              'suits':[Suit_Size],
+              'top':[Tops_Size],
+              'foot_wears':[Product_Size],
+              }
+    
+    #  'branch': [''], 'pgroup': ['suits'], 'gender': [''], 'age_group': [''], 'product_type': ['sss'], 'brand': ['sss'], 'type': ['ssss'], 'color': ['sss']
+    stocks = None
+    searched = False
+    if request.method == "POST":
+        searched = True
+        data = request.POST
+        model = data['pgroup']
+        stocks = mapper[model][0].objects.filter(
+                                              branch_instance__product__product_type__name__iexact = data['product_type'],
+                                              branch_instance__branch = data['branch'],
+                                              branch_instance__product__age_group = data['age_group'],
+                                              branch_instance__product__gender = data['gender'],
+                                              branch_instance__product__brand__iexact = data['brand'],
+                                              branch_instance__product__type__iexact = data['type'],
+                                              branch_instance__product__color__iexact = data['color'],
+                                              
+                                              )
+         
+    return render(request,"stock/getstock.html",
+                  {'age_groups': Product.AGE_GROUP,
+                   'stocks':stocks,
+                   'searched':searched,
+                  'genders':Product.GENDER})
+    

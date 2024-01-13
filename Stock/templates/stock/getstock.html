@@ -1,0 +1,104 @@
+{% extends 'sales/sales.html' %} {% load static %} {% block title %}
+<title>Check Stocks</title>{% endblock title %} {% block main %}
+<h1>Stock</h1>
+<h3>Check Stocks</h3>
+
+<form action="{% url 'stock:getStockView' %}" method="post">
+    {% csrf_token %} 
+    
+    <label for="branch">Branch</label>
+    <select name="branch" id="branch">
+        <option value=""></option>
+        {% for branch in branches  %}
+        <option value="{{branch.id}}">{{branch}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="pgroup">Product Group</label>
+    <select name="pgroup" id="pgroup">
+        <option value=""></option>
+        {% for pgroup in product_groups  %}
+        <option value="{{pgroup}}">{{pgroup}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="gender">Gender</label>
+    <select name="gender" id="gender">
+        <option value=""></option>
+        {% for gender in genders  %}
+        <option value="{{gender}}">{{gender}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="age_group">Age Group</label>
+    <select name="age_group" id="age_group">
+        <option value=""></option>
+        {% for age_group in age_groups  %}
+        <option value="{{age_group}}">{{age_group}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="product_type">Product Type</label>
+    <input type="text" name="product_type" id="product_type" required>
+    <label for="brabd">Brand</label>
+    <input type="text" name="brand" id="brand" required>
+    <label for="type">Type</label>
+    <input type="text" name="type" id="type" required>
+    <label for="color">Color</label>
+    <input type="text" name="color" id="color" required>
+    <button type="submit">Get Stock</button>
+</form>
+
+{% if stocks %}
+<h5>Results from {{stocks.0.branch_instance.branch}} Branch</h5>
+{% elif searched%}
+<h5>No results from {{stocks.0.branch_instance.branch}} Branch</h5>
+{% endif %}
+    
+<div style="margin-top: 30px;" id="salesList" class="tablecontainer">
+    <table id="stock-table">
+        <thead>
+            <th>SN</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Current Qty</th>
+            <th>Returned Qty</th>
+            <th>Bad Qty</th>
+            <th>Add Stock</th>
+        </thead>
+        <tbody>
+
+            {% for stock in stocks %} 
+            <tr>
+                <td class="sn"></td>
+                <td>{{stock.branch_instance.product.product_type.category}}</td>
+                <td>{{stock.branch_instance.product.product_type.name}}</td>
+                <td>{{stock.branch_instance.product.color}}</td>
+                <td>{{stock.size.size}}</td>
+                <td>{{stock.current_qty}}</td>
+                <td>{{stock.returned_qty}}</td>
+                <td>{{stock.bad_qty}}</td>
+                {% comment %} <td>
+                    <form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
+                        {% csrf_token %}
+                        <label for="id_qty">Qty:</label>
+                        <input type="number" name="qty" required="" id="id_qty">
+                        <input type="hidden" name="product" value="{{branch_product.branch_instance.product.id}}">
+                        <input type="hidden" name="size_instance" value="{{branch_product.size.id}}">
+                        <input type="hidden" name="branch" value="{{branchId}}">
+                        <button type="submit"> Add</button>
+                    </form>
+
+                </td> {% endcomment %}
+            </tr>
+             {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>
+
+{% endblock main %} {% block javascript %}
+
+{% endblock javascript %}
