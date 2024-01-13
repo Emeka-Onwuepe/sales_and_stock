@@ -45,6 +45,7 @@ class Product_Size(models.Model):
 
     # TODO: Define fields here
     branch_product = models.ForeignKey(Branch_Product, verbose_name="branch_product",
+                                       related_name = 'branch_product_size',
                                        on_delete=models.CASCADE)
     size = models.ForeignKey("Product.Size", related_name='branch_product_sizes',
                              on_delete=models.CASCADE)
@@ -68,9 +69,9 @@ class Branch_Suit(models.Model):
 
     # TODO: Define fields here
     branch = models.ForeignKey(Branch, verbose_name="branch", 
-                on_delete=models.CASCADE, related_name="Branch_Suit_branch")  
+                on_delete=models.CASCADE, related_name="branch_suit_branch")  
     product = models.ForeignKey("Product.Suit", verbose_name="product", 
-                on_delete=models.CASCADE, related_name="Branch_Suit_product") 
+                on_delete=models.CASCADE, related_name="branch_suit_product") 
 
 
     class Meta:
@@ -89,9 +90,10 @@ class Suit_Size(models.Model):
 
     # TODO: Define fields here
     branch_suit = models.ForeignKey(Branch_Suit, verbose_name="Branch_Suit",
+                                    related_name = 'branch_suit_size',
                                        on_delete=models.CASCADE)
     # Suit_size = models.CharField('product size',max_length=25)
-    size = models.ForeignKey("Product.Size", related_name='Branch_Suit_sizes',
+    size = models.ForeignKey("Product.Size", related_name='branch_suit_sizes',
                              on_delete=models.CASCADE)
     current_qty = models.IntegerField("current_qty", default=0)
     returned_qty = models.IntegerField("returned_qty", default=0)
@@ -113,9 +115,9 @@ class Branch_Tops(models.Model):
 
     # TODO: Define fields here
     branch = models.ForeignKey(Branch, verbose_name="branch", 
-                on_delete=models.CASCADE, related_name="Branch_Tops_branch")  
+                on_delete=models.CASCADE, related_name="branch_tops_branch")  
     product = models.ForeignKey("Product.Top", verbose_name="product", 
-                on_delete=models.CASCADE, related_name="Branch_Tops_product") 
+                on_delete=models.CASCADE, related_name="branch_tops_product") 
 
 
 
@@ -135,9 +137,10 @@ class Tops_Size(models.Model):
 
     # TODO: Define fields here
     branch_tops = models.ForeignKey(Branch_Tops, verbose_name="Branch_Tops",
+                                    related_name = 'branch_tops_size',
                                        on_delete=models.CASCADE)
     # Top_Size = models.CharField('product size',max_length=25)
-    size = models.ForeignKey("Product.Size", related_name='Branch_Tops_sizes',
+    size = models.ForeignKey("Product.Size", related_name='branch_tops_sizes',
                              on_delete=models.CASCADE)
     current_qty = models.IntegerField("current_qty", default=0)
     returned_qty = models.IntegerField("returned_qty", default=0)

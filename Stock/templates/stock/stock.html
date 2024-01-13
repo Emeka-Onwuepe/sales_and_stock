@@ -51,24 +51,24 @@
         </thead>
         <tbody>
 
-            {% for branch_product in branch.Branch_Suit.all %} 
-            <p>hello</p>
-            <p>{{branch_product}}</p>
+            {% for branch_product in branch_stock %} 
             <tr>
                 <td class="sn"></td>
-                <td>{{branch_product.product.product_type.category}}</td>
-                <td>{{branch_product.product.product_type.name}}</td>
-                <td>{{branch_product.product.color}}</td>
-                <td>{{branch_product.product.size}}</td>
+                <td>{{branch_product.branch_suit.product.product_type.category}}</td>
+                <td>{{branch_product.branch_suit.product.product_type.name}}</td>
+                <td>{{branch_product.branch_suit.product.color}}</td>
+                <td>{{branch_product.size.size}}</td>
                 <td>{{branch_product.current_qty}}</td>
                 <td>{{branch_product.returned_qty}}</td>
                 <td>{{branch_product.bad_qty}}</td>
                 <td>
-                    <form action="{% url 'stock:stockView' stockId branchId action %}" method="post">
+                    <form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
                         {% csrf_token %}
                         <label for="id_qty">Qty:</label>
                         <input type="number" name="qty" required="" id="id_qty">
-                        <input type="hidden" name="product" value="{{branch_product.product.id}}">
+                        <input type="hidden" name="product" value="{{branch_product.branch_suit.product.id}}">
+                        <input type="hidden" name="size_instance" value="{{branch_product.size.id}}">
+                        <input type="hidden" name="branch" value="{{branchId}}">
                         <button type="submit"> Add</button>
                     </form>
 

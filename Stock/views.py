@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from Branch.models import Branch, Branch_Product
+from Branch.models import Branch, Branch_Product, Suit_Size
 from Product.models import Product, Size
 from Stock.forms import ProductStockEditForm, ProductStockForm, SuitStockEditForm, SuitStockForm, TopsStockEditForm, TopsStockForm
 
@@ -122,7 +122,7 @@ def stockView(request,stockId,branchId,action,pgroup):
         else:
             return render(request,"stock/stock.html",
                   {"form":form,"stockId":0,"action":"add",
-                   'pgroup':pgroup})  
+                   'branchId':branchId,'pgroup':pgroup})  
             
     if action == "edit" and request.method == "POST":
             
@@ -150,12 +150,16 @@ def stockView(request,stockId,branchId,action,pgroup):
         stock_instance.delete()
         return HttpResponseRedirect(reverse('stock:stockView',
             kwargs={"action":"view","stockId":0,'pgroup':pgroup,'branchId':branchId}))
-    print(branch.Branch_Suit_branch.suit_size)
-    stocks = mapper[pgroup][0].objects.all()
+    branch_stock = None
+    if pgroup == 'suits':  
+        branch_stock = Suit_Size.objects.filter(branch_suit__branch = branch)
+    
+    stocks = mapper[pgroup][0].objects.all()[:10]
     return render(request,"stock/stock.html",
                   {"stockId":0, 
                    'stocks':stocks,
                    "action":"add",
+                   'branch_stock':branch_stock,
                    'branchId':branchId,
                    'branch':branch,
                     'form':form,
