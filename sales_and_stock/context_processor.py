@@ -1,6 +1,6 @@
 
 from Branch.models import Branch
-from Product.models import Category, Product_Type
+from Product.models import Category, Product, Product_Type
 
 Product_Type
 def context_processor(request):
@@ -13,4 +13,6 @@ def context_processor(request):
             sorted_categories.append(category)
     return {"branches": branches, "categories":categories,
             "sorted_categories":sorted_categories,
-            'product_groups':Product_Type.P_GROUP.keys()}
+            'product_groups':Product_Type.P_GROUP.keys(),
+            'age_groups': Product.AGE_GROUP,
+            'genders':Product.GENDER}

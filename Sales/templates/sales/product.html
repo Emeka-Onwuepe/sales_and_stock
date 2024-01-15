@@ -7,7 +7,7 @@
         <h3>{{category}}</h3>
         <div class="content">
             {% for productType in category.category.all %}
-            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id %}"> {{productType.name}} </a>
+            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group %}"> {{productType.name}} </a>
             </p>
             {% endfor %}
         </div>
@@ -23,12 +23,37 @@
     {% endif %}
 </div>
 
-<div style="margin: 30px 0px;" class="get_user">
+{% comment %} <div style="margin: 30px 0px;" class="get_user">
     <label for="user_phone_number">Phone_Number</label>
     <input type="text" name="user_phone_number" id="user_phone_number">
     <button class="addbutton" id="get_user">Get User</button>
+</div> {% endcomment %}
+
+<div id="flex_container">
+    <form action="{% url 'sales:salesView' %}" method="post">
+        {% csrf_token %}
+        {% comment %} <label for="data">Product Name</label>
+        <input type="text" id="data" name="data" required> {% endcomment %}
+        {% include 'sales/getproductform.html' %}
+        <button class="addbutton" type="submit">Get Product</button>
+    </form>
+
+    <div class="get_user">
+        <label for="user_phone_number">Phone_Number</label>
+        <input type="text" name="user_phone_number" id="user_phone_number">
+        <button class="addbutton" id="get_user">Get User</button>
+    </div>
 </div>
+
 {% include "sales/salesform.html" %} {% endblock main %} {% block javascript %}
 <script src="{% static 'javascript/state.js' %}"></script>
 <script src="{% static 'javascript/productpage.js' %}"></script>
+<script>
+    const data_ = document.getElementById('json_data').textContent
+    const data = JSON.parse(data_)
+    const pgroup = "{{pgroup}}"
+    console.log(pgroup)
+    storestate = storeReducer(addProduct({products:data.products,pgroup}))
+    setState(storestate)
+</script>
 {% endblock javascript %}

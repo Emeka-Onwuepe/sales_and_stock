@@ -78,7 +78,7 @@
                         {% comment %} <a href="{% url 'preOrder:preOrderView' 0 'view' %}">Pre Order</a> {% endcomment %}
                         {% comment %} <a href="{% url 'product:returnedProductView' 0 'view' %}">Returned Product</a> {% endcomment %}
                         <a href="{% url 'sales:salesView' %}">Sales</a>
-                        <a href="{% url 'sales:salesAnalysisView' 0 'default' %}">Sales Analysis</a>
+                        {% comment %} <a href="{% url 'sales:salesAnalysisView' 0 'default' %}">Sales Analysis</a> {% endcomment %}
                         {% if request.user.is_admin %}
                         <a href="{% url 'product:sizeView' 0 'view' %}">Size</a>
                         <a href="{% url 'user:userView' 0 'view' %}">Users</a>
@@ -110,12 +110,13 @@
                 </div>
                 {% endif %}
                 {% block main %}
-    
+                   
                 <div id="flex_container">
                     <form action="{% url 'sales:salesView' %}" method="post">
                         {% csrf_token %}
-                        <label for="data">Product Name</label>
-                        <input type="text" id="data" name="data" required>
+                        {% comment %} <label for="data">Product Name</label>
+                        <input type="text" id="data" name="data" required> {% endcomment %}
+                        {% include 'sales/getproductform.html' %}
                         <button class="addbutton" type="submit">Get Product</button>
                     </form>
 
@@ -130,7 +131,7 @@
 
                     {% if not initial and not found %}
                     <p class="error">No Product Found</p>
-                    {% elif not initial and found %} {% for group in products %} {% for product in group %} {% include "sales/product_template.html" %} {% endfor %} {% endfor %} {% endif %}
+                    {% elif not initial and found %} {% for product in products %} {% include "sales/product_template.html" %} {% endfor %} {% endif %}
                 </div>
 
                 <section class="list_items">
@@ -139,7 +140,7 @@
                         <h3>{{category}}</h3>
                         <div class="content">
                             {% for productType in category.category.all %}
-                            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id %}"> {{productType.name}} </a>
+                            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group %}"> {{productType.name}} </a>
                             </p>
                             {% endfor %}
                         </div>
@@ -173,12 +174,22 @@
             {% endblock footer %}
         </footer> 
     </div>
-
+    {{json_data|json_script:'json_data'}}
     {% block javascript %}
+    
     <script src="{% static 'javascript/state.js' %}"></script>
     <script src="{% static 'javascript/productpage.js' %}"></script>
+    <script>
+        const data_ = document.getElementById('json_data').textContent
+        const data = JSON.parse(data_)
+        const pgroup = "{{pgroup}}"
+        console.log(data)
+        storestate = storeReducer(addProduct({products:data.products,pgroup}))
+        setState(storestate)
+    </script>
     {% endblock javascript %}
     <script src="{% static 'javascript/generalAd.js' %}"></script>
+
 </body>
 
 </html>

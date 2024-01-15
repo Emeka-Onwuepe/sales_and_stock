@@ -15,17 +15,17 @@ def manage_stock(instance,branch,action='add'):
     if model == 'product':
         branch_product,created = mapper[model][0].objects.get_or_create(branch = branch,
                                                                     product = instance.product)
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_product = branch_product,
+        product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
                                                                         size = instance.size_instance) 
     elif model == 'suit':
         branch_product,created = mapper[model][0].objects.get_or_create(branch = branch,
                                                                     product = instance.suit)
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_suit = branch_product,
+        product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
                                                                         size = instance.size_instance)
     elif model == "top":
         branch_product,created = mapper[model][0].objects.get_or_create(branch = branch,
                                                                     product = instance.top)
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_tops = branch_product,
+        product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
                                                                         size = instance.size_instance)
     
     if action == 'delete' or action == 'remove' :

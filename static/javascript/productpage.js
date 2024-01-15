@@ -132,7 +132,9 @@ const addOrder = (e) => {
     let list = data.toString().split(";")
 
     if (list.length < 5) {
-        let [id, product_type, color, image] = list
+        let [id, product_type, category] = list
+        let product_data = get_product(id)
+        
         let checkbox = document.getElementsByName(`${id}checkbox`)
         let selected = document.getElementById(`${id}checkboxes`)
         let selectionFound = false
@@ -144,12 +146,14 @@ const addOrder = (e) => {
                 product.size = size
                 product.id = parseInt(id)
                 product.product_type = product_type
-                product.image = image
-                product.color = color
+                product.category = category
+                product.pgroup = product_data.pgroup
+                product.color = product_data.color
+                // product.image = image
+                // product.color = color
                 product.price = parseFloat(price)
                 product.mini = parseFloat(price)
                 product.Id = `${product.id}_${Id}`
-                product.qty = 1
                 product.qty = 1
                 product.productTotal = parseFloat(price)
                 product.expected = parseFloat(price)
@@ -163,22 +167,23 @@ const addOrder = (e) => {
         if (!selectionFound) {
             alert("No selection made, please make a selection.")
         }
-    } else {
-        let product = {}
-        let [id, product_type, size, price, color, image] = list
-        product.size = size
-        product.price = parseFloat(price)
-        product.mini = parseFloat(price)
-        product.id = parseInt(id)
-        product.Id = parseInt(id)
-        product.product_type = product_type
-        product.color = color
-        product.image = image
-        product.qty = 1
-        product.productTotal = parseFloat(price)
-        product.expected = parseFloat(price)
-        productList.push(product)
-    }
+    } 
+    // else {
+    //     let product = {}
+    //     let [id, product_type, size, price] = list
+    //     product.size = size
+    //     product.price = parseFloat(price)
+    //     product.mini = parseFloat(price)
+    //     product.id = parseInt(id)
+    //     product.Id = parseInt(id)
+    //     product.product_type = product_type
+    //     product.color = color
+    //     product.image = image
+    //     product.qty = 1
+    //     product.productTotal = parseFloat(price)
+    //     product.expected = parseFloat(price)
+    //     productList.push(product)
+    // }
 
     // console.log(productList)
     const previousCart = getState().cart

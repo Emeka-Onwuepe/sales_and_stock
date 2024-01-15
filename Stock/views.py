@@ -110,8 +110,8 @@ def getStockView(request):
                                               )
          
     return render(request,"stock/getstock.html",
-                  {'age_groups': Product.AGE_GROUP,
+                  {
                    'stocks':stocks,
                    'searched':searched,
-                  'genders':Product.GENDER})
+                  })
     
