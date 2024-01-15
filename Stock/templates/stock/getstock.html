@@ -1,7 +1,6 @@
 {% extends 'sales/sales.html' %} {% load static %} {% block title %}
 <title>Check Stocks</title>{% endblock title %} {% block main %}
-<h1>Stock</h1>
-<h3>Check Stocks</h3>
+<h1>Check Stocks</h1>
 
 <form action="{% url 'stock:getStockView' %}" method="post">
     {% csrf_token %} 

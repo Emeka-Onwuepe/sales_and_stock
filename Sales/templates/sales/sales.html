@@ -66,10 +66,12 @@
                     <a href="javascript:void(0)" id="close" class="close">&times;</a>
                     <nav>
                         {% if request.user.is_admin %}
-                        {% comment %} <a href="{% url 'product:badProductView' 0 'view' %}">Bad Product</a> {% endcomment %}
+                        <a href="{% url 'badproduct:badProductView' 0 'view' 'product' %}">Bad Product</a>
                         <a href="{% url 'branch:branchView' 0 'view' %}">Branches</a>
                         <a href="{% url 'product:categoryView' 0 'view' %}">Category</a>
                         {% endif %}
+                        <a href="{% url 'product:productTypeView' 0 'view' %}">Product Type</a>
+                        <a href="{% url 'product:productView' 0 'view' 'product' %}">Products</a>
                         <a href="{% url 'credit_sales:creditSalesView' 0 'view' %}">Credit Sales</a>
                         <a href="{% url 'user:customerView' 0 'view' %}">Customers</a>
                         {% if request.user.is_admin %}
@@ -82,22 +84,27 @@
                         {% if request.user.is_admin %}
                         <a href="{% url 'product:sizeView' 0 'view' %}">Size</a>
                         <a href="{% url 'user:userView' 0 'view' %}">Users</a>
-                        <a href="{% url 'product:productTypeView' 0 'view' %}">Product Type</a>
-                        <div>
+                        <a href="{% url 'stock:getStockView' %}">Check Stock</a>
+                        {% comment %} <div>
                             <p>Add Products</p>
                             {% for group in  product_groups %}
-                            <a href="{% url 'product:productView' 0 'view' group %}">{{group|capfirst}}</a>
-                            {% endfor %}
-                        </div>
-                        <div class="stock_branches">
+                            
+                            {% endfor %} {% endcomment %}
+                        {% comment %} </div> {% endcomment %}
+                        {% comment %} <div class="stock_branches">
                             <p>Branch Stocks</p>
                             {% for branch in branches %}
                             {% for group in  product_groups %}
                             <a href="{% url 'stock:stockView' 0 branch.id 'view' group  %}">{{branch}} Branch <br/> {{group}} Stock</a> 
                             {% endfor %}
                             {% endfor %}
-                        </div>
-                        
+                        </div> {% endcomment %}
+                        <div class="stock_branches">
+                            <p>Add Branch Stocks</p>
+                            {% for branch in branches %}
+                            <a href="{% url 'stock:stockView' 0 branch.id 'view' 'product'  %}">{{branch}} Branch </a> 
+                            {% endfor %}
+                        </div>    
                         {% endif %}
                     </nav>
                 </div>
@@ -183,7 +190,6 @@
         const data_ = document.getElementById('json_data').textContent
         const data = JSON.parse(data_)
         const pgroup = "{{pgroup}}"
-        console.log(data)
         storestate = storeReducer(addProduct({products:data.products,pgroup}))
         setState(storestate)
     </script>

@@ -27,6 +27,7 @@ urlpatterns = [
     path('user/',include("User.urls" , namespace='user')),
     path('branch/',include("Branch.urls", namespace='branch')),
     path('product/',include("Product.urls",namespace='product')),
+    path('badproduct/',include("Bad_Product.urls",namespace='bad_product')),
     path('stock/',include("Stock.urls",namespace='stock')),
     path('sales/',include("Sales.urls",namespace='sales')),
     path('credits/',include("Credit_Sales.urls",namespace='credit_sales')),

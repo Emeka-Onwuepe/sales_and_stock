@@ -20,7 +20,7 @@ class Bad_Product(Bad_Product_Abstract):
     """Model definition for Bad_Product."""
 
     # TODO: Define fields here
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name = "bad_product_product_type")
+    product = models.ForeignKey(Product,verbose_name='product', on_delete=models.CASCADE,related_name = "bad_product_product_type")
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name="bad_product_branch")
     size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
                         related_name="bad_product_size_instance",null=True, blank=True)
@@ -41,7 +41,7 @@ class Bad_Suit(Bad_Product_Abstract):
     """Model definition for Bad_Suit."""
 
     # TODO: Define fields here
-    product = models.ForeignKey(Suit, on_delete=models.CASCADE,related_name = "Bad_Suit_product_type")
+    product = models.ForeignKey(Suit,verbose_name='Suit', on_delete=models.CASCADE,related_name = "Bad_Suit_product_type")
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name="Bad_Suit_branch")
     size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
                         related_name="Bad_Suit_size_instance",null=True, blank=True)
@@ -63,7 +63,7 @@ class Bad_Top(Bad_Product_Abstract):
     """Model definition for Bad_Top."""
 
     # TODO: Define fields here
-    product = models.ForeignKey(Top, on_delete=models.CASCADE,related_name = "Bad_Top_product_type")
+    product = models.ForeignKey(Top,verbose_name='top', on_delete=models.CASCADE,related_name = "Bad_Top_product_type")
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name="Bad_Top_branch")
     size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
                         related_name="Bad_Top_size_instance",null=True, blank=True)

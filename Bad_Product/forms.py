@@ -4,7 +4,6 @@ from Bad_Product.models import Bad_Product, Bad_Suit, Bad_Top
 
 class BadProductForm(forms.ModelForm):
     """Form definition for BadProduct."""
-
     class Meta:
         """Meta definition for BadProductform."""
 

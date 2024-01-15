@@ -1,8 +1,16 @@
 {% extends 'sales/sales.html' %} {% load static %} {% block title %}
-<title>Stock</title>{% endblock title %} {% block main %}
-<h1>Stock</h1>
-<h3>{{branch}}</h3>
+<title>Add Stock</title>{% endblock title %} {% block main %}
+<h1>Add Stock</h1>
+<h3>{{pgroup|upper}}</h3>
+<section style="text-align: center;" class="list_items">
+    {% for pgroup in product_groups  %}
+    <div class="items">
 
+        <a href="{% url 'stock:stockView' stockId branchId action pgroup  %}">{{pgroup}}</a>
+    </div>
+
+    {% endfor %}
+</section>
 <form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
     {% csrf_token %} 
     {{form}}

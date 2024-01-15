@@ -2,6 +2,16 @@
 <title>Product</title>{% endblock title %} {% block main %}
 <h1>{{pgroup|upper}}</h1>
 
+<section style="text-align: center;" class="list_items">
+    {% for pgroup in product_groups  %}
+    <div class="items">
+
+        <a href="{% url 'product:productView' productId action pgroup %}">{{pgroup}}</a>
+    </div>
+
+    {% endfor %}
+</section>
+
 <form action="{% url 'product:productView' productId action pgroup %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{form}}

@@ -1,0 +1,40 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Bad Product</title>{% endblock title %} {% block main %}
+
+<h1>Bad Products</h1>
+<section style="text-align: center;" class="list_items">
+    {% for pgroup in product_groups  %}
+    <div class="items">
+
+        <a href="{% url 'badproduct:badProductView' 0 'add' pgroup  %}">{{pgroup}}</a>
+    </div>
+
+    {% endfor %}
+</section>
+<form style="margin-bottom: 30px;" action="{% url 'badproduct:badProductView' badProductId action pgroup %}" method="post">
+    {% csrf_token %} 
+    {{form}}
+    <button class="addbutton" type="submit">
+          
+          {% if action == "add" %}
+              ADD
+          {% else %}
+              UPDATE
+          {% endif %}
+              
+      </button>
+</form>
+
+
+<section style="text-align: center;" class="list_items">
+    {% for badProduct in bad_products %}
+    <div class="items">
+
+        <p class="description">{{badProduct.product}} - {{badProduct.qty}} - ({{badProduct.date}})</p>
+        <a class="delete" href="{% url 'badproduct:badProductView' badProduct.id 'delete' pgroup %}"><button> Delete</button></a>
+        <a href="{% url 'badproduct:badProductView' badProduct.id 'edit' pgroup %}"><button > Edit</button></a>
+    </div>
+
+    {% endfor %} 
+</section>
+{% endblock main %}

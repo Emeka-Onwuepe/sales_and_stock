@@ -199,66 +199,6 @@ def productView(request,productId,action,pgroup):
                     'form':form,
                    'pgroup':pgroup})
 
-
-
-
-
-# @login_required(login_url="user:loginView")
-# def badProductView(request,badProductId,action):
-    
-#     if badProductId != 0:   
-#         bad_product_instance = Bad_Product.objects.get(id=badProductId)
-    
-#     if request.method == "POST" and action == "add":
-#         data= request.POST
-#         product_size = data['product'].split("-")
-#         branch = Branch.objects.get(pk=int(data["branch"]))
-#         if len(product_size)>1:
-#             productId,sizeId = product_size
-#             product = Product.objects.get(pk=int(productId)) 
-#             size = Size.objects.get(pk = int(sizeId))
-#             Bad_Product.objects.create(product = product,branch = branch,
-#                                        size_instance =size,qty = int(data['qty']) )
-#         else:
-#             product = Product.objects.get(pk=int(product_size))
-#             Bad_Product.objects.create(product = product,branch = branch,
-#                                        qty = int(data['qty']) )
-#         return HttpResponseRedirect(reverse('product:badProductView',
-#             kwargs={"action":"view","badProductId":0}))
-        
-#     if action == "edit":
-#         if request.method == "POST":
-#             form = BadProductForm(data= request.POST,instance=bad_product_instance)
-#             if form.is_valid():
-#                 form.save()
-#                 return HttpResponseRedirect(reverse('product:badProductView',
-#                         kwargs={"action":"view","badProductId":0}))
-#             else:
-#                 return render(request,"product/badproduct.html",
-#                   {"form":form,'instance':bad_product_instance,
-#                    "badProductId":bad_product_instance.id,"action":"edit"})
-#         else:
-#             return render(request,"product/badproduct.html",
-#                   {'instance':bad_product_instance,
-#                    "badProductId":bad_product_instance.id,"action":"edit"})
-    
-#     if action == "delete":
-#         bad_product_instance.delete()
-#         return HttpResponseRedirect(reverse('product:badProductView',
-#             kwargs={"action":"view","badProductId":0}))
-        
-        
-#     products =None
-#     if not request.user.is_admin:
-#         products = Product.objects.filter(branches = request.user.branch )
-#     else:
-#         products = Product.objects.all()
-                 
-#     return render(request,"product/badproduct.html",
-#                   {"badProductId":0,
-#                    "action":"add","products":products})
-    
-    
  
 # @login_required(login_url="user:loginView")    
 # def returnedProductView(request,returnedProductId,action):
