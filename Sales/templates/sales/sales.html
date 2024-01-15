@@ -67,6 +67,7 @@
                     <nav>
                         {% if request.user.is_admin %}
                         <a href="{% url 'badproduct:badProductView' 0 'view' 'product' %}">Bad Product</a>
+                        <a href="{% url 'returnedproduct:returnedProductView' 0 'view' 'product' %}">Returned Product</a>
                         <a href="{% url 'branch:branchView' 0 'view' %}">Branches</a>
                         <a href="{% url 'product:categoryView' 0 'view' %}">Category</a>
                         {% endif %}
@@ -78,7 +79,7 @@
                         <a href="{% url 'logistics:locationView' 0 'view' %}">Locations</a>
                         {% endif %}
                         {% comment %} <a href="{% url 'preOrder:preOrderView' 0 'view' %}">Pre Order</a> {% endcomment %}
-                        {% comment %} <a href="{% url 'product:returnedProductView' 0 'view' %}">Returned Product</a> {% endcomment %}
+                       
                         <a href="{% url 'sales:salesView' %}">Sales</a>
                         {% comment %} <a href="{% url 'sales:salesAnalysisView' 0 'default' %}">Sales Analysis</a> {% endcomment %}
                         {% if request.user.is_admin %}

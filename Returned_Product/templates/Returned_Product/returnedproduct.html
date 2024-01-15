@@ -1,0 +1,41 @@
+{% extends 'sales/sales.html' %} {% block title %}
+<title>Returned Product</title>{% endblock title %} {% block main %}
+
+<h1>Returned Products</h1>
+<h3>{{pgroup|capfirst}}</h3>
+<section style="text-align: center;" class="list_items">
+    {% for pgroup in product_groups  %}
+    <div class="items">
+
+        <a href="{% url 'returnedproduct:returnedProductView' 0 'add' pgroup  %}">{{pgroup}}</a>
+    </div>
+
+    {% endfor %}
+</section>
+<form style="margin-bottom: 30px;" action="{% url 'returnedproduct:returnedProductView' returnedProductId action pgroup %}" method="post">
+    {% csrf_token %} 
+    {{form}}
+    <button class="addbutton" type="submit">
+          
+          {% if action == "add" %}
+              ADD
+          {% else %}
+              UPDATE
+          {% endif %}
+              
+      </button>
+</form>
+
+
+<section style="text-align: center;" class="list_items">
+    {% for returnedProduct in returned_products %}
+    <div class="items">
+
+        <p class="description">{{returnedProduct.product}} - {{returnedProduct.qty}} - ({{returnedProduct.date_of_return}})</p>
+        <a class="delete" href="{% url 'returnedproduct:returnedProductView' returnedProduct.id 'delete' pgroup %}"><button> Delete</button></a>
+        <a href="{% url 'returnedproduct:returnedProductView' returnedProduct.id 'edit' pgroup %}"><button > Edit</button></a>
+    </div>
+
+    {% endfor %} 
+</section>
+{% endblock main %}

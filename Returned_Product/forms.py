@@ -10,7 +10,7 @@ class ReturnedProductForm(forms.ModelForm):
         """Meta definition for ReturnedProductform."""
 
         model = Returned_Product
-        exclude =("product","size_instance")
+        fields = '__all__'
         widgets = {
             "date_of_purchase" : forms.widgets.DateInput(attrs={'type':'date'}),
             "date_of_return"  : forms.widgets.DateInput(attrs={'type':'date'})     
@@ -23,7 +23,7 @@ class ReturnedSuitForm(forms.ModelForm):
         """Meta definition for ReturnedSuitform."""
 
         model = Returned_Suit
-        exclude =("product","size_instance")
+        fields = '__all__'
         widgets = {
             "date_of_purchase" : forms.widgets.DateInput(attrs={'type':'date'}),
             "date_of_return"  : forms.widgets.DateInput(attrs={'type':'date'})     
@@ -36,7 +36,7 @@ class ReturnedTopForm(forms.ModelForm):
         """Meta definition for ReturnedTopform."""
 
         model = Returned_Top
-        exclude =("product","size_instance")
+        fields = '__all__'
         widgets = {
             "date_of_purchase" : forms.widgets.DateInput(attrs={'type':'date'}),
             "date_of_return"  : forms.widgets.DateInput(attrs={'type':'date'})     

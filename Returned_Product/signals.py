@@ -12,15 +12,18 @@ def manage_stock(instance,model,action='add'):
     print(model)
     branch_product,created = mapper[model][0].objects.get_or_create(branch = instance.branch,
                                                                     product = instance.product)
-    if model == 'product':
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_product = branch_product,
+    product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
                                                                         size = instance.size_instance) 
-    elif model == 'suit':
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_suit = branch_product,
-                                                                        size = instance.size_instance)
-    elif model == "top":
-        product_size,created_ = mapper[model][1].objects.get_or_create(branch_tops = branch_product,
-                                                                        size = instance.size_instance)
+    
+    # if model == 'product':
+    #     product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
+    #                                                                     size = instance.size_instance) 
+    # elif model == 'suit':
+    #     product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
+    #                                                                     size = instance.size_instance)
+    # elif model == "top":
+    #     product_size,created_ = mapper[model][1].objects.get_or_create(branch_instance = branch_product,
+    #                                                                     size = instance.size_instance)
     
     if action == 'delete':
         product_size.returned_qty -= instance.qty
