@@ -1,6 +1,6 @@
 from django import forms
 
-from Stock.models import Product_Stock,Suit_Stock,Tops_Stock
+from Stock.models import Foot_Wear_Stock, Product_Stock,Suit_Stock,Tops_Stock
 
 
 class ProductStockForm(forms.ModelForm):
@@ -12,15 +12,6 @@ class ProductStockForm(forms.ModelForm):
         model = Product_Stock
         fields = '__all__'
         
-class ProductStockEditForm(forms.ModelForm):
-    """Form definition for ProductStockEdit."""
-    
-    class Meta:
-        """Meta definition for ProductStockEditform."""
-
-        model = Product_Stock
-        fields = ['qty']
-        
 class SuitStockForm(forms.ModelForm):
     """Form definition for SuitStock."""
 
@@ -29,15 +20,6 @@ class SuitStockForm(forms.ModelForm):
 
         model = Suit_Stock
         fields ='__all__'
-        
-class SuitStockEditForm(forms.ModelForm):
-    """Form definition for SuitStockEdit."""
-    
-    class Meta:
-        """Meta definition for SuitStockEditform."""
-
-        model = Suit_Stock
-        fields = ['qty']
         
 class TopsStockForm(forms.ModelForm):
     """Form definition for TopsStock."""
@@ -48,11 +30,11 @@ class TopsStockForm(forms.ModelForm):
         model = Tops_Stock
         fields ='__all__'
         
-class TopsStockEditForm(forms.ModelForm):
-    """Form definition for TopsStockEdit."""
-    
-    class Meta:
-        """Meta definition for TopsStockEditform."""
+class FootWearStockForm(forms.ModelForm):
+    """Form definition for FootWearStockForm."""
 
-        model = Tops_Stock
-        fields = ['qty']
+    class Meta:
+        """Meta definition for FootWearStockForm."""
+
+        model = Foot_Wear_Stock
+        fields ='__all__'

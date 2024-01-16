@@ -1,7 +1,7 @@
 from django.db import models
 from django.forms import BooleanField
 from Branch.models import Branch
-from Product.models import Product, Size, Suit, Top
+from Product.models import Foot_Wear, Product, Size, Suit, Top
 from User.models import Customer
 
 # Create your models here.
@@ -10,12 +10,12 @@ class Items(models.Model):
     """Model definition for Items."""
     
     SUIT = 'suit'
-    FOOT_WEARS = 'foot_wears'
+    FOOT_WEAR = 'foot_wear'
     TOP = 'top'
     PRODUCT = 'product'
 
     P_GROUP = {SUIT:'suit',
-               FOOT_WEARS:'foot_wears',
+               FOOT_WEAR:'foot_wear',
                TOP :'top',
                PRODUCT :'product',
                 } 
@@ -32,6 +32,8 @@ class Items(models.Model):
                     related_name="selected_suit", on_delete=models.CASCADE,null=True, blank=True)
     top = models.ForeignKey(Top, verbose_name="top", 
                     related_name="selected_top", on_delete=models.CASCADE,null=True, blank=True)
+    foot_wear = models.ForeignKey(Foot_Wear, verbose_name="foot_wear", 
+                    related_name="selected_foot_wear", on_delete=models.CASCADE,null=True, blank=True)
     product_type = models.CharField('product_type', max_length = 200)
     size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
                         related_name="items_size_instance",null=True, blank=True)

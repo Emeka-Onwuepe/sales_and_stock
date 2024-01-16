@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from Returned_Product.forms import ReturnedProductForm, ReturnedSuitForm, ReturnedTopForm
+from Returned_Product.forms import ReturnedFootWearForm, ReturnedProductForm, ReturnedSuitForm, ReturnedTopForm
 
-from Returned_Product.models import Returned_Product, Returned_Suit, Returned_Top
+from Returned_Product.models import Returned_Foot_Wear, Returned_Product, Returned_Suit, Returned_Top
 
 # Create your views here.
 
@@ -14,7 +14,7 @@ def returnedProductView(request,returnedProductId,action,pgroup):
     mapper = {'product':[Returned_Product,ReturnedProductForm],
               'suits':[Returned_Suit,ReturnedSuitForm],
               'top':[Returned_Top,ReturnedTopForm],
-              'foot_wears':[Returned_Product,ReturnedProductForm],
+              'foot_wear':[Returned_Foot_Wear,ReturnedFootWearForm],
               }
     returned_products = mapper[pgroup][0].objects.all()[:10]
     form = mapper[pgroup][1]()

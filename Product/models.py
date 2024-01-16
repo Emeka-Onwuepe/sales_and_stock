@@ -25,12 +25,12 @@ class Product_Type(models.Model):
     """Model definition for Product_Type."""
     
     SUITS = 'suits'
-    FOOT_WEARS = 'foot_wears'
+    FOOT_WEAR = 'foot_wear'
     TOP = 'top'
     PRODUCT = 'product'
 
     P_GROUP = {SUITS:'suits',
-               FOOT_WEARS:'foot_wears',
+               FOOT_WEAR:'foot_wear',
                TOP :'top',
                PRODUCT :'product',
                 } 
@@ -207,4 +207,21 @@ class Top(Product_Abstract):
         
     def __str__(self):
         """Unicode representation of Tops."""
+        return f"{self.product_type} - {self.color}"
+    
+class Foot_Wear(Product_Abstract):
+    product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="foot_wear_product_type")
+    sizes = models.ManyToManyField(
+        Size, verbose_name="sizes", related_name="foot_wear_sizes", blank=True)
+    sole_color = models.CharField(verbose_name="Sole Color",default=None, max_length=25,null=True,blank=True)
+    
+    class Meta:
+        """Meta definition for Foot_Wear."""
+
+        verbose_name = 'Foot_Wear'
+        verbose_name_plural = 'Foot_Wears'
+        ordering = ['-date']
+        
+    def __str__(self):
+        """Unicode representation of Foot_Wears."""
         return f"{self.product_type} - {self.color}"

@@ -1,6 +1,6 @@
 from django import forms
 
-from Bad_Product.models import Bad_Product, Bad_Suit, Bad_Top
+from Bad_Product.models import Bad_Foot_Wear, Bad_Product, Bad_Suit, Bad_Top
 
 class BadProductForm(forms.ModelForm):
     """Form definition for BadProduct."""
@@ -26,4 +26,13 @@ class BadTopForm(forms.ModelForm):
         """Meta definition for BadTopform."""
 
         model = Bad_Top
+        fields = '__all__'
+        
+class BadFootWearForm(forms.ModelForm):
+    """Form definition for BadFootWear."""
+
+    class Meta:
+        """Meta definition for BadFootWearform."""
+
+        model = Bad_Foot_Wear
         fields = '__all__'

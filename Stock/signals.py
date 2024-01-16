@@ -1,12 +1,16 @@
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
-from Branch.models import Branch_Product, Branch_Suit, Branch_Tops, Product_Size, Suit_Size, Tops_Size
-from Stock.models import Product_Stock, Suit_Stock, Tops_Stock
+from Branch.models import (Branch_Foot_Wear, Branch_Product, 
+                           Branch_Suit, Branch_Tops, 
+                           Foot_Wear_Size, Product_Size,
+                           Suit_Size, Tops_Size)
+from Stock.models import Foot_Wear_Stock, Product_Stock, Suit_Stock, Tops_Stock
 
 def manage_stock(instance,model,action='add'):
     mapper = {'product':[Branch_Product,Product_Size,Product_Stock],
               'suit':[Branch_Suit,Suit_Size,Suit_Stock],
               'top':[Branch_Tops,Tops_Size,Tops_Stock],
+              'foot_wear':[Branch_Foot_Wear,Foot_Wear_Size,Foot_Wear_Stock],
               }
     
     branch_product,created = mapper[model][0].objects.get_or_create(branch = instance.branch,
@@ -49,6 +53,10 @@ def stock_added(sender, instance, *args, **kwargs):
 @receiver(pre_save, sender=Tops_Stock)
 def stock_added(sender, instance, *args, **kwargs):
     manage_stock(instance,'top')
+    
+@receiver(pre_save, sender=Foot_Wear_Stock)
+def stock_added(sender, instance, *args, **kwargs):
+    manage_stock(instance,'foot_wear')
 
         
 @receiver(post_delete, sender=Product_Stock)
@@ -62,3 +70,7 @@ def stock_deleted(sender, instance, *args, **kwargs):
 @receiver(post_delete, sender=Tops_Stock)
 def stock_deleted(sender, instance, *args, **kwargs): 
     manage_stock(instance,'top','delete')
+    
+@receiver(post_delete, sender=Foot_Wear_Stock)
+def stock_deleted(sender, instance, *args, **kwargs): 
+    manage_stock(instance,'foot_wear','delete')

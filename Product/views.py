@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from Branch.models import Branch, Product_Size
-from Product.forms import  CategoryForm, ProductForm, ProductTypeForm,  SizeForm, SuitForm, TopForm
-from Product.models import Category, Product, Product_Type, Size, Suit, Top
+from Product.forms import  CategoryForm, FootWearForm, ProductForm, ProductTypeForm,  SizeForm, SuitForm, TopForm
+from Product.models import Category, Foot_Wear, Product, Product_Type, Size, Suit, Top
 
 # Create your views here.
 @login_required(login_url="user:loginView")
@@ -145,7 +145,7 @@ def productView(request,productId,action,pgroup):
     mapper = {'product':[Product,ProductForm],
               'suits':[Suit,SuitForm],
               'top':[Top,TopForm],
-              'foot_wears':[Product,ProductForm],
+              'foot_wear':[Foot_Wear,FootWearForm],
     
               }
     
@@ -198,60 +198,3 @@ def productView(request,productId,action,pgroup):
                    "action":"add",
                     'form':form,
                    'pgroup':pgroup})
-
- 
-# @login_required(login_url="user:loginView")    
-# def returnedProductView(request,returnedProductId,action):
-    
-#     if returnedProductId != 0:   
-#         returned_product_instance = Returned_Product.objects.get(id=returnedProductId)
-    
-#     if request.method == "POST" and action == "add":
-#         data= request.POST
-#         product_size = data['product'].split("-")
-#         if len(product_size)>1:
-#             productId,sizeId = product_size
-#             product = Product.objects.get(pk=int(productId))
-#             size = Size.objects.get(pk = int(sizeId))
-#             Returned_Product.objects.create(product=product,branch=request.user.branch,
-#                                        qty=int(data['qty']),size_instance=size,
-#                                        unit_price =data['unit_price'],
-#                                        total_price=data['total_price'],
-#                                        date_of_purchase = data['date_of_purchase'],
-#                                        date_of_return = data['date_of_return']
-#                                  )
-#         else:
-#             product = Product.objects.get(pk=int(product_size))
-#             Returned_Product.objects.create(product=product,branch=request.user.branch,
-#                                        qty=int(data['qty']),size_instance=size,
-#                                        unit_price =float(data['unit_price']),
-#                                        total_price=float(data['total_price']),
-#                                        date_of_purchase = data['date_of_purchase'],
-#                                        date_of_return = data['date_of_return']
-#                                  )
-#         return HttpResponseRedirect(reverse('product:returnedProductView',
-#             kwargs={"action":"view","returnedProductId":0}))
- 
-            
-#     if action == "edit":
-#         if request.method == "POST":
-#             form = ReturnedProductForm(data= request.POST,instance=returned_product_instance)
-#             if form.is_valid():
-#                 form.save()
-#                 return HttpResponseRedirect(reverse('product:returnedProductView',
-#                         kwargs={"action":"view","returnedProductId":0}))
-#             else:
-#                 return render(request,"product/returnedproduct.html",
-#                   {"instance":returned_product_instance,"returnedProductId":returned_product_instance.id,"action":"edit"})
-#         else:
-#             return render(request,"product/returnedproduct.html",
-#                   {"instance":returned_product_instance,
-#                    "returnedProductId":returned_product_instance.id,"action":"edit"})
-    
-#     if action == "delete":
-#         returned_product_instance.delete()
-#         return HttpResponseRedirect(reverse('product:returnedProductView',
-#             kwargs={"action":"view","returnedProductId":0}))
-                 
-#     return render(request,"product/returnedproduct.html",
-#                   {"form":ReturnedProductForm(),"returnedProductId":0,"action":"add"})

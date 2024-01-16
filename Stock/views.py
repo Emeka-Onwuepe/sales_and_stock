@@ -2,11 +2,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from Branch.models import Branch, Branch_Product, Product_Size, Suit_Size, Tops_Size
-from Product.models import Product, Size
-from Stock.forms import ProductStockEditForm, ProductStockForm, SuitStockEditForm, SuitStockForm, TopsStockEditForm, TopsStockForm
+from Branch.models import Branch, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size
+from Stock.forms import FootWearStockForm, ProductStockForm, SuitStockForm, TopsStockForm
 
-from Stock.models import Product_Stock, Suit_Stock, Tops_Stock
+from Stock.models import Foot_Wear_Stock, Product_Stock, Suit_Stock, Tops_Stock
 
 # Create your views here.
 
@@ -15,7 +14,7 @@ def stockView(request,stockId,branchId,action,pgroup):
     mapper = {'product':[Product_Stock,ProductStockForm,Product_Size],
               'suits':[Suit_Stock,SuitStockForm,Suit_Size],
               'top':[Tops_Stock,TopsStockForm,Tops_Size],
-              'foot_wears':[Product_Stock,ProductStockForm,Product_Size],
+              'foot_wear':[Foot_Wear_Stock,FootWearStockForm,Foot_Wear_Size],
     
               }
     branch = Branch.objects.get(pk=branchId)
@@ -88,7 +87,7 @@ def getStockView(request):
     mapper = {'product':[Product_Size],
               'suits':[Suit_Size],
               'top':[Tops_Size],
-              'foot_wears':[Product_Size],
+              'foot_wear':[Foot_Wear_Size],
               }
     
     #  'branch': [''], 'pgroup': ['suits'], 'gender': [''], 'age_group': [''], 'product_type': ['sss'], 'brand': ['sss'], 'type': ['ssss'], 'color': ['sss']

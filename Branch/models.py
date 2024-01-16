@@ -155,3 +155,50 @@ class Tops_Size(models.Model):
     def __str__(self):
         """Unicode representation of Top_Size."""
         return f'{self.branch_instance} - {self.size}'
+
+
+class Branch_Foot_Wear(models.Model):
+    """Model definition for Branch_Foot_Wear."""
+
+    # TODO: Define fields here
+    branch = models.ForeignKey(Branch, verbose_name="branch", 
+                on_delete=models.CASCADE, related_name="branch_foot_wear_branch")  
+    product = models.ForeignKey("Product.Top", verbose_name="product", 
+                on_delete=models.CASCADE, related_name="branch_foot_wear_product") 
+
+
+
+    class Meta:
+        """Meta definition for Branch_Foot_Wear."""
+
+        verbose_name = 'Branch_Foot_Wear'
+        verbose_name_plural = 'Branch_Foot_Wears'
+
+    def __str__(self):
+        """Unicode representation of Branch_Foot_Wear."""
+        return f'{self.branch} - {self.product}'
+    
+
+class Foot_Wear_Size(models.Model):
+    """Model definition for Foot_Wear_Size."""
+
+    # TODO: Define fields here
+    branch_instance = models.ForeignKey(Branch_Foot_Wear, verbose_name="Branch_foot_wear",
+                                    related_name = 'branch_foot_wear_size',
+                                       on_delete=models.CASCADE)
+    # Foot_Wear_Size = models.CharField('product size',max_length=25)
+    size = models.ForeignKey("Product.Size", related_name='branch_foot_wear_sizes',
+                             on_delete=models.CASCADE)
+    current_qty = models.IntegerField("current_qty", default=0)
+    returned_qty = models.IntegerField("returned_qty", default=0)
+    bad_qty = models.IntegerField("bad_qty", default=0)
+
+    class Meta:
+        """Meta definition for Foot_Wear_Size."""
+
+        verbose_name = 'Foot_Wear_Size'
+        verbose_name_plural = 'Foot_Wear_Sizes'
+
+    def __str__(self):
+        """Unicode representation of Top_Size."""
+        return f'{self.branch_instance} - {self.size}'

@@ -1,7 +1,7 @@
 from django import forms
 from Branch.models import Branch
 
-from Product.models import  Category, Product, Product_Type, Size, Suit, Top
+from Product.models import  Category, Foot_Wear, Product, Product_Type, Size, Suit, Top
 
 class CategoryForm(forms.ModelForm):
     """Form definition for Category."""
@@ -66,4 +66,14 @@ class TopForm(forms.ModelForm):
         model = Top
         fields = '__all__'
     
+class FootWearForm(forms.ModelForm):
+    """Form definition for FootWear."""
+    sizes = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                queryset=Size.objects.all(),required=False)
+    
+    class Meta:
+        """Meta definition for FootWearform."""
+
+        model = Foot_Wear
+        fields = '__all__'
 

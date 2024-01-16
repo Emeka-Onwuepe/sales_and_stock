@@ -1,6 +1,6 @@
 from django import forms
-from Branch.models import (Branch, Branch_Product, Branch_Suit, 
-                           Branch_Tops, Product_Size, Suit_Size, Tops_Size)
+from Branch.models import (Branch, Branch_Foot_Wear, Branch_Product, Branch_Suit, 
+                           Branch_Tops, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size)
 
 class BranchForm(forms.ModelForm):
                             
@@ -37,6 +37,15 @@ class BranchTopsForm(forms.ModelForm):
         model = Branch_Tops
         fields = '__all__'
         
+class BranchFootWearForm(forms.ModelForm):
+    """Form definition for BranchFootWear."""
+
+    class Meta:
+        """Meta definition for BranchFootWearform."""
+
+        model = Branch_Foot_Wear
+        fields = '__all__'
+        
 class ProductSizeForm(forms.ModelForm):
     """Form definition for ProductSize."""
 
@@ -62,4 +71,13 @@ class SuitSizeForm(forms.ModelForm):
         """Meta definition for SuitSizeform."""
 
         model = Suit_Size
+        fields = '__all__'
+        
+class FootWearSizeForm(forms.ModelForm):
+    """Form definition for FootWearForm."""
+
+    class Meta:
+        """Meta definition for FootWearForm."""
+
+        model = Foot_Wear_Size
         fields = '__all__'

@@ -2,11 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from Bad_Product.forms import BadProductForm, BadSuitForm, BadTopForm
-
-from Bad_Product.models import Bad_Product, Bad_Suit, Bad_Top
-from Branch.models import Branch
-from Product.models import Product, Suit, Top
+from Bad_Product.forms import BadFootWearForm, BadProductForm, BadSuitForm, BadTopForm
+from Bad_Product.models import Bad_Foot_Wear, Bad_Product, Bad_Suit, Bad_Top
 
 # Create your views here.
 
@@ -16,7 +13,7 @@ def badProductView(request,badProductId,action,pgroup):
     mapper = {'product':[Bad_Product,BadProductForm],
               'suits':[Bad_Suit,BadSuitForm],
               'top':[Bad_Top,BadTopForm],
-              'foot_wears':[Bad_Product,BadProductForm],
+              'foot_wear':[Bad_Foot_Wear,BadFootWearForm],
               }
     bad_products = mapper[pgroup][0].objects.all()[:10]
     form = mapper[pgroup][1]()

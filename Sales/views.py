@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 import json
 from Branch.models import Branch
 from Credit_Sales.models import Credit_Sale
-from Product.models import Product, Product_Type, Size, Suit, Top
-from Product.serializer import ProductSerializer, SuitSerializer, TopSerializer
+from Product.models import Foot_Wear, Product, Product_Type, Size, Suit, Top
+from Product.serializer import FootWearSerializer, ProductSerializer, SuitSerializer, TopSerializer
 from Sales.forms import salesForm
 from Sales.models import Items, Sales
 from User.Forms import CustomerForm
@@ -23,7 +23,7 @@ def salesView(request):
         mapper = {'product':[Product,ProductSerializer],
               'suits':[Suit,SuitSerializer],
               'top':[Top,TopSerializer],
-              'foot_wears':[Product,ProductSerializer],
+              'foot_wear':[Foot_Wear,FootWearSerializer],
     
               }
         products=[]
@@ -86,7 +86,7 @@ def salesProductView(request,productTypeId,pgroup):
     mapper = {'product':[Product,ProductSerializer],
               'suits':[Suit,SuitSerializer],
               'top':[Top,TopSerializer],
-              'foot_wears':[Product,ProductSerializer],
+              'foot_wear':[Foot_Wear,FootWearSerializer],
     
               }
     products = []
@@ -116,7 +116,7 @@ def processSalesView(request):
        mapper = {'product':[Product],
               'suits':[Suit],
               'top':[Top],
-              'foot_wears':[Product],
+              'foot_wear':[Foot_Wear],
               }
        
        try:

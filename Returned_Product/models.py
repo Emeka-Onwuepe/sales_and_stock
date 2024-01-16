@@ -1,7 +1,7 @@
 from django.db import models
 from Branch.models import Branch
 
-from Product.models import Product, Size, Suit, Top
+from Product.models import Foot_Wear, Product, Size, Suit, Top
 
 
 # Create your models here.
@@ -81,4 +81,25 @@ class Returned_Top(Returned_Product_Abstract):
 
     def __str__(self):
         """Unicode representation of Returned_Top."""
+        return f" {self.branch} - {self.product} - {self.total_price}"
+    
+class Returned_Foot_Wear(Returned_Product_Abstract):
+    """Model definition for Returned_Foot_Wear."""
+
+    # TODO: Define fields here
+    product = models.ForeignKey(Foot_Wear,verbose_name='foot_wear'
+                                , on_delete=models.CASCADE,related_name = "returned_foot_wear_product_type")
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, related_name="returned_foot_wear_branch")
+    size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
+                        related_name="returned_foot_wear_size_instance",null=True, blank=True)
+    
+
+    class Meta:
+        """Meta definition for Returned_foot_wear."""
+
+        verbose_name = 'Returned_Foot_Wear'
+        verbose_name_plural = 'Returned_Foot_Wears'
+
+    def __str__(self):
+        """Unicode representation of Returned_Foot_Wear."""
         return f" {self.branch} - {self.product} - {self.total_price}"

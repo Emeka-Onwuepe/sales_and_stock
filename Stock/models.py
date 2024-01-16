@@ -1,7 +1,7 @@
 from typing import Any
 from django.db import models
 from Branch.models import Branch
-from Product.models import Product, Size, Size, Suit, Top
+from Product.models import Foot_Wear, Product, Size, Size, Suit, Top
 
 # Create your models here.
    
@@ -83,6 +83,27 @@ class Tops_Stock(Stock):
 
     def __str__(self):
         """Unicode representation of Tops_Stock."""
+        return f'{self.branch} - {self.product} - ({self.qty})'
+    
+class Foot_Wear_Stock(Stock):
+    
+    branch = models.ForeignKey(Branch, verbose_name="branch", on_delete=models.CASCADE,
+                        related_name="foot_wear_stock_branch")
+    size_instance = models.ForeignKey(Size, verbose_name="size_instance", on_delete=models.CASCADE,
+                        related_name="foot_wear_stock_size_instance",null=True, blank=True)
+    product = models.ForeignKey(Foot_Wear, verbose_name="foot_wear", on_delete=models.CASCADE,
+                        related_name="foot_wear_stock")
+        
+        
+    class Meta:
+        """Meta definition for Foot_Wear_Stock."""
+
+        verbose_name = 'Foot_Wear_Stock'
+        verbose_name_plural = 'Foot_Wear_Stocks'
+        
+
+    def __str__(self):
+        """Unicode representation of Foot_Wear_Stock."""
         return f'{self.branch} - {self.product} - ({self.qty})'
     
     
