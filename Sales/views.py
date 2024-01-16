@@ -111,7 +111,6 @@ def processSalesView(request):
        sale_type = None
        data = json.loads(request.body.decode("utf-8"))
        orderlist = data['orders']
-       print(orderlist[0])
        
        mapper = {'product':[Product],
               'suits':[Suit],
@@ -175,6 +174,12 @@ def processSalesView(request):
                                             mini_price=item['mini'],expected_price=item['expected'])
             elif pgroup == 'product':
                 Item =  Items.objects.create(product=product,product_type=item['product_type'],
+                                             p_group = pgroup,size_instance=size,
+                                             qty=item['qty'],
+                                            unit_price=item['price'],total_price=item['productTotal'],
+                                            mini_price=item['mini'],expected_price=item['expected'])
+            elif pgroup == 'foot_wear':
+                Item =  Items.objects.create(foot_wear=product,product_type=item['product_type'],
                                              p_group = pgroup,size_instance=size,
                                              qty=item['qty'],
                                             unit_price=item['price'],total_price=item['productTotal'],
