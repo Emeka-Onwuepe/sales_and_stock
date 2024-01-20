@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('logistics/',include("Logistics.urls" , namespace='logistics')),
     path('user/',include("User.urls" , namespace='user')),
+    path('api/',include("api.urls" , namespace='api')),
     path('branch/',include("Branch.urls", namespace='branch')),
     path('product/',include("Product.urls",namespace='product')),
     path('badproduct/',include("Bad_Product.urls",namespace='bad_product')),

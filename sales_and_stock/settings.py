@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     "knox",
+    "api.apps.ApiConfig",
     "Branch.apps.BranchConfig",
     "Credit_Sales.apps.CreditSalesConfig",
     "Product.apps.ProductConfig",
