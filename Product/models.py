@@ -124,7 +124,7 @@ class Product_Abstract(models.Model):
     description = models.TextField(verbose_name="description", max_length=150,null=False,blank=False)
     # sizes = models.ManyToManyField(
     #     Size, verbose_name="sizes", related_name="sizes", blank=True)
-    color = models.CharField("color",max_length = 200,null=False,blank=False)
+    color = models.CharField("color",max_length = 50,null=False,blank=False)
     image = models.ImageField(verbose_name="image", default="image",null=True,blank=True)
     gender = models.CharField(
         max_length=2,
@@ -140,7 +140,7 @@ class Product_Abstract(models.Model):
 
     type = models.CharField(verbose_name="type",default=None, max_length=50,null=True,blank=True)
     brand = models.CharField(verbose_name="brand",default=None, max_length=50,null=True,blank=True)
-    type = models.CharField(verbose_name="type",default=None, max_length=100,null=True,blank=True)
+    # type = models.CharField(verbose_name="type",default=None, max_length=100,null=True,blank=True)
     # price = models.DecimalField("price", max_digits=50,default=0, decimal_places=2,null=True,blank=True)
     date = models.DateField("date", auto_now=False, auto_now_add=True)
     publish = models.BooleanField(default=False)
