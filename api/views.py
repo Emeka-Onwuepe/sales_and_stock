@@ -1,5 +1,6 @@
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
+from Branch.models import Branch
 
 from Credit_Sales.models import Payment,Credit_Sale
 from Product.models import (Category,Product_Type,Size,
@@ -42,3 +43,17 @@ class Get_All(generics.GenericAPIView):
         data = models[model][1](model_data,many=True).data
             
         return Response({'data':data})
+
+class Get_Branch(generics.GenericAPIView):
+    
+    # permission_classes = [permissions.IsAuthenticated]
+ 
+
+    def get(self, request , *args, **kwargs):
+        # permission_classes = [permissions.IsAuthenticated]
+        name = request.query_params['name']
+
+        branch = Branch.objects.get(name=name)
+        data = branch.id
+            
+        return Response({'id':data})
