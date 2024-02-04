@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-2e#re!5i3y+@n)$gpl+dr&!ejzs*dyo@2faztg9$6mk)9cyu-2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,7 +76,7 @@ REST_KNOX = {
   'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
 }
 
-CORS_ORIGIN_WHITELIST = []
+CORS_ORIGIN_WHITELIST = ['*']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

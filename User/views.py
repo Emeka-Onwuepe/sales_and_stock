@@ -15,11 +15,10 @@ from User.Forms import CustomerForm, UserEditForm, UserForm
 
 # Create your views here.
 def loginView(request,next="next"):
-    print(next)
-    if request.user.is_authenticated:
-            user= request.user
-            return HttpResponseRedirect(reverse("sales:salesView",
-            kwargs={}))
+    # if request.user.is_authenticated:
+    #         user= request.user
+    #         return HttpResponseRedirect(reverse("sales:salesView",
+    #         kwargs={}))
     if request.method=="POST":
         form= AuthenticationForm(data=request.POST)
         if form.is_valid():
