@@ -49,7 +49,6 @@ def manage_stock(instance,branch,action='add'):
 
 @receiver(pre_save, sender=Credit_Sale)
 def add_credit_sale(sender, instance, *args, **kwargs):
-    print('about to add credit sales')
     if not instance.pk:
         instance.balance = instance.total_amount * -1
     if instance.total_payment  >= instance.total_amount:

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from Branch.models import Branch
@@ -156,3 +157,14 @@ class processSalesView(generics.GenericAPIView):
            
         return Response({"purchase_id":credit_or_sales.purchase_id,
                             "type":sale_type})
+        
+class creditPaymentView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        # user = request.user
+        data = request.data
+        credit_sale = Credit_Sale.objects.get(purchase_id = data['purchase_id'])
+        Payment.objects.create(credit_sale=credit_sale,amount=Decimal(data['amount']))
+        
+        return Response({'id':data['id']})
