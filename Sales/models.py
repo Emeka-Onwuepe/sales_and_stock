@@ -81,7 +81,7 @@ class Sales(models.Model):
     date = models.DateField("date", auto_now=False, auto_now_add=True)
     customer = models.ForeignKey(Customer, verbose_name="customer",related_name="sales_customer",on_delete=models.CASCADE)
     items = models.ManyToManyField(Items, verbose_name="items",related_name="items")
-    purchase_id = models.CharField("purchase_id", max_length=150)
+    purchase_id = models.CharField("purchase_id", max_length=150,unique=True)
     paid = models.BooleanField("paid",default=True)
     
     class Meta:
