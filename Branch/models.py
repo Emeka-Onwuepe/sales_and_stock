@@ -163,7 +163,7 @@ class Branch_Foot_Wear(models.Model):
     # TODO: Define fields here
     branch = models.ForeignKey(Branch, verbose_name="branch", 
                 on_delete=models.CASCADE, related_name="branch_foot_wear_branch")  
-    product = models.ForeignKey("Product.Top", verbose_name="product", 
+    product = models.ForeignKey("Product.Foot_Wear", verbose_name="product", 
                 on_delete=models.CASCADE, related_name="branch_foot_wear_product") 
 
 
