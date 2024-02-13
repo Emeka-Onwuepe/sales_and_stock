@@ -42,6 +42,7 @@ def manage_stock(instance,branch,action='add'):
     if action == 'delete' or action == 'remove' :
         product_size.current_qty += instance.qty
         product_size.save()
+        instance.delete()
         return
  
     product_size.current_qty -= instance.qty
