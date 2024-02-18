@@ -21,6 +21,8 @@
         <p style="display: none;" id='{{product.id}}productData'>{{product.id}};{{product.product_type.name}};{{product.product_type.category.name}}</p>
         {% endif %}
         <p>{{product.description}}</p>
+        <br/>
+        <p id="meta-{{product.id}}" style="font-size: 15px;"></p>
         <button style="margin-left: 40px; margin-top:5px;" class="addToCartButton addbutton" id={{product.id}}>Add to Cart</button>
     </div>
 </div>

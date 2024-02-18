@@ -52,8 +52,13 @@
     const data_ = document.getElementById('json_data').textContent
     const data = JSON.parse(data_)
     const pgroup = "{{pgroup}}"
-    console.log(pgroup)
+    
     storestate = storeReducer(addProduct({products:data.products,pgroup}))
+    data.products.forEach(product =>{
+        let target = document.getElementById(`meta-${product.id}`)
+        target.innerHTML = getDetails(product)
+    })
+
     setState(storestate)
 </script>
 {% endblock javascript %}

@@ -191,6 +191,10 @@ const storeReducer = (action) => {
 
         case ADD_PRODUCT:
             console.log('add product ran')
+           action.data.products.forEach(product => {
+            product['meta'] = getDetails(product)
+           });
+            
                 return {
                     ...state,
                     products: action.data.products,
@@ -335,6 +339,18 @@ const convertToFloat = (input) => {
 
 }
 
+const getDetails = (data) =>{
+    details = ''
+    for (const [key,value] of Object.entries(data)) {
+        if(key !='id' && key !='product_type' 
+        && key !='sizes' && key != 'description' ){
+            details += `${key}:${value} -- `
+        } 
+    }
+     
+    return details.slice(0,-3)
+
+}
 
 
 //   const getHours = (time) => {

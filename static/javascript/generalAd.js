@@ -76,12 +76,13 @@ try {
         e.preventDefault()
         const check = confirm("Are you Sure you want to delete")
         if (check) {
+            
             window.location.href = e.target.parentNode.href
         }
     }
 
     for (const button of deleteButtons) {
-        button.addEventListener("click", ConfirmDelete)
+        // button.addEventListener("click", ConfirmDelete)
 
     }
 

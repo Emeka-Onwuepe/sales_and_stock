@@ -134,7 +134,6 @@ const addOrder = (e) => {
     if (list.length < 5) {
         let [id, product_type, category] = list
         let product_data = get_product(id)
-        
         let checkbox = document.getElementsByName(`${id}checkbox`)
         let selected = document.getElementById(`${id}checkboxes`)
         let selectionFound = false
@@ -149,6 +148,7 @@ const addOrder = (e) => {
                 product.category = category
                 product.pgroup = product_data.pgroup
                 product.color = product_data.color
+                product.meta = product_data.meta
                 // product.image = image
                 // product.color = color
                 product.price = parseFloat(price)
@@ -300,6 +300,7 @@ const appendOrderList = (data) => {
         <td>${data[i].product_type}</td>
         <td>${data[i].color}</td>
         <td>${data[i].size}</td>
+        <td style="font-size: 15px;">${data[i].meta}</td>
         <td><input type="text" name="price" value=${data[i].price} id="${data[i].Id}-price"></td>
         <td id="${data[i].Id}-miniPrice" class='amount'>${data[i].mini}</td>
         <td><input type="text" name="qty" value=${data[i].qty} id="${data[i].Id}-qty"></td>
