@@ -1,6 +1,6 @@
 
 from Branch.models import Branch
-from Product.models import Category, Foot_Wear, Product, Product_Type, Suit, Top
+from Product.models import Category, Product, Product_Type
 
 def context_processor(request):
     branches = Branch.objects.all()
