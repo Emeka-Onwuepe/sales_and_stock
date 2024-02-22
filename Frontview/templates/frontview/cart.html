@@ -1,0 +1,82 @@
+{% extends 'frontview/home.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/homeproductpage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/general.css' %}"> {% endblock styles %} {% block title %}
+
+<title>Cart</title>{% endblock title %}{% block banner %}{% endblock banner %} {% block main %}
+
+<h1>CART</h1>
+
+<div id="confirmBox">
+    <p>Are you Sure you want to delete?</p>
+    <div style="text-align: center;">
+        <a href="" class="cancelDelete">Cancel</a>
+        <a href="" class="confirmDelete">Delete</a>
+    </div>
+</div>
+
+<div class="historyDiv">
+    <form action="{% url 'frontview:csales'%}" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="hidden_phone_number" name="phone_number">
+        <button type="submit">Order History</button>
+    </form>
+</div>
+
+<div class="cartbody">
+    <p style="display: none;text-align:center" class="emptycart">Your cart is empty.</p>
+    <div id="cartflex">
+
+    </div>
+    <div style="margin: 30px auto; display:flex;justify-content: space-around;flex-wrap: wrap;">
+        <p style="display:none;padding:0px 10px 5px 10px;"><strong>Total: &#8358 <span id="total"></span></strong></p>
+        <p style="display:none;padding:0px 10px 5px 10px;"><strong>Logistics: &#8358 <span id="ltotal"></span></strong></p>
+        <p><strong> Grand Total: &#8358 <span id="grand_total"></span></strong></p>
+    </div>
+
+    <button id="process_order" class="addbutton">Process Order</button>
+    <div id="customerDetails">
+        <div>
+            <label for="logistics">Delivery Logistics</label>
+            <select style="padding: 5px;text-align:center" name="logistics" id="logistics">
+            <option  value="0">---Please Select---</option>
+            {% for location in locations  %}
+            <option value="{{location.price}}">{{location.location}} -- &#8358 <span class="amount">{{location.price}}</span></option>  
+            {% endfor %}
+        </select>
+        </div>
+        <div class="customerDetails">
+            <form name="customerForm" action="" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Customer Details</legend>
+                    <label for="id_name">Name:</label>
+                    <p id="nameer"></p>
+                    <input class="contactInput" type="text" name="name" maxlength="255" required="" id="id_name">
+                    <label for="id_email">Email address:</label>
+                    <p id="emailer"></p>
+                    <input type="email" class="contactInput" name="email" maxlength="255" required="" id="id_email">
+                    <label for="id_phone_number">Phone_number:</label>
+                    <p id="phone_numberer"></p>
+                    <input type="text" class="contactInput" name="phone_number" maxlength="20" required="" id="id_phone_number">
+                    <label for="id_address">Address:</label>
+                    <p id="addresser"></p>
+                    <input type="text" class="contactInput" name="address" maxlength="256" required="" id="id_address">
+                </fieldset>
+            </form>
+        </div>
+        <p id="public_key" style="display: none;">{{public_key}}</p>
+        <div class="make_payment">
+            <button id="make_payment" style="margin: 30px auto;" class="addbutton">Make Payment</button>
+        </div>
+    </div>
+</div>
+{% endblock main %} {% block javascript %}
+<script src="{% static 'javascript/state.js' %}"></script>
+<script src="{% static 'javascript/homeproductpage.js' %}"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="{% static 'javascript/cart.js' %}"></script>
+
+
+{% endblock javascript %}
+
+</html>

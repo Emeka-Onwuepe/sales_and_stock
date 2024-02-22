@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "api.apps.ApiConfig",
     "Branch.apps.BranchConfig",
     "Credit_Sales.apps.CreditSalesConfig",
+    "Frontview.apps.FrontviewConfig",
     "Product.apps.ProductConfig",
     "Returned_Product.apps.ReturnedProductConfig",
     "Bad_Product.apps.BadProductConfig",

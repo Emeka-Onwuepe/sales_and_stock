@@ -162,7 +162,7 @@ class Product(Product_Abstract):
 
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
-        # ordering = ['-date']
+        ordering = ['-date','product_type']
         # abstract = True
 
     def __str__(self):
@@ -184,7 +184,7 @@ class Suit(Product_Abstract):
 
         verbose_name = 'Suit'
         verbose_name_plural = 'Suits'
-        ordering = ['-date']
+        ordering = ['-date','product_type']
         
     def __str__(self):
         """Unicode representation of Suits."""
@@ -203,7 +203,7 @@ class Top(Product_Abstract):
 
         verbose_name = 'Top'
         verbose_name_plural = 'Tops'
-        ordering = ['-date']
+        ordering = ['-date','product_type']
         
     def __str__(self):
         """Unicode representation of Tops."""
@@ -220,7 +220,7 @@ class Foot_Wear(Product_Abstract):
 
         verbose_name = 'Foot_Wear'
         verbose_name_plural = 'Foot_Wears'
-        ordering = ['-date']
+        ordering = ['-date','product_type']
         
     def __str__(self):
         """Unicode representation of Foot_Wears."""

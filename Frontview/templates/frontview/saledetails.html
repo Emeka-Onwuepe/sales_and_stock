@@ -1,0 +1,84 @@
+{% extends 'frontview/home.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/homeproductpage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/general.css' %}"> {% endblock styles %} {% block title %}
+
+<title>Order history</title>{% endblock title %}{% block banner %}{% endblock banner %} {% block main %}
+<div class="historyDiv">
+    <form action="{% url 'frontview:csales'%}" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="hidden_phone_number" name="phone_number">
+        <button type="submit">Order History</button>
+    </form>
+</div>
+
+<div>
+    <div class="customerData">
+        <p><strong>Name:</strong> {{customer.name}}</p>
+        <p><strong>Phone Number:</strong> {{customer.phone_number}}</p>
+        <p><strong>Email:</strong> {{customer.email}}</p>
+        <p><strong>Address:</strong> {{customer.address}}</p>
+        <p><strong>Purchase_id:</strong> {{sale.purchase_id}}</p>
+        <p><strong>Payment_method:</strong> {% if sale.payment_method %} {{sale.payment_method}}{% else %} Credit {% endif %}</p>
+        <p><strong>Remark: </strong>{{sale.remark}}</p>
+        <p><strong>Date:</strong> {{sale.date}}</p>
+        <p><strong>Paid: </strong> {{sale.paid}} </p>
+    </div>
+
+    <div id="salesList">
+        <table>
+            <thead>
+                <tr>
+                    <th>SN</th>
+                    <th>Product Name</th>
+                    <th>Color</th>
+                    <th>Size</th>
+                    <th>Unit Price</th>
+                    <th>Qty</th>
+                    <th>Total Price</th>
+                    <th>Logistics</th>
+
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                {% for item in sale.items.all %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{item.product_type}}</td>
+                    <td>{{item.color}}</td>
+                    <td>{{item.size}} </td>
+                    <td class="amount">{{item.unit_price}}</td>
+                    <td>{{item.qty}} </td>
+                    <td class="amount">{{item.total_price}}</td>
+                    <td></td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td id="grandtotal" class="amount">{{sale.total_amount}}</td>
+                    <td id="logistics" class="amount">{{sale.logistics}}</td>
+                </tr>
+                <tr>
+                    <td colspan="6">Grand Total</td>
+                    <td colspan="2" id="logistics" class="amount">{{sale.logistics|add:sale.total_amount}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+{% endblock main %} {% block javascript %}
+<script src="{% static 'javascript/state.js' %}"></script>
+<script src="{% static 'javascript/homeproductpage.js' %}"></script>
+<!-- <script src="{% static 'javascript/history.js' %}"></script> -->
+
+
+
+{% endblock javascript %}
