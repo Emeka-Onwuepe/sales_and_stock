@@ -23,7 +23,9 @@ def homeView(request):
     products_list = []   
     for pgroup in mapper.values():
         product = pgroup[0].objects.filter(publish=True)[:20]
-        products_list.append(product)
+        if product:
+            products_list.append(product)
+        
     return render(request,'frontview/home.html',{"products_list":products_list})
 
 def cartView(request): 
@@ -72,9 +74,9 @@ def processPaymentView(request):
                    sales = Sales.objects.get(purchase_id=data["purchase_id"])
                    sales.paid = True
                    sales.save()
-                   email_body = (f"There is a new online sale with ID:{sales.purchase_id}. Please, view " +
-                        f"sales details on {rootUrl}/sales/sale/{sales.purchase_id}/{sales.payment_method} ")
-                   send_mail('A new order',email_body,official_email,[admin_staff])
+                #    email_body = (f"There is a new online sale with ID:{sales.purchase_id}. Please, view " +
+                #         f"sales details on {rootUrl}/sales/sale/{sales.purchase_id}/{sales.payment_method} ")
+                #    send_mail('A new order',email_body,official_email,[admin_staff])
                    return JsonResponse({"message":'success'})
                         
            if data['action'] == "create":
@@ -105,19 +107,47 @@ def processPaymentView(request):
                                                     payment_method = data['payment_method'],
                                                     purchase_id = data['purchase_id'],
                                                     paid=False)
-            
-                for item in orderlist:
-                        product = Product.objects.get(pk=int(item['id']))
-                        size= None
-                        if item['id'] != item['Id']:
-                            _,sizeId= item['Id'].split("_")
-                            size = Size.objects.get(pk=int(sizeId))
-                        Item =  Items.objects.create(product=product,product_type=item['product_type'],
-                                                size=item['size'],size_instance=size,color=item['color'],qty=item['qty'],
-                                                unit_price=item['price'],total_price=item['productTotal'],
-                                                mini_price=item['mini'],expected_price=item['expected'])
-                        sales.items.add(Item)
                 
+                for item in orderlist:
+            
+                    pgroup = item['pgroup']
+                    product = mapper[pgroup][0].objects.get(pk=int(item['id']))
+                    size= None
+                    
+                    if item['id'] != item['Id']:
+                        _,sizeId= item['Id'].split("_")
+                        size = Size.objects.get(pk=int(sizeId))
+                        
+                        
+                    if pgroup == 'suits':
+                        pgroup = 'suit'
+                        Item =  Items.objects.create(suit=product,product_type=item['product_type'],
+                                                    p_group = pgroup,size_instance=size,
+                                                    qty=item['qty'],
+                                                    unit_price=item['price'],total_price=item['productTotal'],
+                                                    mini_price=item['mini'],expected_price=item['expected'])
+                    elif pgroup == 'top':
+                        Item =  Items.objects.create(top=product,product_type=item['product_type'],
+                                                    p_group = pgroup,size_instance=size,
+                                                    qty=item['qty'],
+                                                    unit_price=item['price'],total_price=item['productTotal'],
+                                                    mini_price=item['mini'],expected_price=item['expected'])
+                    elif pgroup == 'product':
+                        Item =  Items.objects.create(product=product,product_type=item['product_type'],
+                                                    p_group = pgroup,size_instance=size,
+                                                    qty=item['qty'],
+                                                    unit_price=item['price'],total_price=item['productTotal'],
+                                                    mini_price=item['mini'],expected_price=item['expected'])
+                    elif pgroup == 'foot_wear':
+                        Item =  Items.objects.create(foot_wear=product,product_type=item['product_type'],
+                                                    p_group = pgroup,size_instance=size,
+                                                    qty=item['qty'],
+                                                    unit_price=item['price'],total_price=item['productTotal'],
+                                                    mini_price=item['mini'],expected_price=item['expected'])
+                    
+                    # credit_or_sales.items.add(Item)
+                    sales.items.add(Item)
+                    
                     
                 return JsonResponse({"purchase_id":sales.purchase_id,
                                     "type":sale_type})

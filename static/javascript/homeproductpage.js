@@ -181,57 +181,67 @@ const addOrder = (e) => {
     e.preventDefault();
     let id = e.target.id
     let productList = []
-    let data = document.getElementById(`${id}productData`).innerHTML
-    let list = data.toString().split(";")
+    let other = document.getElementById(`${id}-other`).innerHTML
+    let data = document.getElementById(`${id}-meta`).innerHTML
+    data = JSON.parse(data)
+    
+    console.log(id)
+    let [product_id,pgroup] = id.toString().split("-")
+    let [product_type,category] = other.toString().split(";")
 
-    if (list.length < 5) {
-        let [id, product_type, color, image] = list
-        let checkbox = document.getElementsByName(`${id}checkbox`)
-        let selected = document.getElementById(`${id}checkboxes`)
-        let selectionFound = false
-        checkbox.forEach(node => {
-            if (node.checked) {
-                let product = {}
-                let [Id, price, size] = node.dataset['data'].toString().split(";")
-                selectionFound = true
-                product.size = size
-                product.id = parseInt(id)
-                product.product_type = product_type
-                product.image = image
-                product.color = color
-                product.price = parseFloat(price)
-                product.mini = parseFloat(price)
-                product.Id = `${product.id}_${Id}`
-                product.qty = 1
-                product.qty = 1
-                product.productTotal = parseFloat(price)
-                product.expected = parseFloat(price)
-                productList.push(product)
-                node.checked = false
+
+    console.log(pgroup)
+    
+    let checkbox = document.getElementsByName(`${id}checkbox`)
+    let selected = document.getElementById(`${id}checkboxes`)
+    let selectionFound = false
+    checkbox.forEach(node => {
+        if (node.checked) {
+            let product = {}
+            let [Id, price, size] = node.dataset['data'].toString().split(";")
+            selectionFound = true
+            product.size = size
+            product.id = parseInt(product_id)
+            product.pgroup = pgroup
+            product.product_type = product_type
+            product.color = data.color
+            product.category = category
+            product.brand = data.brand
+            product.type = data.type
+            product.price = parseFloat(price)
+            product.mini = parseFloat(price)
+            product.Id = `${product.id}_${Id}`
+            product.qty = 1
+            product.qty = 1
+            product.productTotal = parseFloat(price)
+            product.expected = parseFloat(price)
+            productList.push(product)
+            node.checked = false
             }
         })
 
-        selected.style.display = "none";
-        expanded = false;
-        if (!selectionFound) {
-            Alert("No selection made, please make a selection.")
+    selected.style.display = "none";
+    expanded = false;
+    if (!selectionFound) {
+        Alert("No selection made, please make a selection.")
         }
-    } else {
-        let product = {}
-        let [id, product_type, size, price, color, image] = list
-        product.size = size
-        product.price = parseFloat(price)
-        product.mini = parseFloat(price)
-        product.id = parseInt(id)
-        product.Id = parseInt(id)
-        product.product_type = product_type
-        product.color = color
-        product.image = image
-        product.qty = 1
-        product.productTotal = parseFloat(price)
-        product.expected = parseFloat(price)
-        productList.push(product)
-    }
+    // } 
+    // else {
+    //     let product = {}
+    //     let [id, product_type, size, price, color, image] = list
+    //     product.size = size
+    //     product.price = parseFloat(price)
+    //     product.mini = parseFloat(price)
+    //     product.id = parseInt(id)
+    //     product.Id = parseInt(id)
+    //     product.product_type = product_type
+    //     product.color = color
+    //     product.image = image
+    //     product.qty = 1
+    //     product.productTotal = parseFloat(price)
+    //     product.expected = parseFloat(price)
+    //     productList.push(product)
+    // }
 
     // console.log(productList)
     const previousCart = getState().user_cart
@@ -241,6 +251,7 @@ const addOrder = (e) => {
             const check = previousCart.filter(item => item.Id == product.Id)
             if (check.length == 0) {
                 purelist.push(product)
+                console.log(product)
             } else {
                 Alert(`${product.product_type} ${product.color} ${product.size} already added `)
             }

@@ -249,6 +249,22 @@
 
         }
         window.addEventListener('pageshow', setChartCounter)
+
+        let product_metas = document.querySelectorAll('.product_meta')
+        product_metas.forEach(meta =>{
+            let data = meta.innerHTML.replace(/'_state'.+\d&gt;,\s/,'')
+            data = data.replace(/'image'.*image&gt;,\s/,'')
+            data = data.replace(/'date'.*\),\s/,'')
+            data = data.replace(/'/g,"\"")
+            data = data.replace(/True/g,"true")
+            data = data.replace(/False/g,"false")
+            data = data.replace(/None/g,'"None"')
+            data = JSON.parse(data)
+            meta.innerHTML = JSON.stringify(data)
+            meta.nextSibling.nextSibling.innerHTML = get_details(data)
+           
+          
+        })
     </script>
 
 </body>

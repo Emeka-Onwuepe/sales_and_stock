@@ -149,6 +149,10 @@ class Product_Abstract(models.Model):
     class Meta:
         """Meta definition for Product."""
         abstract = True
+        
+    # def get_meta(self):
+    #     print(self.__dict__)
+    #     return self.__dict__
 
     
 class Product(Product_Abstract):
@@ -156,6 +160,8 @@ class Product(Product_Abstract):
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="product_sizes", blank=True)
     
+    def get_meta(self):
+        return self.__dict__
     
     class Meta:
         """Meta definition for Product."""
@@ -179,6 +185,10 @@ class Suit(Product_Abstract):
     pics = models.CharField(verbose_name="pics",default=None, max_length=25,null=True,blank=True)
     golden_button = models.CharField(verbose_name="golden button",default=None, max_length=25,null=True,blank=True)
     
+    def get_meta(self):
+        print(self.__dict__)
+        return self.__dict__
+    
     class Meta:
         """Meta definition for Suit."""
 
@@ -198,6 +208,9 @@ class Top(Product_Abstract):
         Size, verbose_name="sizes", related_name="top_sizes", blank=True)
     sleeves = models.CharField(verbose_name="sleeves",default=None, max_length=25,null=True,blank=True)
     
+    def get_meta(self):
+        return self.__dict__
+    
     class Meta:
         """Meta definition for Top."""
 
@@ -214,6 +227,9 @@ class Foot_Wear(Product_Abstract):
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="foot_wear_sizes", blank=True)
     sole_color = models.CharField(verbose_name="Sole Color",default=None, max_length=25,null=True,blank=True)
+    
+    def get_meta(self):
+        return self.__dict__
     
     class Meta:
         """Meta definition for Foot_Wear."""
