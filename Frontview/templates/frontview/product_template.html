@@ -29,9 +29,9 @@
     
     
     {% comment %} <p>{{product.description}}</p> {% endcomment %}
-    <h3>Product Meta</h3>
+    <p style="font-weight:600;font-size: 12px">Product Meta</p>
     <p id='{{product.id}}-{{product.product_type.p_group}}-other' style="display: none"> {{product.product_type.name}};{{product.product_type.category}}</p>
     <p class="product_meta" id='{{product.id}}-{{product.product_type.p_group}}-meta'  style="display: none">{{product.get_meta}}</p>
-    <p class="meta" style="text-align: center; margin-top: -8px;"></p>
+    <p class="meta" style="margin-top: -11px; font-size: 14px;"></p>
     <button class="addToCartButton addbutton" id='{{product.id}}-{{product.product_type.p_group}}'>Add to Cart</button>
 </div>

@@ -361,6 +361,7 @@ const get_details = (data) =>{
         if(key !='id' && key !='product_type' 
         && key !='sizes' && key != 'description'  &&
         key != 'publish' && key != 'brand' && 
+        key != 'color' &&
         key != 'type' && key != 'product_type_id'){
             if(key == 'age_group'){
                 value = age_group[value.toLowerCase()]
