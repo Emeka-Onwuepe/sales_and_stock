@@ -186,7 +186,6 @@ class Suit(Product_Abstract):
     golden_button = models.CharField(verbose_name="golden button",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
-        print(self.__dict__)
         return self.__dict__
     
     class Meta:
