@@ -10,6 +10,8 @@
 
 {% if stocks %}
 <h5>Results from {{stocks.0.branch_instance.branch}} Branch</h5>
+{% elif all%}
+<h5>Results From all the Branches</h5>
 {% elif searched%}
 <h5>No results from {{stocks.0.branch_instance.branch}} Branch</h5>
 {% endif %}
@@ -20,12 +22,14 @@
             <th>SN</th>
             <th>Category</th>
             <th>Name</th>
+            <th>Brand</th>
             <th>Color</th>
+            <th>Product meta</th>
             <th>Size</th>
             <th>Current Qty</th>
             <th>Returned Qty</th>
             <th>Bad Qty</th>
-            <th>Add Stock</th>
+            {% comment %} <th>Add Stock</th> {% endcomment %}
         </thead>
         <tbody>
 
@@ -34,7 +38,9 @@
                 <td class="sn"></td>
                 <td>{{stock.branch_instance.product.product_type.category}}</td>
                 <td>{{stock.branch_instance.product.product_type.name}}</td>
+                <td>{{stock.branch_instance.product.brand}}</td>
                 <td>{{stock.branch_instance.product.color}}</td>
+                <td style="font-size: 14px;">{{stock.branch_instance.product.get_details}}</td>
                 <td>{{stock.size.size}}</td>
                 <td>{{stock.current_qty}}</td>
                 <td>{{stock.returned_qty}}</td>
@@ -53,6 +59,32 @@
                 </td> {% endcomment %}
             </tr>
              {% endfor %}
+             {% for stock in all_ %} 
+             <tr>
+                 <td class="sn"></td>
+                 <td>{{stock.0.branch_instance.product.product_type.category}}</td>
+                 <td>{{stock.0.branch_instance.product.product_type.name}}</td>
+                 <td>{{stock.0.branch_instance.product.brand}}</td>
+                 <td>{{stock.0.branch_instance.product.color}}</td>
+                 <td style="font-size: 14px;">{{stock.0.branch_instance.product.get_details}}</td>
+                 <td>{{stock.0.size.size}}</td>
+                 <td>{{stock.1}}</td>
+                 <td>{{stock.2}}</td>
+                 <td>{{stock.3}}</td>
+                 {% comment %} <td>
+                     <form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
+                         {% csrf_token %}
+                         <label for="id_qty">Qty:</label>
+                         <input type="number" name="qty" required="" id="id_qty">
+                         <input type="hidden" name="product" value="{{branch_product.branch_instance.product.id}}">
+                         <input type="hidden" name="size_instance" value="{{branch_product.size.id}}">
+                         <input type="hidden" name="branch" value="{{branchId}}">
+                         <button type="submit"> Add</button>
+                     </form>
+ 
+                 </td> {% endcomment %}
+             </tr>
+              {% endfor %}
         </tbody>
         <tfoot></tfoot>
     </table>

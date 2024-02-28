@@ -93,11 +93,14 @@ def getStockView(request):
     #  'branch': [''], 'pgroup': ['suits'], 'gender': [''], 'age_group': [''], 'product_type': ['sss'], 'brand': ['sss'], 'type': ['ssss'], 'color': ['sss']
     stocks = None
     searched = False
+    all = False
+    data = []
     if request.method == "POST":
         searched = True
         data = request.POST
         model = data['pgroup']
-        stocks = mapper[model][0].objects.filter(
+        if data['branch'] != '0':
+            stocks = mapper[model][0].objects.filter(
                                               branch_instance__product__product_type__name__iexact = data['product_type'],
                                               branch_instance__branch = data['branch'],
                                               branch_instance__product__age_group = data['age_group'],
@@ -105,12 +108,37 @@ def getStockView(request):
                                               branch_instance__product__brand__iexact = data['brand'],
                                               branch_instance__product__type__iexact = data['type'],
                                               branch_instance__product__color__iexact = data['color'],
-                                              
                                               )
-         
+        else:
+            stocks = mapper[model][0].objects.filter(
+                                              branch_instance__product__product_type__name__iexact = data['product_type'],
+                                              branch_instance__product__age_group = data['age_group'],
+                                              branch_instance__product__gender = data['gender'],
+                                              branch_instance__product__brand__iexact = data['brand'],
+                                              branch_instance__product__type__iexact = data['type'],
+                                              branch_instance__product__color__iexact = data['color'],
+                                              ).select_related('branch_instance')
+        
+            
+            data_ = {}
+            for stock in stocks:
+                key = f'{stock.branch_instance.product_id}_{stock.size_id}'
+                if data_.get(key):
+                    data_[key][1] = data_[key][1] + stock.current_qty
+                    data_[key][2] = data_[key][2] + stock.returned_qty
+                    data_[key][3] = data_[key][3] + stock.bad_qty
+                else:
+                    data_[key] = [stock,stock.current_qty,stock.returned_qty,stock.bad_qty]
+
+            all = True
+            stocks = []
+            data = data_.values()
+            print(list(data)[0][0].branch_instance.product.get_details())
     return render(request,"stock/getstock.html",
                   {
                    'stocks':stocks,
                    'searched':searched,
+                   'all':all,
+                   'all_':data
                   })
     

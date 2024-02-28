@@ -163,6 +163,30 @@ class Product(Product_Abstract):
     def get_meta(self):
         return self.__dict__
     
+    def get_details(self):
+        gender = {'u':"unisex",
+                  'f': 'female', 
+                  'm':'male'  } 
+                    
+        age_group = {'a':'adult','c':'children'}
+        details = ''
+        data = self.__dict__
+        exclude = ['id','product_type' ,'sizes','description',
+                   'publish','brand','color','date',
+                   'product_type_id','_state','image'
+                   ]
+        
+        for key,value in data.items():
+            if key not in exclude:
+                if key == 'age_group':
+                    value = age_group[value.lower()]
+                
+                if key == 'gender':
+                    value = gender[value.lower()]
+                
+                details += f'{key.lower()} : {value}, '
+        return details[0:-2]
+    
     class Meta:
         """Meta definition for Product."""
 
@@ -188,6 +212,30 @@ class Suit(Product_Abstract):
     def get_meta(self):
         return self.__dict__
     
+    def get_details(self):
+        gender = {'u':"unisex",
+                  'f': 'female', 
+                  'm':'male'  } 
+                    
+        age_group = {'a':'adult','c':'children'}
+        details = ''
+        data = self.__dict__
+        exclude = ['id','product_type' ,'sizes','description',
+                   'publish','brand','color','date',
+                   'product_type_id','_state','image'
+                   ]
+        
+        for key,value in data.items():
+            if key not in exclude:
+                if key == 'age_group':
+                    value = age_group[value.lower()]
+                
+                if key == 'gender':
+                    value = gender[value.lower()]
+                
+                details += f'{key.lower()} : {value}, '
+        return details[0:-2]
+    
     class Meta:
         """Meta definition for Suit."""
 
@@ -210,6 +258,30 @@ class Top(Product_Abstract):
     def get_meta(self):
         return self.__dict__
     
+    def get_details(self):
+        gender = {'u':"unisex",
+                  'f': 'female', 
+                  'm':'male'  } 
+                    
+        age_group = {'a':'adult','c':'children'}
+        details = ''
+        data = self.__dict__
+        exclude = ['id','product_type' ,'sizes','description',
+                   'publish','brand','color','date',
+                   'product_type_id','_state','image'
+                   ]
+        
+        for key,value in data.items():
+            if key not in exclude:
+                if key == 'age_group':
+                    value = age_group[value.lower()]
+                
+                if key == 'gender':
+                    value = gender[value.lower()]
+                
+                details += f'{key.lower()} : {value}, '
+        return details[0:-2]
+    
     class Meta:
         """Meta definition for Top."""
 
@@ -229,6 +301,30 @@ class Foot_Wear(Product_Abstract):
     
     def get_meta(self):
         return self.__dict__
+    
+    def get_details(self):
+        gender = {'u':"unisex",
+                  'f': 'female', 
+                  'm':'male'  } 
+                    
+        age_group = {'a':'adult','c':'children'}
+        details = ''
+        data = self.__dict__
+        exclude = ['id','product_type' ,'sizes','description',
+                   'publish','brand','color','date',
+                   'product_type_id','_state','image'
+                   ]
+        
+        for key,value in data.items():
+            if key not in exclude:
+                if key == 'age_group':
+                    value = age_group[value.lower()]
+                
+                if key == 'gender':
+                    value = gender[value.lower()]
+                
+                details += f'{key.lower()} : {value}, '
+        return details[0:-2]
     
     class Meta:
         """Meta definition for Foot_Wear."""

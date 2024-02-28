@@ -71,12 +71,8 @@ def categoryView(request,cat,brand,p_type):
     brands = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type=p_type.id).annotate(lower = Lower('brand')).values_list('lower',flat=True)
     distincts = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category).values_list('product_type').distinct()
     product_types = Product_Type.objects.filter(id__in = distincts)
-    
-    purelist = []
-    for i in brands:
-        if i not in purelist:
-            purelist.append(i)
-    brands = purelist
+   
+    brands = set(brands)
     
     
     # unsorted_product_types = Product_Type.objects.filter(category=category.id,
