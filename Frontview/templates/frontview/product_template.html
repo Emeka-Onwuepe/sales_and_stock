@@ -1,9 +1,9 @@
 <div id="product" class="product">
-    <h3>{{product.product_type.name}} {{product.product_type.category}}</h3>
+    <h3>{{product.brand}} {{product.product_type.category}}</h3>
     <img src="{{product.image.url}}" alt="{{product.product_type.name}} image"> 
 
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="text-transform:capitalize;width: 49%; text-align: left;">Brand: {{product.brand}}</div>
+    <div style="display: flex; flex-wrap: wrap;margin-bottom: 10px;">
+        <div style="text-transform:capitalize;width: 49%; text-align: left;">Category: {{product.product_type.name}}  </div>
         <div style="text-transform:capitalize;width: 49%; text-align: right">Type: {{product.type}}</div>
         <div style="text-transform:capitalize;width: 100%; text-align: center"> Color: {{product.color}} </div>
     

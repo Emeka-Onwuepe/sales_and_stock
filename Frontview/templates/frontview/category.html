@@ -10,6 +10,43 @@
 <h1>{{category.name}}s</h1>
 
 <input type="text" placeholder="Filter products by name" id="filterInput">
+<div class="filters">
+    
+    <div>
+        <label  style='text-align: center;border-bottom: 1px solid black;' for="category">Category:</label>
+        <select style="text-transform: capitalize;" name="Category" id="category_options">
+            <option value="default">Category</option>
+            {% for p in product_types %}
+                 
+                {% if p.name == p_type %}
+                <option value="{{p.name}}" selected>{{p.name}}</option>
+                {% else %}
+                <option value="{{p.name}}">{{p.name}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+   
+    <div>
+        <label style='text-align: center;border-bottom: 1px solid black;'  for="brands">Brand:</label>
+        <select style="text-transform: capitalize;" name="brands" id="brands_options">
+            <option value="default">Brands</option>
+            {% for brand in brands %}
+                
+                {% if brand == brand_ %}
+                <option  value="{{brand}}" selected >{{brand}}</option>
+                {% else %}
+                <option  value="{{brand}}">{{brand}}</option>
+                {% endif %}
+                    
+                
+            {% endfor %}
+        </select>    
+    </div>
+   
+  
+</div>
+
 
 <div id="decisionBox">
     <p>Do you want to:</p>

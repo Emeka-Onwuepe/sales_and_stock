@@ -85,7 +85,7 @@
                     <a href="javascript:void(0)" id="close" class="close">&times;</a>
                     <nav>
                         {% for category in sorted_categories %}
-                        <a href="{% url 'frontview:categoryView' category.name %}"> {{category}}s</a>
+                        <a href="{% url 'frontview:categoryView' category.name 'default' 'default' %}"> {{category}}s</a>
                          {% endfor %}
 
                     </nav>
@@ -104,17 +104,17 @@
                 </div>
                 {% block main %}
 
-                <section class="slide_category">
+                {% comment %} <section class="slide_category">
                     {% include "frontview/slide_category.html" %}
-                </section>
+                </section> {% endcomment %}
 
                 <section class="category_items">
 
                     {% for category in sorted_categories %}
                     <div id='catgorylist'>
                         <div class="innercategory">
-                            <a id="catlink" class="catlink" href="{% url 'frontview:categoryView' category.name %}"> {{category}}s</a>
-                            <a id="catlink2" class="catlink2" href="{% url 'frontview:categoryView' category.name %}">Shop Category</a>
+                            <a id="catlink" class="catlink" href="{% url 'frontview:categoryView' category.name 'default' 'default' %}"> {{category}}s</a>
+                            <a id="catlink2" class="catlink2" href="{% url 'frontview:categoryView' category.name 'default' 'default' %}">Shop Category</a>
                             <img src="{{category.image.url}}" alt="{{category.name}} image" />
                         </div>
                     </div>

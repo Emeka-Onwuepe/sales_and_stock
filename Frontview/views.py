@@ -1,4 +1,3 @@
-from itertools import product
 import json
 import requests
 from django.urls import reverse
@@ -12,6 +11,8 @@ from Product.models import Category, Foot_Wear, Product, Product_Type, Size, Sui
 from Sales.models import Items, Sales
 from User.models import Customer
 from sales_and_stock.variables import official_email,rootUrl,admin_staff
+
+from django.db.models.functions import Lower
 
 mapper = {'product':[Product],
               'suits':[Suit],
@@ -33,13 +34,51 @@ def cartView(request):
     return render(request,'frontview/cart.html',{"public_key":settings.PAYSTACT_PUBLIC_KEY,
                                                  "locations":locations})
 
-def categoryView(request,cat):
+def categoryView(request,cat,brand,p_type):
+    brand = brand.replace('-',' ')
+    p_type = p_type.replace('-',' ')    
     
     category = get_object_or_404(Category,name__iexact=cat)
-    product_type = Product_Type.objects.get(category=category)
+    product_type = Product_Type.objects.filter(category=category)[0]
     pgroup = product_type.p_group
     
-    products = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category)
+    if brand == 'default' and p_type == 'default':
+        p_type = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category)[0]
+        p_type = Product_Type.objects.get(id=p_type.product_type.id)
+        
+        brand = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type = p_type.id)[0]
+        brand = brand.brand
+    elif brand != 'default' and p_type != 'default':
+        p_type = Product_Type.objects.get(name=p_type)
+       
+    elif  p_type != 'default':
+        p_type = Product_Type.objects.get(name=p_type)
+        brand = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type = p_type.id)[0]
+        brand = brand.brand
+    elif brand != 'default':
+        p_type = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category)[0]
+        p_type = Product_Type.objects.get(id=p_type.product_type.id)
+ 
+    products = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,brand=brand,product_type=p_type.id)
+    
+    if not products:
+        # try a randon brand
+        brand = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type = p_type.id)[0]
+        brand = brand.brand
+        products = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,brand=brand,product_type=p_type.id)
+        
+   
+    brands = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type=p_type.id).annotate(lower = Lower('brand')).values_list('lower',flat=True)
+    distincts = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category).values_list('product_type').distinct()
+    product_types = Product_Type.objects.filter(id__in = distincts)
+    
+    purelist = []
+    for i in brands:
+        if i not in purelist:
+            purelist.append(i)
+    brands = purelist
+    
+    
     # unsorted_product_types = Product_Type.objects.filter(category=category.id,
     #                                                         product_type__publish = True)
     # sorted_product_types = []
@@ -49,7 +88,11 @@ def categoryView(request,cat):
             
             
     return render(request,'frontview/category.html',{"category":category,
-                                                     "products":products})
+                                                     "products":products,
+                                                     'brands' :brands,
+                                                     'product_types':product_types,
+                                                      'p_type':p_type.name,
+                                                      'brand_': brand})
     
     
 def processPaymentView(request):

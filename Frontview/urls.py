@@ -12,11 +12,7 @@ urlpatterns = [
     path('cart',views.cartView,name="cartView"), 
     path('csales', views.customerOrderHistoryView, name="csales"),
     path('processorder',views.processPaymentView,name="processPaymentView"), 
-    path('category/<str:cat>',views.categoryView,name="categoryView"),
+    path('category/<str:cat>/<str:brand>/<str:p_type>',views.categoryView,name="categoryView"),
     path('details/<str:purchaseId>',views.saleView,name="saledetailsView"),
-    
-   
-      
-
 ]
 urlpatterns += router.urls

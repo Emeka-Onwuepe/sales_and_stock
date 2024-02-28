@@ -335,3 +335,25 @@ try {
 } catch (error) {
 
 }
+
+const get_category = (e,type) =>{
+    let selected = e.target.value
+    selected = selected.replace(' ','-')
+    let path = window.location.pathname
+    path = path.split('/')
+    path[0] = '/'
+    if(type == 'brand'){
+        path[3] = selected
+    }else{
+        path[4] = selected
+    }
+
+    path = `${path[0]}${path[1]}/${path[2]}/${path[3]}/${path[4]}`
+    window.location.pathname = path
+}
+
+let category_options = document.getElementById('category_options')
+category_options.addEventListener('change',(e) => get_category(e,'category'))
+
+let brand_options = document.getElementById('brands_options')
+brand_options.addEventListener('change',(e) => get_category(e,'brand'))

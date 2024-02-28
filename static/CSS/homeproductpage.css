@@ -9,6 +9,7 @@
 .selectBox select {
     width: 100%;
     font-weight: bold;
+    border: 1px solid black;
 }
 
 .overSelect {
@@ -19,10 +20,13 @@
     bottom: 0;
 }
 
+.multiple{
+    background-color: white;
+}
 .checkboxes {
     display: none;
-    background-color: #8080803d;
-    padding: 3px;
+    background-color: black;
+    padding: 1px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
@@ -38,8 +42,9 @@
     display: inline;
     margin: 0px;
     padding: 0px;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
+    margin-left: 3px;
 }
 
 .checkboxes label:hover {
@@ -169,50 +174,33 @@
 #filterInput {
     /* margin: 0px auto; */
     border: 1px solid black;
-    margin: 0px auto 30px auto;
+    /* margin: 0px auto 30px auto; */
     border-radius: 50px;
     padding: 10px;
     height: 50px;
     width: 270px;
     text-align: center;
+    margin: 0px auto 10px auto;
 }
 
-
-/* table {
-    counter-reset: tableCount;
+.filters {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
-.counterCell::before {
-    content: counter(tableCount);
-    counter-increment: tableCount;
+.filters select{
+    width: 150px;
+    border: 0px;
+   
 }
 
-.product_container {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
+select{
+    background-color: white;
+    padding: 3px;
 }
-
-.product {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-}
-
- */
-
-
-/* @media screen and (min-width:360px) {
-    #product img {
-        width: 150px;
-    }
-    #product {
-        width: 170px;
-    }
-    #product button {
-        margin-left: 28.55px;
-    }
-} */
 
 @media screen and (min-width:750px) {
     #decisionBox,

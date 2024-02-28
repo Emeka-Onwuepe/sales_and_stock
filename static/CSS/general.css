@@ -31,6 +31,8 @@ li {
 
 h3 {
     text-align: center;
+    text-transform: capitalize;
+
 }
 
 #logo-div {
@@ -143,6 +145,11 @@ h1 {
 footer {
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+img {
+	font-size: 12px;
+	font-style: italic;
 }
 
 #footer,
