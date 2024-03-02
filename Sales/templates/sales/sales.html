@@ -70,9 +70,9 @@
                         <a href="{% url 'returnedproduct:returnedProductView' 0 'view' 'product' %}">Returned Product</a>
                         <a href="{% url 'branch:branchView' 0 'view' %}">Branches</a>
                         <a href="{% url 'product:categoryView' 0 'view' %}">Category</a>
-                        {% endif %}
                         <a href="{% url 'product:productTypeView' 0 'view' %}">Product Type</a>
                         <a href="{% url 'product:productView' 0 'view' 'product' %}">Products</a>
+                        {% endif %}
                         <a href="{% url 'credit_sales:creditSalesView' 0 'view' %}">Credit Sales</a>
                         <a href="{% url 'user:customerView' 0 'view' %}">Customers</a>
                         {% if request.user.is_admin %}

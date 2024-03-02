@@ -14,7 +14,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class Get_User_Serializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude=["password","last_login","is_active","is_admin","staff",
+        exclude=["password","last_login","is_active","staff",
                     "is_superuser","groups","user_permissions"]
 
 class User_Serializer(serializers.ModelSerializer):
