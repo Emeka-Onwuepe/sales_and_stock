@@ -168,3 +168,42 @@ class creditPaymentView(generics.GenericAPIView):
         Payment.objects.create(credit_sale=credit_sale,amount=Decimal(data['amount']))
         
         return Response({'id':data['id']})
+    
+class addProductView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        # user = request.user
+        data = request.data
+       
+        mapper = {'product':[Product],
+              'suits':[Suit],
+              'top':[Top],
+              'foot_wear':[Foot_Wear],
+              }
+        status = 'success'
+        for product in data['data']:
+            try:
+                p_type = Product_Type.objects.get(name__iexact=product['product_type_id'],
+                                                category__name__iexact=product['category'])
+                product.pop('category')
+                size = product.pop('size')
+                price = product.pop('price')
+                product['product_type_id'] = p_type.id
+                product_instance,p_created= mapper[p_type.p_group][0].objects.get_or_create(**product)
+                size_instance = Size.objects.get(size=size,gender=product['gender'],
+                                        age_group = product['age_group'],
+                                        product_type_id = product['product_type_id'] )
+                product_instance.sizes.add(size_instance)
+            except Product_Type.DoesNotExist:
+                status = 'Product Type not Found'
+            except Size.DoesNotExist:
+                size_instance = Size.objects.create(size=size,gender=product['gender'],
+                                        age_group = product['age_group'],
+                                        product_type_id = product['product_type_id'],
+                                        price=price)
+                product_instance.sizes.add(size_instance)   
+        return Response({"status":status})
+        
+        
+        
