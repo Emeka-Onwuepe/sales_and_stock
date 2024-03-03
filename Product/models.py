@@ -121,7 +121,7 @@ class Product_Abstract(models.Model):
     # TODO: Define fields here
     # product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="product_type")
     # size = models.CharField(verbose_name="size",default="0", max_length=150,null=True,blank=True)
-    description = models.TextField(verbose_name="description", max_length=150,null=False,blank=False)
+    description = models.TextField(verbose_name="description", max_length=150,null=True,blank=True)
     # sizes = models.ManyToManyField(
     #     Size, verbose_name="sizes", related_name="sizes", blank=True)
     color = models.CharField("color",max_length = 50,null=False,blank=False)
