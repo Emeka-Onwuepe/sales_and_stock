@@ -1,3 +1,4 @@
+from datetime import date
 from decimal import Decimal
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
@@ -11,6 +12,7 @@ from Product.serializer import (CategorySerializer,ProductTypeSerializer,
                                 SuitSerializer,TopSerializer,
                                 FootWearSerializer)
 from Sales.models import Items,Sales
+from Stock.models import Foot_Wear_Stock, Product_Stock, Suit_Stock, Tops_Stock
 from User.models import Customer
 from User.serializer import CustomerSerializer, Get_User_Serializer, Login_Serializer
 
@@ -205,5 +207,54 @@ class addProductView(generics.GenericAPIView):
                 product_instance.sizes.add(size_instance)   
         return Response({"status":status})
         
-        
+class addStockView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        # user = request.user
+        data = request.data
+       
+        mapper = {'product':[Product,Product_Stock],
+              'suits':[Suit,Suit_Stock],
+              'top':[Top,Tops_Stock],
+              'foot_wear':[Foot_Wear,Foot_Wear_Stock],
+              }
+        status = 'success'
+        for product in data['data']:
+            try:
+                p_type = Product_Type.objects.get(name__iexact=product['product_type_id'],
+                                                category__name__iexact=product['category'])
+                product.pop('category')
+                size = product.pop('size')
+                qty = product.pop('qty')
+                product['product_type_id'] = p_type.id
+                product_instance = mapper[p_type.p_group][0].objects.get(**product)
+                size_instance = Size.objects.get(size=size,gender=product['gender'],
+                                        age_group = product['age_group'],
+                                        product_type_id = product['product_type_id'] )
+                branch = Branch.objects.get(name__iexact = data['branch'])
+                
+                check =  mapper[p_type.p_group][1].objects.filter(branch = branch,
+                                                          product = product_instance,
+                                                          size_instance = size_instance,
+                                                          qty = qty,
+                                                          date__icontains = date.today()
+                                                          )
+                if check:
+                    continue
+                mapper[p_type.p_group][1].objects.create(branch = branch,
+                                                          product = product_instance,
+                                                          size_instance = size_instance,
+                                                          qty = qty
+                                                          )
+                
+            except Product_Type.DoesNotExist:
+                status = 'Product Type not Found'
+            except mapper[p_type.p_group][0].DoesNotExist:
+                status = 'Product not Found'
+            except Size.DoesNotExist:
+                status = 'Size Does Not Exist' 
+            except Branch.DoesNotExist:
+                status = 'Branch Does Not Exist'   
+        return Response({"status":status})   
         

@@ -2,7 +2,9 @@ from rest_framework import routers
 from django.urls import path
 from knox import views as KnoxView
 
-from api.views import Get_All, Get_Branch,processSalesView,LoginUser,creditPaymentView,addProductView
+from api.views import (Get_All, Get_Branch,processSalesView,
+                       LoginUser,creditPaymentView,addProductView,
+                       addStockView)
 router = routers.DefaultRouter()
 
 app_name = 'api'
@@ -14,7 +16,8 @@ urlpatterns = [
     path('process',processSalesView.as_view(),name="processSalesView"),
     path('login', LoginUser.as_view(), name="login"),
     path('creditpayment',creditPaymentView.as_view(),name='creditPayment'),
-    path('addproduct',addProductView.as_view(),name='addProductView')
+    path('addproduct',addProductView.as_view(),name='addProductView'),
+    path('addstock',addStockView.as_view(),name='addstockView')
     
            
 ]
