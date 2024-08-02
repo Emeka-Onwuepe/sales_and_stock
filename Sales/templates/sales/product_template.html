@@ -1,7 +1,18 @@
 <div class="product">
     <div id="product">
-        <h3>{{product.product_type.name}}</h3>
-        <p>{{product.product_type.category.name}}</p>
+        {% comment %} <h3>{{}}</h3>
+        <p>{{product.product_type.category.name}}</p> {% endcomment %}
+        <h3>{{product.brand}} {{product.product_type.category.name}}</h3>
+
+        <div class="product_flex" style="margin-bottom: 10px;">
+        {% if product.color %}
+            <p class="colour" style="text-transform: capitalize;">{{product.color}}</p>
+        {% endif %}
+            
+        <p style="text-transform: capitalize;">Category: {{product.product_type.name}}</p>
+        </div>
+        
+
         {% if product.sizes.all %}
 
         <div id='{{product.id}};selectBox' class="selectBox">
@@ -20,9 +31,9 @@
         </div>
         <p style="display: none;" id='{{product.id}}productData'>{{product.id}};{{product.product_type.name}};{{product.product_type.category.name}}</p>
         {% endif %}
-        <p>{{product.description}}</p>
-        <br/>
-        <p id="meta-{{product.id}}" style="font-size: 15px;"></p>
+        {% comment %} <br/> {% endcomment %}
+        {% comment %} <p id="meta-{{product.id}}" style="font-size: 15px;"></p> {% endcomment %}
+        <p style="text-transform: capitalize;text-align: justify;">{{product.get_details}}</p>
         <button style="margin-left: 40px; margin-top:5px;" class="addToCartButton addbutton" id={{product.id}}>Add to Cart</button>
     </div>
 </div>

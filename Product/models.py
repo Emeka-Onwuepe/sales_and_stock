@@ -183,8 +183,11 @@ class Product(Product_Abstract):
                 
                 if key == 'gender':
                     value = gender[value.lower()]
+                    
+                if not value or value in ['adult','No','no','None','none']:
+                    continue
                 
-                details += f'{key.lower()} : {value}, '
+                details += f'{key.lower()} : {value},  '
         return details[0:-2]
     
     class Meta:
@@ -203,10 +206,10 @@ class Suit(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="suit_product_type")
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="sizes", blank=True)
-    # sleeves = models.CharField(verbose_name="sleeves",default=None, max_length=25,null=True,blank=True)
+    sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
     breasted = models.CharField(verbose_name="breasted",default=None, max_length=25,null=True,blank=True)
     button = models.CharField(verbose_name="button",default=None, max_length=25,null=True,blank=True)
-    pics = models.CharField(verbose_name="pics",default=None, max_length=25,null=True,blank=True)
+    pics = models.CharField(verbose_name="pics",default=None, max_length=45,null=True,blank=True)
     golden_button = models.CharField(verbose_name="golden button",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
@@ -232,8 +235,11 @@ class Suit(Product_Abstract):
                 
                 if key == 'gender':
                     value = gender[value.lower()]
+                    
+                if not value or value in ['adult','No','no','None','none']:
+                    continue
                 
-                details += f'{key.lower()} : {value}, '
+                details += f'{key.lower()} : {value},  '
         return details[0:-2]
     
     class Meta:
@@ -253,7 +259,7 @@ class Top(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="top_product_type")
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="top_sizes", blank=True)
-    sleeves = models.CharField(verbose_name="sleeves",default=None, max_length=25,null=True,blank=True)
+    sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
         return self.__dict__
@@ -278,8 +284,11 @@ class Top(Product_Abstract):
                 
                 if key == 'gender':
                     value = gender[value.lower()]
+                    
+                if not value or value in ['adult','No','no','None','none']:
+                    continue
                 
-                details += f'{key.lower()} : {value}, '
+                details += f'{key.lower()} : {value},  '
         return details[0:-2]
     
     class Meta:
@@ -323,7 +332,10 @@ class Foot_Wear(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                 
-                details += f'{key.lower()} : {value}, '
+                if not value or value in ['adult','No','no','None','none']:
+                    continue
+                
+                details += f'{key.lower()} : {value},  '
         return details[0:-2]
     
     class Meta:

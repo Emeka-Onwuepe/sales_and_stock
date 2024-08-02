@@ -177,7 +177,6 @@ class addProductView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         # user = request.user
         data = request.data
-       
         mapper = {'product':[Product],
               'suits':[Suit],
               'top':[Top],
@@ -186,13 +185,25 @@ class addProductView(generics.GenericAPIView):
         status = 'success'
         for product in data['data']:
             try:
-                p_type = Product_Type.objects.get(name__iexact=product['product_type_id'],
-                                                category__name__iexact=product['category'])
+                Category_instance,cat_created= Category.objects.get_or_create(name=product['product'])
+                
+                p_type,p_type_created = Product_Type.objects.get_or_create(name=product['category'],
+                                                category = Category_instance,
+                                                p_group = product['p_group']
+                                                )
+                print(product['p_group'])
+                price = 45_000
                 product.pop('category')
+                product.pop('p_group')
+                product.pop('product')
                 size = product.pop('size')
-                price = product.pop('price')
+                if product.get('price'):
+                    price = product.pop('price')
+                
                 product['product_type_id'] = p_type.id
-                product_instance,p_created= mapper[p_type.p_group][0].objects.get_or_create(**product)
+               
+                product_instance,product_instance_created = mapper[p_type.p_group][0].objects.get_or_create(**product)
+               
                 size_instance = Size.objects.get(size=size,gender=product['gender'],
                                         age_group = product['age_group'],
                                         product_type_id = product['product_type_id'] )

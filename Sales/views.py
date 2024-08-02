@@ -81,7 +81,7 @@ def saleView(request,purchaseId,type):
                                              "customer":customer,'not_found':not_found})
 
 @login_required(login_url="user:loginView")
-def salesProductView(request,productTypeId,pgroup):
+def salesProductView(request,productTypeId,pgroup,brand='default'):
     json_data = {'products':[]}
     mapper = {'product':[Product,ProductSerializer],
               'suits':[Suit,SuitSerializer],
@@ -91,15 +91,21 @@ def salesProductView(request,productTypeId,pgroup):
               }
     products = []
     initial = True
-    if productTypeId != 0:
+    brands = []
+    
+    if productTypeId != 0 and brand != 'default':
         initial = False
-        products = mapper[pgroup][0].objects.filter(product_type = productTypeId)
+        products = mapper[pgroup][0].objects.filter(product_type = productTypeId,brand = brand)
         
         jsonData = mapper[pgroup][1](products,many=True).data
         json_data['products'] =  jsonData
+    
+    if productTypeId != 0:
+        brands = mapper[pgroup][0].objects.filter(product_type = productTypeId).values('brand').distinct()
         
     return render(request,"sales/product.html",{"products":products,"customerForm":CustomerForm,
                                                 'json_data':json_data,'pgroup':pgroup,
+                                                'productType':productTypeId,'brands':brands,
                                                 "saleForm":salesForm,'initial':initial})
 
 @login_required(login_url="user:loginView")

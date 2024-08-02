@@ -7,9 +7,21 @@
         <h3>{{category}}</h3>
         <div class="content">
             {% for productType in category.category.all %}
-            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group %}"> {{productType.name}} </a>
+            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group 'default' %}"> {{productType.name}} </a>
             </p>
             {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<section id='list_items' class="list_items">
+    {% for brand in brands %}
+    <div class="categories">
+        <div class="content">
+            {% if productType %}
+                 <p class="innerItem"><a href="{% url 'sales:salesProductView' productType pgroup brand.brand %}"> {{brand.brand}} </a>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
@@ -54,10 +66,10 @@
     const pgroup = "{{pgroup}}"
     
     storestate = storeReducer(addProduct({products:data.products,pgroup}))
-    data.products.forEach(product =>{
-        let target = document.getElementById(`meta-${product.id}`)
-        target.innerHTML = getDetails(product)
-    })
+   // data.products.forEach(product =>{
+      //  let target = document.getElementById(`meta-${product.id}`)
+      //  target.innerHTML = product.meta
+   // })
 
     setState(storestate)
 </script>

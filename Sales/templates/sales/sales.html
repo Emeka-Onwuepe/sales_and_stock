@@ -148,7 +148,7 @@
                         <h3>{{category}}</h3>
                         <div class="content">
                             {% for productType in category.category.all %}
-                            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group %}"> {{productType.name}} </a>
+                            <p class="innerItem"><a href="{% url 'sales:salesProductView' productType.id productType.p_group 'default' %}"> {{productType.name}} </a>
                             </p>
                             {% endfor %}
                         </div>

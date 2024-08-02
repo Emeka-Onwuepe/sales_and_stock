@@ -1,210 +1,256 @@
 .multiselect {
-    width: 200px;
+  width: 200px;
 }
 
 .selectBox {
-    position: relative;
+  position: relative;
 }
 
 .selectBox select {
-    width: 100%;
-    font-weight: bold;
-    border: 1px solid black;
+  width: 100%;
+  font-weight: bold;
+  border: 1px solid black;
 }
 
 .overSelect {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
-.multiple{
-    background-color: white;
+.multiple {
+  background-color: white;
 }
 .checkboxes {
-    display: none;
-    background-color: black;
-    padding: 1px;
-    margin-top: -10px;
-    margin-bottom: 10px;
+  display: none;
+  background-color: black;
+  padding: 1px;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
 .checkboxes label {
-    display: inline-block;
-    padding: 3px;
-    margin-bottom: 5px;
-    /* color: white; */
+  display: inline-block;
+  padding: 3px;
+  margin-bottom: 5px;
+  /* color: white; */
 }
 
 .checkboxes input {
-    display: inline;
-    margin: 0px;
-    padding: 0px;
-    width: 15px;
-    height: 15px;
-    margin-left: 3px;
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+  width: 15px;
+  height: 15px;
+  margin-left: 3px;
 }
 
 .checkboxes label:hover {
-    background-color: gray;
+  background-color: gray;
 }
 
 #product {
-    padding: 10px;
-    width: 270px;
-    /* margin-right: 20px; */
-    margin-bottom: 20px;
-    box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
-    -ms-box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
-    -webkit-box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
+  padding: 10px;
+  width: 48.5%;
+  /* width: 250px; */
+  /* margin-right: 20px; */
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
+  -ms-box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
+  -webkit-box-shadow: 0px 2px 8px 0px rgba(17, 17, 17, 0.3);
 }
 
 #product img {
-    width: 250px;
-    height: auto;
+  width: 100%;
+  height: auto;
+  border: 2px solid red;
 }
 
 #product button {
-    margin-left: 77.5px;
-    margin-top: 7px;
-    padding: 6px;
-    background-color: #9E612C;
+  margin-left: 71.5px;
+  margin-top: 7px;
+  padding: 6px;
+  background-color: #9e612c;
 }
 
 .order {
-    padding: 20px 20px;
-    width: 200px;
-    /* padding: 10px; */
-    margin-right: 20px;
-    margin-bottom: 20px;
-    box-shadow: grey 2px 2px 5px;
+  padding: 20px 20px;
+  width: 200px;
+  /* padding: 10px; */
+  margin-right: 20px;
+  margin-bottom: 20px;
+  box-shadow: grey 2px 2px 5px;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .order p {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .order button {
-    padding: 5px;
-    margin-left: 41.75px;
+  padding: 5px;
+  margin-left: 41.75px;
 }
 
 .order p:nth-last-child(1) {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 #product:nth-last-child(1) {
-    margin-right: 0px;
+  margin-right: 0px;
 }
 
 .order:nth-last-child(1) {
-    margin-right: 0px;
+  margin-right: 0px;
 }
 
 .orderhistory,
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 #product p,
 #product h3 {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 }
 
 #confirmBox {
-    position: fixed;
-    z-index: 4;
-    padding: 15px 20px 20px 20px;
-    background-color: white;
-    box-shadow: 1px 1px 8px gray;
-    display: none;
-    width: 293px
+  position: fixed;
+  z-index: 4;
+  padding: 15px 20px 20px 20px;
+  background-color: white;
+  box-shadow: 1px 1px 8px gray;
+  display: none;
+  width: 293px;
 }
 
 #decisionBox p,
 #confirmBox p {
-    text-align: center;
-    margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 #confirmBox .cancelDelete {
-    padding: 3px;
-    color: white;
-    margin-right: 20px;
-    background-color: #0089A6;
+  padding: 3px;
+  color: white;
+  margin-right: 20px;
+  background-color: #0089a6;
 }
 
 #confirmBox .confirmDelete {
-    padding: 3px;
-    color: white;
-    background-color: darkred;
+  padding: 3px;
+  color: white;
+  background-color: darkred;
 }
 
 #decisionBox {
-    position: fixed;
-    z-index: 4;
-    top: 150px;
-    border: 2px solid white;
-    background-color: #FEF2E7;
-    padding: 15px 20px 20px 20px;
-    /* margin-top: 30px; */
-    display: none;
-    width: 293px
+  position: fixed;
+  z-index: 4;
+  top: 150px;
+  border: 2px solid white;
+  background-color: #fef2e7;
+  padding: 15px 20px 20px 20px;
+  /* margin-top: 30px; */
+  display: none;
+  width: 293px;
 }
 
 #decisionBox .continue {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 #decisionBox a {
-    display: inline-block;
-    background-color: #9E612C;
-    padding: 6px;
-    /* font-weight: bold; */
+  display: inline-block;
+  background-color: #9e612c;
+  padding: 6px;
+  /* font-weight: bold; */
 }
 
 #filterInput {
-    /* margin: 0px auto; */
-    border: 1px solid black;
-    /* margin: 0px auto 30px auto; */
-    border-radius: 50px;
-    padding: 10px;
-    height: 50px;
-    width: 270px;
-    text-align: center;
-    margin: 0px auto 10px auto;
+  /* margin: 0px auto; */
+  border: 1px solid black;
+  /* margin: 0px auto 30px auto; */
+  border-radius: 50px;
+  padding: 10px;
+  height: 50px;
+  width: 270px;
+  text-align: center;
+  margin: 0px auto 10px auto;
 }
 
 .filters {
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	flex-wrap: wrap;
-    margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
-.filters select{
-    width: 150px;
-    border: 0px;
-   
+.filters select {
+  width: 150px;
+  border: 0px;
 }
 
-select{
-    background-color: white;
-    padding: 3px;
+select {
+  background-color: white;
+  padding: 3px;
 }
 
-@media screen and (min-width:750px) {
-    #decisionBox,
-    #confirmBox {
-        width: 320px
-    }
+@media screen and (min-width: 500px) {
+  #product {
+    width: 47%;
+  }
+}
+@media screen and (min-width: 600px) {
+  #product {
+    width: 45%;
+  }
+
+@media screen and (min-width: 700px) {
+  #product {
+    width: 42%;
+  }
+}
+
+
+  /* 
+#product img {
+  width: 100%;
+  height: auto;
+  border: 2px solid red;
+} */
+}
+
+@media screen and (min-width: 750px) {
+  #decisionBox,
+  #confirmBox {
+    width: 320px;
+  }
+
+   #product {
+    width: 32%;
+  }
+}
+
+@media screen and (min-width: 1160px) {
+  #product {
+    padding: 10px;
+    width: 250px;
+  }
+
+  #product img {
+    /* width: 260px; */
+    height: auto;
+  }
+
+  #product button {
+    margin-left: 80px;
+  }
 }
