@@ -102,10 +102,11 @@ def salesProductView(request,productTypeId,pgroup,brand='default'):
     
     if productTypeId != 0:
         brands = mapper[pgroup][0].objects.filter(product_type = productTypeId).values('brand').distinct()
-        
+        productType = Product_Type.objects.get(pk=productTypeId)
     return render(request,"sales/product.html",{"products":products,"customerForm":CustomerForm,
                                                 'json_data':json_data,'pgroup':pgroup,
                                                 'productType':productTypeId,'brands':brands,
+                                                'productTypeName':productType,
                                                 "saleForm":salesForm,'initial':initial})
 
 @login_required(login_url="user:loginView")

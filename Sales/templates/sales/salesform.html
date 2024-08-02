@@ -4,10 +4,20 @@
     <form class="form" name="salesForm">
         {% csrf_token %}
 
+                <div id="flex_container">
+                    <div class="get_user" style="margin-bottom: 10px;">
+                        <label for="user_phone_number">Phone_Number</label>
+                        <input type="text" name="user_phone_number" id="user_phone_number">
+                        <button class="addbutton" id="get_user">Get User</button>
+                    </div>
+
+                    <div class="class_data" style="margin-bottom: 10px;">
+                        {{customerForm}} {{saleForm}}
+                    </div>
+                </div>
+
         <div id='salesDetails'>
-            <div class="class_data">
-                {{customerForm}} {{saleForm}}
-            </div>
+            
 
             <div id="salesList">
                 <table>

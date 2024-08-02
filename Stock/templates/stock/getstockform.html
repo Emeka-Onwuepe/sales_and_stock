@@ -33,7 +33,13 @@
 </select>
 
 <label for="product_type">Product Type</label>
-<input type="text" name="product_type" id="product_type" required>
+<select name="product_type" id="product_type">
+    <option value=""></option>
+    {% for productType in productType  %}
+    <option value="{{productType.id}}">{{productType}}</option>
+    {% endfor %}
+</select>
+{% comment %} <input type="text" name="product_type" id="product_type" required> {% endcomment %}
 <label for="brabd">Brand</label>
 <input type="text" name="brand" id="brand" required>
 <label for="type">Type</label>

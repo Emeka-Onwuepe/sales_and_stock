@@ -15,21 +15,23 @@
     {% endfor %}
 </section>
 
+{% if productType %}
+  <h3>{{productTypeName.name}} {{productTypeName.category.name}}</h3>
 <section id='list_items' class="list_items">
     {% for brand in brands %}
     <div class="categories">
         <div class="content">
-            {% if productType %}
                  <p class="innerItem"><a href="{% url 'sales:salesProductView' productType pgroup brand.brand %}"> {{brand.brand}} </a>
-            {% endif %}
+            
         </div>
     </div>
     {% endfor %}
 </section>
+{% endif %}
 
 <div class="product_container">
     {% if products %} {% for product in products %} {% include 'sales/product_template.html' %} {% endfor %} {% elif initial %}
-    <p>Please select a product type</p>
+    {% comment %} <p>Please select a product type</p> {% endcomment %}
     {% else %}
     <p>No product Found</p>
     {% endif %}
@@ -41,11 +43,9 @@
     <button class="addbutton" id="get_user">Get User</button>
 </div> {% endcomment %}
 
-<div id="flex_container">
+{% comment %} <div id="flex_container">
     <form action="{% url 'sales:salesView' %}" method="post">
         {% csrf_token %}
-        {% comment %} <label for="data">Product Name</label>
-        <input type="text" id="data" name="data" required> {% endcomment %}
         {% include 'sales/getproductform.html' %}
         <button class="addbutton" type="submit">Get Product</button>
     </form>
@@ -55,7 +55,7 @@
         <input type="text" name="user_phone_number" id="user_phone_number">
         <button class="addbutton" id="get_user">Get User</button>
     </div>
-</div>
+</div> {% endcomment %}
 
 {% include "sales/salesform.html" %} {% endblock main %} {% block javascript %}
 <script src="{% static 'javascript/state.js' %}"></script>

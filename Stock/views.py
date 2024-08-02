@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from Branch.models import Branch, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size
+from Product.models import Product_Type
 from Stock.forms import FootWearStockForm, ProductStockForm, SuitStockForm, TopsStockForm
 
 from Stock.models import Foot_Wear_Stock, Product_Stock, Suit_Stock, Tops_Stock
@@ -101,7 +102,7 @@ def getStockView(request):
         model = data['pgroup']
         if data['branch'] != '0':
             stocks = mapper[model][0].objects.filter(
-                                              branch_instance__product__product_type__name__iexact = data['product_type'],
+                                              branch_instance__product__product_type__id = int(data['product_type']),
                                               branch_instance__branch = data['branch'],
                                               branch_instance__product__age_group = data['age_group'],
                                               branch_instance__product__gender = data['gender'],
@@ -111,7 +112,7 @@ def getStockView(request):
                                               )
         else:
             stocks = mapper[model][0].objects.filter(
-                                              branch_instance__product__product_type__name__iexact = data['product_type'],
+                                              branch_instance__product__product_type__id = int(data['product_type']),
                                               branch_instance__product__age_group = data['age_group'],
                                               branch_instance__product__gender = data['gender'],
                                               branch_instance__product__brand__iexact = data['brand'],
@@ -133,12 +134,15 @@ def getStockView(request):
             all = True
             stocks = []
             data = data_.values()
-            print(list(data)[0][0].branch_instance.product.get_details())
+    productType = Product_Type.objects.all()
+    # print(productType)
+            # print(list(data)[0][0].branch_instance.product.get_details())
     return render(request,"stock/getstock.html",
                   {
                    'stocks':stocks,
                    'searched':searched,
                    'all':all,
-                   'all_':data
+                   'all_':data,
+                   'productType':productType
                   })
     
