@@ -1,13 +1,12 @@
-<div>
-    <label for="branch">Branch</label>
-    <select name="branch" id="branch">
-        <option value=""></option>
-        {% for branch in branches  %}
-        <option value="{{branch.id}}">{{branch}}</option>
-        {% endfor %}
-        <option value="0">All</option>
-    </select>
-</div>
+
+{% comment %} <label for="branch">Branch</label>
+<select name="branch" id="branch">
+    <option value=""></option>
+    {% for branch in branches  %}
+    <option value="{{branch.id}}">{{branch}}</option>
+    {% endfor %}
+    <option value="0">All</option>
+</select> {% endcomment %}
 <div>
     <label for="pgroup">Product Group</label>
     <select name="pgroup" id="pgroup">
@@ -56,3 +55,7 @@
     <label for="color">Color</label>
     <input type="text" name="color" id="color" required>
 </div>
+
+{% comment %} <input type="text" name="product_type" id="product_type" required> {% endcomment %}
+
+

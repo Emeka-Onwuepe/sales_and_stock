@@ -1,8 +1,8 @@
 {% extends 'sales/sales.html' %} {% load static %} {% block title %}
 <title>Add Stock</title>{% endblock title %} {% block main %}
 <h1>Add Stock</h1>
-<h3>{{pgroup|upper}}</h3>
-<section style="text-align: center;" class="list_items">
+{% comment %} <h3>{{pgroup|upper}}</h3> {% endcomment %}
+{% comment %} <section style="text-align: center;" class="list_items">
     {% for pgroup in product_groups  %}
     <div class="items">
 
@@ -24,6 +24,14 @@
             {% endif %}
                 
         </button>
+</form> {% endcomment %}
+
+<form action="{% url 'stock:stockView' stockId branchId 'get' pgroup %}" method="post">
+    {% csrf_token %} 
+    <div class="class_data">
+        {% include 'stock/getstockform_.html' %}
+    </div>
+    <button type="submit">Get Stock</button>
 </form>
 
 

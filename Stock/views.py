@@ -3,19 +3,21 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from Branch.models import Branch, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size
-from Product.models import Product_Type
+from Product.models import Foot_Wear, Product, Product_Type, Suit, Top
 from Stock.forms import FootWearStockForm, ProductStockForm, SuitStockForm, TopsStockForm
 
 from Stock.models import Foot_Wear_Stock, Product_Stock, Suit_Stock, Tops_Stock
+
+from django.db.models import Q
 
 # Create your views here.
 
 @login_required(login_url="user:loginView")
 def stockView(request,stockId,branchId,action,pgroup):
-    mapper = {'product':[Product_Stock,ProductStockForm,Product_Size],
-              'suits':[Suit_Stock,SuitStockForm,Suit_Size],
-              'top':[Tops_Stock,TopsStockForm,Tops_Size],
-              'foot_wear':[Foot_Wear_Stock,FootWearStockForm,Foot_Wear_Size],
+    mapper = {'product':[Product_Stock,ProductStockForm,Product_Size,Product],
+              'suits':[Suit_Stock,SuitStockForm,Suit_Size,Suit],
+              'top':[Tops_Stock,TopsStockForm,Tops_Size,Top],
+              'foot_wear':[Foot_Wear_Stock,FootWearStockForm,Foot_Wear_Size,Foot_Wear],
     
               }
     branch = Branch.objects.get(pk=branchId)
@@ -23,18 +25,65 @@ def stockView(request,stockId,branchId,action,pgroup):
                               'qty':0,
                               'product':"",
                               'size_instance':""})
+    
+    branch_stock = []
+    productType = Product_Type.objects.all()
+    stocks = mapper[pgroup][0].objects.all()[:10]
+
+     
     if stockId != 0:   
         stock_instance = mapper[pgroup][0].objects.get(id=stockId)
         form = mapper[pgroup][1](instance=stock_instance)
         
+    
+    if request.method == "POST" and action == "get":
+        data = request.POST
+        pgroup = data['pgroup']
+        # print('inside get stock')
+        # stocks = mapper[pgroup][0].objects.filter(
+        #                                      Q(branch_instance__product__product_type__id = int(data['product_type'])) &
+        #                                       Q(branch_instance__branch = branch.id) &
+        #                                       Q(branch_instance__product__age_group = data['age_group']) &
+        #                                       Q(branch_instance__product__gender = data['gender']) &
+        #                                       Q(branch_instance__product__brand__iexact = data['brand']) &
+        #                                       Q(branch_instance__product__type__iexact = data['type']) &
+        #                                       Q(branch_instance__product__color__iexact = data['color']) 
+        #                                       )
+        branch_stock = mapper[pgroup][2].objects.filter(
+                                                        # branch_instance__branch = branch
+                                                         Q(branch_instance__product__product_type__id = int(data['product_type'])) &
+                                                         Q(branch_instance__branch = branch.id) &
+                                                         Q(branch_instance__product__age_group = data['age_group']) &
+                                                         Q(branch_instance__product__gender = data['gender']) &
+                                                         Q(branch_instance__product__brand__iexact = data['brand']) &
+                                                         Q(branch_instance__product__type__iexact = data['type']) &
+                                                         Q(branch_instance__product__color__iexact = data['color']) 
+                                                        )
+        
+        # print(branch_stock)
+        
     if request.method == "POST" and action == "add":
         form = mapper[pgroup][1](data= request.POST,files=request.FILES)
         # form.data['branch'] = branch
+        data = request.POST
+        # pgroup = data['pgroup']
         if form.is_valid():
             form.save()
             # product.sizes.all()
-            return HttpResponseRedirect(reverse('stock:stockView',
-            kwargs={"action":"view","stockId":0,'pgroup':pgroup,'branchId':branchId}))
+            product  = mapper[pgroup][3].objects.get(pk=data['product'])
+            branch_stock = mapper[pgroup][2].objects.filter(
+                                                        # branch_instance__branch = branch
+                                                         Q(branch_instance__product__product_type__id = product.product_type.id) &
+                                                         Q(branch_instance__branch = branch.id) &
+                                                         Q(branch_instance__product__age_group = product.age_group) &
+                                                         Q(branch_instance__product__gender = product.gender) &
+                                                         Q(branch_instance__product__brand__iexact = product.brand) &
+                                                         Q(branch_instance__product__type__iexact = product.type) &
+                                                         Q(branch_instance__product__color__iexact = product.color) 
+                                                        )
+
+            # return HttpResponseRedirect(reverse('stock:stockView',
+            # kwargs={"action":"view","stockId":0,'pgroup':pgroup,'branchId':branchId}))
         else:
             return render(request,"stock/stock.html",
                   {"form":form,"stockId":0,"action":"add",
@@ -66,11 +115,10 @@ def stockView(request,stockId,branchId,action,pgroup):
         stock_instance.delete()
         return HttpResponseRedirect(reverse('stock:stockView',
             kwargs={"action":"view","stockId":0,'pgroup':pgroup,'branchId':branchId}))
-    branch_stock = None
+    # branch_stock = None
      
-    branch_stock = mapper[pgroup][2].objects.filter(branch_instance__branch = branch)
-    
-    stocks = mapper[pgroup][0].objects.all()[:10]
+    # branch_stock = mapper[pgroup][2].objects.filter(branch_instance__branch = branch)
+
     return render(request,"stock/stock.html",
                   {"stockId":0, 
                    'stocks':stocks,
@@ -79,7 +127,8 @@ def stockView(request,stockId,branchId,action,pgroup):
                    'branchId':branchId,
                    'branch':branch,
                     'form':form,
-                   'pgroup':pgroup})
+                   'pgroup':pgroup,
+                   'productType':productType})
     
 
 @login_required(login_url="user:loginView")
@@ -101,23 +150,25 @@ def getStockView(request):
         data = request.POST
         model = data['pgroup']
         if data['branch'] != '0':
+            
+            
             stocks = mapper[model][0].objects.filter(
-                                              branch_instance__product__product_type__id = int(data['product_type']),
-                                              branch_instance__branch = data['branch'],
-                                              branch_instance__product__age_group = data['age_group'],
-                                              branch_instance__product__gender = data['gender'],
-                                              branch_instance__product__brand__iexact = data['brand'],
-                                              branch_instance__product__type__iexact = data['type'],
-                                              branch_instance__product__color__iexact = data['color'],
+                                             Q(branch_instance__product__product_type__id = int(data['product_type'])) &
+                                              Q(branch_instance__branch = data['branch']) &
+                                              Q(branch_instance__product__age_group = data['age_group']) &
+                                              Q(branch_instance__product__gender = data['gender']) &
+                                              Q(branch_instance__product__brand__iexact = data['brand']) &
+                                              Q(branch_instance__product__type__iexact = data['type']) &
+                                              Q(branch_instance__product__color__iexact = data['color']) 
                                               )
         else:
             stocks = mapper[model][0].objects.filter(
-                                              branch_instance__product__product_type__id = int(data['product_type']),
-                                              branch_instance__product__age_group = data['age_group'],
-                                              branch_instance__product__gender = data['gender'],
-                                              branch_instance__product__brand__iexact = data['brand'],
-                                              branch_instance__product__type__iexact = data['type'],
-                                              branch_instance__product__color__iexact = data['color'],
+                                              Q(branch_instance__product__product_type__id = int(data['product_type'])) &
+                                              Q(branch_instance__product__age_group = data['age_group']) &
+                                              Q(branch_instance__product__gender = data['gender']) &
+                                              Q(branch_instance__product__brand__iexact = data['brand']) &
+                                              Q(branch_instance__product__type__iexact = data['type']) &
+                                              Q(branch_instance__product__color__iexact = data['color'])
                                               ).select_related('branch_instance')
         
             

@@ -4,7 +4,9 @@
 
 <form action="{% url 'stock:getStockView' %}" method="post">
     {% csrf_token %} 
+    <div class="class_data">
     {% include 'stock/getstockform.html' %}
+    </div>
     <button type="submit">Get Stock</button>
 </form>
 
