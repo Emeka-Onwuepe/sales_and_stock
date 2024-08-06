@@ -28,7 +28,13 @@
         <p><strong>Payment_method:</strong> {% if sale.payment_method %} {{sale.payment_method}}{% else %} Credit {% endif %}</p>
         <p><strong>Remark: </strong>{{sale.remark}}</p>
         <p><strong>Date:</strong> {{sale.date}}</p>
-        <p><strong>Paid: </strong> {{sale.paid}} </p>
+        <p><strong>Paid: </strong> 
+        {% if sale.paid %}
+            True
+        {% else %}
+            False
+        {% endif %}
+         </p>
     </div>
 
     <div id="salesList">
@@ -64,17 +70,24 @@
             <tfoot>
                 <tr>
                     <td></td>
+                    <td colspan="5">Totals</td>
+                    {% comment %} <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td></td> {% endcomment %}
                     <td id="grandtotal" class="amount">{{sale.total_amount}}</td>
                     <td id="logistics" class="amount">{{sale.logistics}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Grand Total</td>
-                    <td colspan="2" id="logistics" class="amount">{{sale.logistics|add:sale.total_amount}}</td>
+                    
+                    {% if sale.logistics %}
+                        <td colspan="2" id="" class="amount">{{sale.logistics|add:sale.total_amount}}</td>
+                    {% else %}
+                        <td colspan="2" id="" class="amount">{{sale.total_amount}}</td>
+                    {% endif %}
+                        
+                    
                 </tr>
             </tfoot>
         </table>

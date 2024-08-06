@@ -193,6 +193,7 @@ const addOrder = (e) => {
             const check = previousCart.filter(item => item.Id == product.Id)
             if (check.length == 0) {
                 purelist.push(product)
+                alert(` Product Added `)
             } else {
                 alert(`${product.product_type} ${product.color} ${product.size} already added `)
             }
@@ -221,7 +222,7 @@ const manageLastSale = (data = null) => {
     const lastSale = document.getElementById("lastSale")
     const latestOrder = data ? data : getState().latestOrder
     if (latestOrder.purchase_id != "") {
-        lastSale.lastChild.href = `/sales/sale/${latestOrder.purchase_id}/${latestOrder.type}`
+        lastSale.lastChild.href = `/sales/sale/${latestOrder.purchase_id}/${latestOrder.type?latestOrder.type:'credit'}`
     }
 
 }
