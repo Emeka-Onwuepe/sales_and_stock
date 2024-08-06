@@ -12,9 +12,24 @@
 
     {% endfor %}
 </section>
+
+<form action="{% url 'returnedproduct:returnedProductView' returnedProductId 'get' pgroup %}"
+     method="post" style="margin-bottom: 20px;">
+
+    {% csrf_token %} 
+    <div class="class_data">
+    {% include 'bad_product/getproductform.html' %}
+    </div>
+    <button class="addbutton" type="submit">Get Product</button>
+</form>
+
+
 <form style="margin-bottom: 30px;" action="{% url 'returnedproduct:returnedProductView' returnedProductId action pgroup %}" method="post">
     {% csrf_token %} 
-    {{form}}
+    <div class="class_data">
+        {{form}}
+    </div>
+    
     <button class="addbutton" type="submit">
           
           {% if action == "add" %}
@@ -26,13 +41,81 @@
       </button>
 </form>
 
+<div style="margin-top: 30px;" id="salesList" class="tablecontainer">
+    <table id="stock-table">
+        <thead>
+            <th>SN</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Product meta</th>
+            <th>Size</th>
+            <th>Add</th>
+        </thead>
+        <tbody>
+
+            {% for product in products %} 
+            {% for size in product.sizes.all %}
+             <tr>
+                <td class="sn"></td>
+                <td>{{product.product_type.category}}</td>
+                <td>{{product.product_type.name}}</td>
+                <td>{{product.brand}}</td>
+                <td>{{product.color}}</td>
+                <td style="font-size: 14px;">{{product.get_details}}</td>
+                <td>{{size.size}}</td>
+                <td>
+                    <form action="{% url 'returnedproduct:returnedProductView' returnedProductId 'select' pgroup %}" method="post">
+                         {% csrf_token %} 
+
+                         <div>
+                            <label for="qty">Qty</label>
+                            <input type="text" name="qty" value="0">
+                         </div>
+
+                         <div>
+                            <label for="unit_price">Unit Price</label>
+                            <input type="text" name="unit_price" value="0">
+                         </div>
+
+                         <div>
+                            <label for="total_price">Total Price</label>
+                            <input type="text" name="total_price" value="0">
+                         </div>
+
+                         <div>
+                            <label for="date_of_purchase">Date of Purchase</label>
+                            <input type="date" name="date_of_purchase" id="date_of_purchase">
+                         </div>
+                         <div>
+                            <label for="date_of_return">Date of Purchase</label>
+                            <input type="date" name="date_of_return" id="date_of_return">
+                         </div>
+                        <div style="display: none;">
+                        <input type="text" name="product" value="{{product.id}}">
+                        <input type="text" name="size" value="{{size.id}}">
+                        <input type="text" name="branch" value="{{branchid}}">
+                        <input type="pgroup" name="pgroup" value="{{pgroup}}">
+                        </div>
+                        <button class="addbutton" type="submit">ADD</button>
+                    </form>
+                </td> 
+            </tr>
+            {% endfor %}
+             {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>
+
 
 <section style="text-align: center;" class="list_items">
     {% for returnedProduct in returned_products %}
     <div class="items">
 
         <p class="description">{{returnedProduct.product}} - {{returnedProduct.qty}} - ({{returnedProduct.date_of_return}})</p>
-        <a class="delete" href="{% url 'returnedproduct:returnedProductView' returnedProduct.id 'delete' pgroup %}"><button> Delete</button></a>
+        {% comment %} <a class="delete" href="{% url 'returnedproduct:returnedProductView' returnedProduct.id 'delete' pgroup %}"><button> Delete</button></a> {% endcomment %}
         <a href="{% url 'returnedproduct:returnedProductView' returnedProduct.id 'edit' pgroup %}"><button > Edit</button></a>
     </div>
 

@@ -21,14 +21,11 @@ def stockView(request,stockId,branchId,action,pgroup):
     
               }
     branch = Branch.objects.get(pk=branchId)
-    form = mapper[pgroup][1]({'branch':branch.id,
-                              'qty':0,
-                              'product':"",
-                              'size_instance':""})
+    form = mapper[pgroup][1]()
     
     branch_stock = []
     productType = Product_Type.objects.all()
-    stocks = mapper[pgroup][0].objects.all()[:10]
+    stocks = mapper[pgroup][0].objects.filter(branch_id = branchId)[:10]
 
      
     if stockId != 0:   
@@ -39,16 +36,6 @@ def stockView(request,stockId,branchId,action,pgroup):
     if request.method == "POST" and action == "get":
         data = request.POST
         pgroup = data['pgroup']
-        # print('inside get stock')
-        # stocks = mapper[pgroup][0].objects.filter(
-        #                                      Q(branch_instance__product__product_type__id = int(data['product_type'])) &
-        #                                       Q(branch_instance__branch = branch.id) &
-        #                                       Q(branch_instance__product__age_group = data['age_group']) &
-        #                                       Q(branch_instance__product__gender = data['gender']) &
-        #                                       Q(branch_instance__product__brand__iexact = data['brand']) &
-        #                                       Q(branch_instance__product__type__iexact = data['type']) &
-        #                                       Q(branch_instance__product__color__iexact = data['color']) 
-        #                                       )
         branch_stock = mapper[pgroup][2].objects.filter(
                                                         # branch_instance__branch = branch
                                                          Q(branch_instance__product__product_type__id = int(data['product_type'])) &
@@ -105,6 +92,7 @@ def stockView(request,stockId,branchId,action,pgroup):
     elif action == "edit" and request.method == "GET":
         return render(request,"stock/stock.html",
                   {"stock_instance":stock_instance,
+                   'stocks':stocks,
                    "stockId":stock_instance.id,
                    'branchId':branchId,
                    "action":"edit",
@@ -125,6 +113,7 @@ def stockView(request,stockId,branchId,action,pgroup):
                    "action":"add",
                    'branch_stock':branch_stock,
                    'branchId':branchId,
+                    'branch':branch.name,
                    'branch':branch,
                     'form':form,
                    'pgroup':pgroup,

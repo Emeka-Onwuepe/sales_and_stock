@@ -1,8 +1,8 @@
 {% extends 'sales/sales.html' %} {% load static %} {% block title %}
 <title>Add Stock</title>{% endblock title %} {% block main %}
-<h1>Add Stock</h1>
-{% comment %} <h3>{{pgroup|upper}}</h3> {% endcomment %}
-{% comment %} <section style="text-align: center;" class="list_items">
+<h1>Add Stock to {{branch}}</h1>
+<h3>{{pgroup|upper}}</h3>
+<section style="text-align: center;" class="list_items">
     {% for pgroup in product_groups  %}
     <div class="items">
 
@@ -11,11 +11,16 @@
 
     {% endfor %}
 </section>
-<form action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
-    {% csrf_token %} 
-    {{form}}
 
-    <button type="submit">
+<form style="margin-bottom: 20px;"
+action="{% url 'stock:stockView' stockId branchId action pgroup %}" method="post">
+    {% csrf_token %} 
+    <div class="class_data">
+        {{form}}
+    </div>
+   
+
+    <button  class='addbutton' type="submit">
             
             {% if action == "add" %}
                 ADD
@@ -24,14 +29,14 @@
             {% endif %}
                 
         </button>
-</form> {% endcomment %}
+</form> 
 
 <form action="{% url 'stock:stockView' stockId branchId 'get' pgroup %}" method="post">
     {% csrf_token %} 
     <div class="class_data">
         {% include 'stock/getstockform_.html' %}
     </div>
-    <button type="submit">Get Stock</button>
+    <button class='addbutton'  type="submit">Get Stock</button>
 </form>
 
 
@@ -45,7 +50,7 @@
         <p> {{stock.size_instance}} </p>
         <div>
             <p class="description">{{stock.date}} --- ({{stock.qty}}) </p>
-            <a class="delete" href="{% url 'stock:stockView' stock.id branchId 'delete' pgroup %}"><button>Delete</button></a>
+            {% comment %} <a class="delete" href="{% url 'stock:stockView' stock.id branchId 'delete' pgroup %}"><button>Delete</button></a> {% endcomment %}
             <a href="{% url 'stock:stockView' stock.id branchId 'edit' pgroup %}"><button>Edit</button></a>
         </div>
 

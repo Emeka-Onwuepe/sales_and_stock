@@ -99,7 +99,7 @@ def customerView(request,customerId,action):
          return JsonResponse({"data":customerdata})
            
                      
-    customers = Customer.objects.all()
+    customers = Customer.objects.all()[:30]
     if customerId != 0:   
         customer_instance = Customer.objects.get(id=customerId)
     
