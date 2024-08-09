@@ -42,8 +42,12 @@
             <thead>
                 <tr>
                     <th>SN</th>
-                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Product</th>
+                    <th>Brand</th>
+                    <th>size</th>
                     <th>Color</th>
+                    <th>Product meta</th>
                     <th>Size</th>
                     <th>Unit Price</th>
                     <th>Qty</th>
@@ -56,9 +60,16 @@
                 {% for item in sale.items.all %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{item.product_type}}</td>
+                    {% comment %} <td>{{item.product_type}}</td>
                     <td>{{item.color}}</td>
-                    <td>{{item.size}} </td>
+                    <td>{{item.size}} </td> {% endcomment %}
+                    <td>{{item.get_product.product_type.category}}</td>
+                    <td>{{item.get_product.product_type.name}}</td>
+                    <td>{{item.get_product.brand}}</td>
+                    <td>{{item.size_instance.size}}</td>
+                    <td>{{item.get_product.color}}</td>
+                    <td>{{item.get_product.get_details}}</td>
+                    <td>{{item.size_instance.size}} </td> 
                     <td class="amount">{{item.unit_price}}</td>
                     <td>{{item.qty}} </td>
                     <td class="amount">{{item.total_price}}</td>
@@ -70,7 +81,7 @@
             <tfoot>
                 <tr>
                     <td></td>
-                    <td colspan="5">Totals</td>
+                    <td colspan="9">Totals</td>
                     {% comment %} <td></td>
                     <td></td>
                     <td></td>
@@ -79,7 +90,8 @@
                     <td id="logistics" class="amount">{{sale.logistics}}</td>
                 </tr>
                 <tr>
-                    <td colspan="6">Grand Total</td>
+                    <td></td>
+                    <td colspan="9">Grand Total</td>
                     
                     {% if sale.logistics %}
                         <td colspan="2" id="" class="amount">{{sale.logistics|add:sale.total_amount}}</td>

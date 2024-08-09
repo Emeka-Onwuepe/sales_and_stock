@@ -42,9 +42,20 @@ class Items(models.Model):
     total_price = models.DecimalField("total_price", max_digits=10, decimal_places=2)
     mini_price = models.DecimalField("mini_price", max_digits=10, decimal_places=2)
     expected_price = models.DecimalField("expected_price", max_digits=10, decimal_places=2)
+    
 
     # TODO: Define fields here
 
+    def get_product(self):
+        if self.p_group == 'suit':
+            return self.suit
+        elif self.p_group == 'foot_wear':
+            return self.foot_wear
+        elif self.p_group == 'top':
+            return self.top
+        elif self.p_group == 'product':
+            return self.product
+        
     class Meta:
         """Meta definition for Items."""
 

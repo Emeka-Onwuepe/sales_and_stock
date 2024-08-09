@@ -39,14 +39,16 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="10">Store Sales</th>
+                    <th colspan="12">Store Sales</th>
                 </tr>
                 <tr>
                     <th>SN</th>
                     <th>Category</th>
                     <th>Product</th>
+                    <th>Brand</th>
                     <th>size</th>
                     <th>Color</th>
+                    <th>Product meta</th>
                     <th>Qty</th>
                     <th>Unity Price</th>
                     <th>Total Price</th>
@@ -58,10 +60,12 @@
                 {% for item in store_sales.sales %}
                 <tr>
                     <td class="sn"></td>
-                    <td>{{item.product.product_type.category}}</td>
-                    <td>{{item.product_type}}</td>
-                    <td>{{item.size}}</td>
-                    <td>{{item.color}}</td>
+                    <td>{{item.get_product.product_type.category}}</td>
+                    <td>{{item.get_product.product_type.name}}</td>
+                    <td>{{item.get_product.brand}}</td>
+                    <td>{{item.size_instance.size}}</td>
+                    <td>{{item.get_product.color}}</td>
+                    <td style="font-size: 14px;">{{item.get_product.get_details}}</td>
                     <td>{{item.qty}}</td>
                     <td class="amount">{{item.unit_price}}</td>
                     <td class="amount">{{item.total_price}}</td>
@@ -74,10 +78,12 @@
                 {% endfor %} {% for item in credit_sales.sales %}
                 <tr>
                     <td class="sn"></td>
-                    <td>{{item.product.product_type.category}}</td>
-                    <td>{{item.product_type}}</td>
-                    <td>{{item.size}}</td>
-                    <td>{{item.color}}</td>
+                    <td>{{item.get_product.product_type.category}}</td>
+                    <td>{{item.get_product.product_type.name}}</td>
+                    <td>{{item.get_product.brand}}</td>
+                    <td>{{item.size_instance.size}}</td>
+                    <td>{{item.get_product.color}}</td>
+                    <td style="font-size: 14px;">{{item.get_product.get_details}}</td>
                     <td>{{item.qty}}</td>
                     <td class="amount">{{item.unit_price}}</td>
                     <td class="amount">{{item.total_price}}</td>
@@ -98,11 +104,15 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="4">Store Sales Summary</th>
+                    <th colspan="8">Store Sales Summary</th>
                 </tr>
                 <tr>
                     <th>SN</th>
-                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Product meta</th>
                     <th>Total Quantity</th>
                     <th>Total Amount</th>
                 </tr>
@@ -111,7 +121,41 @@
                 {% for item in store_sales.summary %}
                 <tr>
                     <td class="sn1"></td>
-                    <td>{{item.product_type}}</td>
+                        {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %}    
+
                     <td>{{item.total_qty}}</td>
                     <td class="amount">{{item.total_amount}}</td>
                 </tr>
@@ -120,16 +164,19 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="3">Total Payment by Transfer</th>
+                    <th colspan="5">Total Payment by Transfer</th>
                     <th class="amount">{{store_sales.transfer.total}}</th>
+                    <th colspan="2"></th>
                 </tr>
                 <tr>
-                    <th colspan="3">Total Payment in Cash</th>
+                    <th colspan="5">Total Payment in Cash</th>
                     <th class="amount">{{store_sales.cash.total}}</th>
+                    <th colspan="2"></th>
                 </tr>
                 <tr>
-                    <th colspan="3">Grand Total</th>
+                    <th colspan="5">Grand Total</th>
                     <th class="amount">{{store_sales.total_amount.total}}</th>
+                    <th colspan="2"></th>
                 </tr>
             </tfoot>
         </table>
@@ -139,11 +186,15 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="4">Credit Sales Summary</th>
+                    <th colspan="8">Credit Sales Summary</th>
                 </tr>
                 <tr>
-                    <th>SN</th>
-                    <th>Product</th>
+                   <th>SN</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Product meta</th>
                     <th>Total Quantity</th>
                     <th>Total Amount</th>
                 </tr>
@@ -152,7 +203,41 @@
                 {% for item in credit_sales.summary %}
                 <tr>
                     <td class="sn2"></td>
-                    <td>{{item.product_type}}</td>
+                    {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %}    
+
                     <td>{{item.total_qty}}</td>
                     <td class="amount">{{item.total_amount}}</td>
                 </tr>
@@ -162,8 +247,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="3">Total</th>
+                    <th colspan="5">Total</th>
                     <th class="amount">{{credit_sales.total_amount.total}}</th>
+                    <th colspan="2"></th>
                 </tr>
             </tfoot>
         </table>
@@ -176,14 +262,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th colspan="12">Online Sales</th>
+                        <th colspan="14">Online Sales</th>
                     </tr>
                     <tr>
                         <th>SN</th>
                         <th>Category</th>
                         <th>Product</th>
+                        <th>Brand</th>
                         <th>size</th>
                         <th>Color</th>
+                        <th>Product meta</th>
                         <th>Qty</th>
                         <th>Unity Price</th>
                         <th>Total Price</th>
@@ -197,10 +285,12 @@
                     {% for item in online_sales.sales %}
                     <tr>
                         <td class="sn3"></td>
-                        <td>{{item.product.product_type.category}}</td>
-                        <td>{{item.product_type}}</td>
-                        <td>{{item.size}}</td>
-                        <td>{{item.color}}</td>
+                         <td>{{item.get_product.product_type.category}}</td>
+                        <td>{{item.get_product.product_type.name}}</td>
+                        <td>{{item.get_product.brand}}</td>
+                        <td>{{item.size_instance.size}}</td>
+                        <td>{{item.get_product.color}}</td>
+                        <td style="font-size: 14px;">{{item.get_product.get_details}}</td>
                         <td>{{item.qty}}</td>
                         <td class="amount">{{item.unit_price}}</td>
                         <td class="amount">{{item.total_price}}</td>
@@ -223,11 +313,15 @@
             <table>
                 <thead>
                     <tr>
-                        <th colspan="7">Online Sales Summary</th>
+                        <th colspan="9">Online Sales Summary</th>
                     </tr>
                     <tr>
                         <th>SN</th>
-                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Color</th>
+                        <th>Product meta</th>
                         <th>Total Quantity</th>
                         <th>Total Amount</th>
                         <th>Total Logistics</th>
@@ -237,7 +331,40 @@
                     {% for item in online_sales.summary %}
                     <tr>
                         <td class="sn4"></td>
-                        <td>{{item.product_type}}</td>
+                         {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %} 
                         <td>{{item.total_qty}}</td>
                         <td class="amount">{{item.total_amount}}</td>
                         <td></td>
@@ -248,12 +375,14 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="3">Total</th>
+                        <th></th>
+                        <th colspan="6">Total</th>
                         <th class="amount">{{online_sales.total_amount.total}}</th>
                         <th class="amount">{{online_sales.total_amount.logistics}}</th>
                     </tr>
                     <tr>
-                        <th colspan="3">Grand Total</th>
+                        <th></th>
+                        <th colspan="6">Grand Total</th>
                         <th  colspan="2" class="amount">{{online_sales.total_amount.logistics|add:online_sales.total_amount.total}}</th>
                     </tr>
                 </tfoot>

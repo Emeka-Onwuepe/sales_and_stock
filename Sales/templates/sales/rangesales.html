@@ -6,12 +6,16 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="5">Store Sales Summary</th>
+                    <th colspan="9">Store Sales Summary</th>
                 </tr>
                 <tr>
                     <th>SN</th>
                     <th>Date</th>
-                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Product meta</th>
                     <th>Total Quantity</th>
                     <th>Total Amount</th>
                 </tr>
@@ -22,7 +26,42 @@
                     <td class="sn"></td>
                     <td><a href="{% url 'sales:salesAnalysisView' branch.id item.items__date  %}">
                     {{item.items__date}}</a></td>
-                    <td>{{item.product_type}}</td>
+                    
+                    {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %}    
+
                     <td>{{item.total_qty}}</td>
                     <td class="amount"> {{item.total_amount}}</td>
 
@@ -32,7 +71,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="4">Grand Total</th>
+                    <th></th>
+                    <th colspan="7">Grand Total</th>
                     <th class="amount">{{store_sales.total_amount.total}}</th>
                 </tr>
             </tfoot>
@@ -43,12 +83,16 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="5">Credit Sales Summary</th>
+                    <th colspan="9">Credit Sales Summary</th>
                 </tr>
                 <tr>
                     <th>SN</th>
                     <th>Date</th>
-                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Product meta</th>
                     <th>Total Quantity</th>
                     <th>Total Amount</th>
                 </tr>
@@ -58,7 +102,42 @@
                 <tr>
                     <td class="sn1"></td>
                     <td><a href="{% url 'sales:salesAnalysisView' branch.id item.credit_sale_Items__date  %}">{{item.credit_sale_Items__date}}</a></td>
-                    <td>{{item.product_type}}</td>
+                    
+                     {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %}    
+
                     <td>{{item.total_qty}}</td>
                     <td class="amount">{{item.total_amount}}</td>
 
@@ -69,7 +148,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="4">Total</th>
+                    <th></th>
+                    <th colspan="7">Total</th>
                     <th class="amount">{{credit_sales.total_amount.total}}</th>
                 </tr>
             </tfoot>
@@ -81,12 +161,16 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="6">Online Sales Summary</th>
+                    <th colspan="10">Online Sales Summary</th>
                 </tr>
                 <tr>
                     <th>SN</th>
                     <th>Date</th>
-                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Product meta</th>
                     <th>Total Quantity</th>
                     <th>Total Amount</th>
                     <th>Logistics</th>
@@ -97,7 +181,41 @@
                 <tr>
                     <td class="sn2"></td>
                     <td><a href="{% url 'sales:salesAnalysisView' branch.id item.items__date  %}">{{item.items__date}}</a></td>
-                    <td>{{item.product_type}}</td>
+                    
+                      {% for product_item in products_data %}
+
+                            {% if product_item.id == item.suit and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.product and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.top and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+
+                            {% if product_item.id == item.foot_wear and product_item.p_group == item.p_group %}
+                                <td>{{product_item.category}}</td>
+                                <td>{{product_item.name}}</td>
+                                <td>{{product_item.brand}}</td>
+                                <td>{{product_item.color}}</td>
+                                <td style="font-size: 14px;">{{product_item.get_details}}</td>
+                            {% endif %}
+                        {% endfor %}    
                     <td>{{item.total_qty}}</td>
                     <td class="amount">{{item.total_amount}}</td>
                     <td></td>
@@ -108,12 +226,14 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="4">Total</th>
+                    <th></th>
+                    <th colspan="7">Total</th>
                     <th class="amount">{{online_sales.total_amount.total}}</th>
                     <th class="amount">{{online_sales.total_amount.logistics}}</th>
                 </tr>
                 <tr>
-                    <th colspan="4">Grand Total</th>
+                    <th></th>
+                    <th colspan="7">Grand Total</th>
                     <th colspan='2' class="amount">{{online_sales.total_amount.total|add:online_sales.total_amount.logistics}}</th>
                 </tr>
             </tfoot>
