@@ -150,16 +150,19 @@
                     </div>
                 </section>
 
+                
+                {% if products_list %}
                 <h3 style="margin-top: 15px;margin-bottom:10px">RECENTLY ADDED</h3>
                 <section class="products">
                     
                     {% for products in products_list %}
                     {% for product in products %} {% include "frontview/product_template.html" %} {% endfor %}
-                    {% endfor %}
-                        
+                    {% endfor %}    
                     
                 </section>
-
+                {% endif %}
+                    
+                
                 <section id='contact_us' class="contact_us">
                     <h3 class="contact_head">Contact Us</h3>
                     <div class="contact_flex">
@@ -261,7 +264,7 @@
             data = data.replace(/None/g,'"None"')
             data = JSON.parse(data)
             meta.innerHTML = JSON.stringify(data)
-            meta.nextSibling.nextSibling.innerHTML = get_details(data)
+          //  meta.nextSibling.nextSibling.innerHTML = get_details(data)
            
           
         })

@@ -150,9 +150,6 @@ class Product_Abstract(models.Model):
         """Meta definition for Product."""
         abstract = True
         
-    # def get_meta(self):
-    #     print(self.__dict__)
-    #     return self.__dict__
 
     
 class Product(Product_Abstract):
@@ -162,6 +159,14 @@ class Product(Product_Abstract):
     
     def get_meta(self):
         return self.__dict__
+
+    
+    def name(self):
+        exclude = [None,'None','none','Normal','normal'] 
+        if self.brand not in exclude:
+            return f'{self.brand} {self.product_type.category.name}'
+        else:
+            return f'{self.product_type.category.name} {self.product_type.name}'
     
     def get_details(self):
         gender = {'u':"unisex",
@@ -214,6 +219,18 @@ class Suit(Product_Abstract):
     
     def get_meta(self):
         return self.__dict__
+
+    
+    def name(self):
+        exclude = [None,'None','none','Normal','normal'] 
+        breasted = ['Double Breasted','double breasted']
+        if self.breasted in breasted  and self.brand not in exclude :
+            return f'{self.brand} Double Breasted {self.product_type.category.name}'
+        elif self.brand not in exclude:
+            return f'{self.brand} {self.product_type.category.name}'
+        else:
+            return f'{self.product_type.category.name} {self.product_type.name}'
+        
     
     def get_details(self):
         gender = {'u':"unisex",
@@ -236,7 +253,7 @@ class Suit(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value in ['adult','No','no','None','none']:
+                if not value or value in ['adult','No','no','None','none','single','Single']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -263,6 +280,14 @@ class Top(Product_Abstract):
     
     def get_meta(self):
         return self.__dict__
+  
+    
+    def name(self):
+        exclude = [None,'None','none','Normal','normal'] 
+        if self.brand not in exclude:
+            return f'{self.brand} {self.product_type.category.name}'
+        else:
+            return f'{self.product_type.category.name} {self.product_type.name}'
     
     def get_details(self):
         gender = {'u':"unisex",
@@ -310,7 +335,15 @@ class Foot_Wear(Product_Abstract):
     
     def get_meta(self):
         return self.__dict__
+       
     
+    def name(self):
+        exclude = [None,'None','none','Normal','normal'] 
+        if self.brand not in exclude:
+            return f'{self.brand} {self.product_type.category.name}'
+        else:
+            return f'{self.product_type.category.name} {self.product_type.name}'
+        
     def get_details(self):
         gender = {'u':"unisex",
                   'f': 'female', 

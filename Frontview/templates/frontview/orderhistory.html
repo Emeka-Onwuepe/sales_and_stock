@@ -15,7 +15,8 @@
         <p class="center">Paid</p>
         {% else %}
         <p id="data{{order.id}}" style="display: none;">{{order.purchase_id}};{{order.total_amount|add:order.logistics}};{{order.customer.email}}</p>
-        <button id="{{order.id}}" class="make_payment center">Pay Now</button> {% endif %}
+        <button style="color: white;background-color: green;
+            border-color: white;" id="{{order.id}}" class="make_payment center">Pay Now</button> {% endif %}
 
     </div>
     {% endfor %}

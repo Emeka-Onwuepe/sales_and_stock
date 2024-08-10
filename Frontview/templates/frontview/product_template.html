@@ -1,5 +1,5 @@
 <div id="product" class="product">
-    <h3>{{product.brand}} {{product.product_type.category}}</h3>
+    <h3 id='{{product.id}}-{{product.product_type.p_group}}-name'>{{product.name}}</h3>
     <img src="{{product.image.url}}" alt="{{product.product_type.name}} image"> 
 
     <div style="display: flex; flex-wrap: wrap;margin-bottom: 10px;">
@@ -29,9 +29,12 @@
     
     
     {% comment %} <p>{{product.description}}</p> {% endcomment %}
-    <p style="font-weight:600;font-size: 12px">Product Meta</p>
+    <p style="font-weight:600;font-size: 12px">Product Meta: </p>
+    <p id='{{product.id}}-{{product.product_type.p_group}}-dis'
+             style="margin-top: -11px; font-size: 14px;
+            text-transform: capitalize; text-align: justify;">{{product.get_details}}</p>
     <p id='{{product.id}}-{{product.product_type.p_group}}-other' style="display: none"> {{product.product_type.name}};{{product.product_type.category}}</p>
     <p class="product_meta" id='{{product.id}}-{{product.product_type.p_group}}-meta'  style="display: none">{{product.get_meta}}</p>
-    <p class="meta" style="margin-top: -11px; font-size: 14px;"></p>
+    {% comment %} <p class="meta" style="margin-top: -11px; font-size: 14px; display: none;"></p> {% endcomment %}
     <button class="addToCartButton addbutton" id='{{product.id}}-{{product.product_type.p_group}}'>Add to Cart</button>
 </div>

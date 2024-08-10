@@ -183,14 +183,16 @@ const addOrder = (e) => {
     let productList = []
     let other = document.getElementById(`${id}-other`).innerHTML
     let data = document.getElementById(`${id}-meta`).innerHTML
+    let name = document.getElementById(`${id}-name`).innerHTML
+    let meta = document.getElementById(`${id}-dis`).innerHTML
     data = JSON.parse(data)
-    
-    console.log(id)
+    // console.log(data)
+    // console.log(id)
     let [product_id,pgroup] = id.toString().split("-")
     let [product_type,category] = other.toString().split(";")
 
 
-    console.log(pgroup)
+    // console.log(pgroup)
     
     let checkbox = document.getElementsByName(`${id}checkbox`)
     let selected = document.getElementById(`${id}checkboxes`)
@@ -201,6 +203,8 @@ const addOrder = (e) => {
             let [Id, price, size] = node.dataset['data'].toString().split(";")
             selectionFound = true
             product.size = size
+            product.name = name
+            product.meta = meta
             product.id = parseInt(product_id)
             product.pgroup = pgroup
             product.product_type = product_type
@@ -353,7 +357,12 @@ const get_category = (e,type) =>{
 }
 
 let category_options = document.getElementById('category_options')
-category_options.addEventListener('change',(e) => get_category(e,'category'))
+if (category_options) {
+    category_options.addEventListener('change',(e) => get_category(e,'category'))
+}
+
 
 let brand_options = document.getElementById('brands_options')
-brand_options.addEventListener('change',(e) => get_category(e,'brand'))
+if (brand_options) {
+   brand_options.addEventListener('change',(e) => get_category(e,'brand')) 
+}

@@ -29,8 +29,12 @@
             <thead>
                 <tr>
                     <th>SN</th>
-                    <th>Product Name</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>size</th>
                     <th>Color</th>
+                    <th>Product meta</th>
                     <th>Size</th>
                     <th>Unit Price</th>
                     <th>Qty</th>
@@ -43,9 +47,13 @@
                 {% for item in sale.items.all %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{item.product_type}}</td>
-                    <td>{{item.color}}</td>
-                    <td>{{item.size}} </td>
+                     <td>{{item.get_product.product_type.category}}</td>
+                    <td>{{item.get_product.product_type.name}}</td>
+                    <td>{{item.get_product.brand}}</td>
+                    <td>{{item.size_instance.size}}</td>
+                    <td>{{item.get_product.color}}</td>
+                    <td style="font-size: 14px;">{{item.get_product.get_details}}</td>
+                    <td>{{item.size_instance.size}} </td>
                     <td class="amount">{{item.unit_price}}</td>
                     <td>{{item.qty}} </td>
                     <td class="amount">{{item.total_price}}</td>
@@ -57,16 +65,13 @@
             <tfoot>
                 <tr>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="9">Total</td>
                     <td id="grandtotal" class="amount">{{sale.total_amount}}</td>
                     <td id="logistics" class="amount">{{sale.logistics}}</td>
                 </tr>
                 <tr>
-                    <td colspan="6">Grand Total</td>
+                    <td></td>
+                    <td colspan="9">Grand Total</td>
                     <td colspan="2" id="logistics" class="amount">{{sale.logistics|add:sale.total_amount}}</td>
                 </tr>
             </tfoot>
