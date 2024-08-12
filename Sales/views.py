@@ -96,6 +96,8 @@ def salesProductView(request,productTypeId,pgroup,brand='default'):
     
     if productTypeId != 0 and brand != 'default':
         initial = False
+        if brand == 'None':
+            brand = None
         products = mapper[pgroup][0].objects.filter(product_type = productTypeId,brand = brand)
         
         jsonData = mapper[pgroup][1](products,many=True).data

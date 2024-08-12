@@ -191,7 +191,6 @@ class addProductView(generics.GenericAPIView):
                                                 category = Category_instance,
                                                 p_group = product['p_group']
                                                 )
-                print(product['p_group'])
                 price = 45_000
                 product.pop('category')
                 product.pop('p_group')

@@ -162,11 +162,11 @@ class Product(Product_Abstract):
 
     
     def name(self):
-        exclude = [None,'None','none','Normal','normal'] 
+        exclude = [None, 'None','none','Normal','normal'] 
         if self.brand not in exclude:
             return f'{self.brand} {self.product_type.category.name}'
         else:
-            return f'{self.product_type.category.name} {self.product_type.name}'
+            return f'{self.product_type.name} {self.product_type.category.name}'
     
     def get_details(self):
         gender = {'u':"unisex",
@@ -189,7 +189,7 @@ class Product(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value in ['adult','No','no','None','none']:
+                if not value or value.lower() in ['adult','no','none','normal','male']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -229,7 +229,7 @@ class Suit(Product_Abstract):
         elif self.brand not in exclude:
             return f'{self.brand} {self.product_type.category.name}'
         else:
-            return f'{self.product_type.category.name} {self.product_type.name}'
+            return f'{self.product_type.name} {self.product_type.category.name}'
         
     
     def get_details(self):
@@ -253,7 +253,7 @@ class Suit(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value in ['adult','No','no','None','none','single','Single']:
+                if not value or value.lower() in ['adult','no','none','normal','male']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -287,7 +287,7 @@ class Top(Product_Abstract):
         if self.brand not in exclude:
             return f'{self.brand} {self.product_type.category.name}'
         else:
-            return f'{self.product_type.category.name} {self.product_type.name}'
+            return f'{self.product_type.name} {self.product_type.category.name}'
     
     def get_details(self):
         gender = {'u':"unisex",
@@ -310,7 +310,7 @@ class Top(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value in ['adult','No','no','None','none']:
+                if not value or value.lower() in ['adult','no','none','normal','male']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -342,7 +342,7 @@ class Foot_Wear(Product_Abstract):
         if self.brand not in exclude:
             return f'{self.brand} {self.product_type.category.name}'
         else:
-            return f'{self.product_type.category.name} {self.product_type.name}'
+            return f'{self.product_type.name} {self.product_type.category.name}'
         
     def get_details(self):
         gender = {'u':"unisex",
@@ -365,7 +365,7 @@ class Foot_Wear(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                 
-                if not value or value in ['adult','No','no','None','none']:
+                if not value or value.lower() in ['adult','no','none','normal','male']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
