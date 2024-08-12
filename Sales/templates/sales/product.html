@@ -30,7 +30,14 @@
 {% endif %}
 
 <div class="product_container">
-    {% if products %} {% for product in products %} {% include 'sales/product_template.html' %} {% endfor %} {% elif initial %}
+    {% if products %} {% for product,sizes in products %}
+    
+    {% if sizes %}
+        {% include 'sales/product_template.html' %}
+    {% endif %}
+        
+    {% endfor %}
+     {% elif initial %}
     {% comment %} <p>Please select a product type</p> {% endcomment %}
     {% else %}
     <p>No product Found</p>

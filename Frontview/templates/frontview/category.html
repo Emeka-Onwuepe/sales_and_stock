@@ -55,10 +55,16 @@
 </div>
 
 <div class="products">
-    {% for product in products %}
-    {% include "frontview/product_template.html" %} {% endfor %} 
+    {% for product,sizes in products %}
 
-    {% for product_type in sorted_product_types %} {% for product in product_type.product_type.all %}
-     {% if product.publish %} {% include "frontview/product_template.html" %} {% endif %} {% endfor %} {% endfor %}
+    {% if sizes %}
+        {% include "frontview/product_template.html" %}
+    {% endif %}
+    
+    {% endfor %} 
+    {% comment %} <p>{{sorted_product_types}}</p> {% endcomment %}
+
+    {% comment %} {% for product_type in sorted_product_types %} {% for product in product_type.product_type.all %}
+     {% if product.publish %} {% include "frontview/product_template.html" %} {% endif %} {% endfor %} {% endfor %} {% endcomment %}
 </div>
 {% endblock main %}

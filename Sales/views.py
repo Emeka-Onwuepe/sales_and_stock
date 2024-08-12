@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import json
-from Branch.models import Branch
+from Branch.models import Branch, Branch_Foot_Wear, Branch_Product, Branch_Suit, Branch_Tops, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size
 from Credit_Sales.models import Credit_Sale
 from Product.models import Foot_Wear, Product, Product_Type, Size, Suit, Top
 from Product.serializer import FootWearSerializer, ProductSerializer, SuitSerializer, TopSerializer
@@ -83,13 +83,14 @@ def saleView(request,purchaseId,type):
 @login_required(login_url="user:loginView")
 def salesProductView(request,productTypeId,pgroup,brand='default'):
     json_data = {'products':[]}
-    mapper = {'product':[Product,ProductSerializer],
-              'suits':[Suit,SuitSerializer],
-              'top':[Top,TopSerializer],
-              'foot_wear':[Foot_Wear,FootWearSerializer],
+    mapper = {'product':[Product,ProductSerializer,Branch_Product,Product_Size],
+              'suits':[Suit,SuitSerializer,Branch_Suit,Suit_Size],
+              'top':[Top,TopSerializer,Branch_Tops,Tops_Size],
+              'foot_wear':[Foot_Wear,FootWearSerializer,Branch_Foot_Wear,Foot_Wear_Size],
     
               }
     products = []
+    sizes = []
     initial = True
     brands = []
     productType = None
@@ -100,13 +101,25 @@ def salesProductView(request,productTypeId,pgroup,brand='default'):
             brand = None
         products = mapper[pgroup][0].objects.filter(product_type = productTypeId,brand = brand)
         
+        
+        for product in products:
+            filtered_sizes = []
+            branch_product = mapper[pgroup][2].objects.get(branch=request.user.branch,
+                                                           product = product)
+            for size in product.sizes.all():
+                qty =  mapper[pgroup][3].objects.get(branch_instance=branch_product,
+                                                     size = size).current_qty
+                if qty:
+                    filtered_sizes.append(size)
+            sizes.append(filtered_sizes)
+        
         jsonData = mapper[pgroup][1](products,many=True).data
         json_data['products'] =  jsonData
     
     if productTypeId != 0:
         brands = mapper[pgroup][0].objects.filter(product_type = productTypeId).values('brand').distinct()
         productType = Product_Type.objects.get(pk=productTypeId)
-    return render(request,"sales/product.html",{"products":products,"customerForm":CustomerForm,
+    return render(request,"sales/product.html",{"products":zip(products,sizes),"customerForm":CustomerForm,
                                                 'json_data':json_data,'pgroup':pgroup,
                                                 'productType':productTypeId,'brands':brands,
                                                 'productTypeName':productType,

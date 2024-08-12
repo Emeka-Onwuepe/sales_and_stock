@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect, JsonResponse
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
-from Branch.models import Branch
+from Branch.models import Branch, Branch_Foot_Wear, Branch_Product, Branch_Suit, Branch_Tops, Foot_Wear_Size, Product_Size, Suit_Size, Tops_Size
 from Logistics.models import Location
 from Product.models import Category, Foot_Wear, Product, Product_Type, Size, Suit, Top
 from Sales.models import Items, Sales
@@ -14,20 +14,38 @@ from sales_and_stock.variables import official_email,rootUrl,admin_staff
 
 from django.db.models.functions import Lower
 
-mapper = {'product':[Product],
-              'suits':[Suit],
-              'top':[Top],
-              'foot_wear':[Foot_Wear],
+# mapper = {'product':[Product],
+#               'suits':[Suit],
+#               'top':[Top],
+#               'foot_wear':[Foot_Wear],
+#               }
+mapper = {'product':[Product,Branch_Product,Product_Size],
+              'suits':[Suit,Branch_Suit,Suit_Size],
+              'top':[Top,Branch_Tops,Tops_Size],
+              'foot_wear':[Foot_Wear,Branch_Foot_Wear,Foot_Wear_Size],
+    
               }
 # Create your views here.
 def homeView(request):
     products_list = []   
+    sizes = []
     for pgroup in mapper.values():
-        product = pgroup[0].objects.filter(publish=True)[:20]
-        if product:
-            products_list.append(product)
+        products = pgroup[0].objects.filter(publish=True)[:20]
+        if products:
+            products_list.append(products)
+            
+            for product in products:
+                filtered_sizes = []
+                branch_product = pgroup[1].objects.get(branch__name='Main',
+                                                            product = product)
+                for size in product.sizes.all():
+                    qty =  pgroup[2].objects.get(branch_instance=branch_product,
+                                                        size = size).current_qty
+                    if qty:
+                        filtered_sizes.append(size)
+                sizes.append(filtered_sizes)
         
-    return render(request,'frontview/home.html',{"products_list":products_list})
+    return render(request,'frontview/home.html',{"products_list":zip(products_list,sizes)})
 
 def cartView(request): 
     locations = Location.objects.all()
@@ -36,7 +54,11 @@ def cartView(request):
 
 def categoryView(request,cat,brand,p_type):
     brand = brand.replace('-',' ')
-    p_type = p_type.replace('-',' ')    
+    p_type = p_type.replace('-',' ') 
+    sizes = []
+    
+    if brand == 'None':
+        brand = None   
     
     category = get_object_or_404(Category,name__iexact=cat)
     product_type = Product_Type.objects.filter(category=category)[0]
@@ -60,6 +82,16 @@ def categoryView(request,cat,brand,p_type):
         p_type = Product_Type.objects.get(id=p_type.product_type.id)
  
     products = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,brand=brand,product_type=p_type.id)
+    for product in products:
+            filtered_sizes = []
+            branch_product = mapper[pgroup][1].objects.get(branch__name='Main',
+                                                            product = product)
+            for size in product.sizes.all():
+                qty =  mapper[pgroup][2].objects.get(branch_instance=branch_product,
+                                                        size = size).current_qty
+                if qty:
+                    filtered_sizes.append(size)
+            sizes.append(filtered_sizes)
     
     if not products:
         # try a randon brand
@@ -84,7 +116,7 @@ def categoryView(request,cat,brand,p_type):
             
             
     return render(request,'frontview/category.html',{"category":category,
-                                                     "products":products,
+                                                     "products":zip(products,sizes),
                                                      'brands' :brands,
                                                      'product_types':product_types,
                                                       'p_type':p_type.name,

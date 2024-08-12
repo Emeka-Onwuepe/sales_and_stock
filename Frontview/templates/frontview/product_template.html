@@ -11,20 +11,35 @@
     {% comment %} <p>Brand: {{product.brand}}</p>
     <p>Type: {{product.type}}</p>
     <p style="text-transform:capitalize;">Color: {{product.color}} </p> {% endcomment %}
-    <div id='{{product.id}}-{{product.product_type.p_group}};selectBox' class="selectBox">
+    
+    {% if sizes > 1 %}
+        <div id='{{product.id}}-{{product.product_type.p_group}};selectBox' class="selectBox">
         <select>
         <option>Select size(s)</option>
       </select>
         <div class="overSelect"></div>
     </div>
     <div id='{{product.id}}-{{product.product_type.p_group}}checkboxes' class="checkboxes">
-        {% for size in product.sizes.all %}
+        {% for size in sizes %}
         <div class="multiple">
             <input type="checkbox" name="{{product.id}}-{{product.product_type.p_group}}checkbox" id={{size.id}} data-data={{size.id}};{{size.price}};{{size.size}} />
-            <label for={{size.id}}>size: {{size.size}} - &#8358 <span class="amount">{{size.price}}</span></label>
+            <label for={{size.id}}>Size: {{size.size}} - &#8358 <span class="amount">{{size.price}}</span></label>
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div id='{{product.id}}-{{product.product_type.p_group}}checkboxes'>
+        
+        {% for size in sizes %}
+             <input type="checkbox" checked name="{{product.id}}-{{product.product_type.p_group}}checkbox" 
+            id={{size.id}} data-data={{size.id}};{{size.price}};{{size.size}} style="display: none;" />
+            <p> Size: {{size.size}} - &#8358 <span class="amount">{{size.price}}</span></p>
+        {% endfor %}
+            
+    </div>
+    {% endif %}
+        
+    
     {% comment %} <p style="display: none;" id='{{product.id}}productData'>{{product.product_type.name}};{{product.color}};{{product.brand}};{{product.type}}</p> {% endcomment %}
     
     

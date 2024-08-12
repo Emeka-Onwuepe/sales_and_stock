@@ -13,7 +13,7 @@
         </div>
         
 
-        {% if product.sizes.all %}
+        {% if sizes %}
 
         <div id='{{product.id}};selectBox' class="selectBox">
             <select>
@@ -22,7 +22,7 @@
             <div class="overSelect"></div>
         </div>
         <div id='{{product.id}}checkboxes' class="checkboxes">
-            {% for size in product.sizes.all %}
+            {% for size in sizes %}
             <div class="multiple">
                 <input type="checkbox" name="{{product.id}}checkbox" id={{size.id}} data-data={{size.id}};{{size.price}};{{size.size}} />
                 <label for={{size.id}}>size: {{size.size}} - &#8358 <span class="amount">{{size.price}}</span></label>

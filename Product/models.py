@@ -189,7 +189,7 @@ class Product(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value.lower() in ['adult','no','none','normal','male']:
+                if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -253,7 +253,7 @@ class Suit(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value.lower() in ['adult','no','none','normal','male']:
+                if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -310,7 +310,7 @@ class Top(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                     
-                if not value or value.lower() in ['adult','no','none','normal','male']:
+                if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
@@ -365,7 +365,7 @@ class Foot_Wear(Product_Abstract):
                 if key == 'gender':
                     value = gender[value.lower()]
                 
-                if not value or value.lower() in ['adult','no','none','normal','male']:
+                if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
                 details += f'{key.lower()} : {value},  '
