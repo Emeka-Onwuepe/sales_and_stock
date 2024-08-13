@@ -121,7 +121,7 @@ class Product_Abstract(models.Model):
     # TODO: Define fields here
     # product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="product_type")
     # size = models.CharField(verbose_name="size",default="0", max_length=150,null=True,blank=True)
-    description = models.TextField(verbose_name="description", max_length=150,null=True,blank=True)
+    # description = models.TextField(verbose_name="description", max_length=150,null=True,blank=True)
     # sizes = models.ManyToManyField(
     #     Size, verbose_name="sizes", related_name="sizes", blank=True)
     color = models.CharField("color",max_length = 50,null=False,blank=False)
@@ -138,8 +138,8 @@ class Product_Abstract(models.Model):
     )
     
 
-    type = models.CharField(verbose_name="type",default=None, max_length=50,null=True,blank=True)
-    brand = models.CharField(verbose_name="brand",default=None, max_length=50,null=True,blank=True)
+    type = models.CharField(verbose_name="type",default=None, max_length=60,null=True,blank=True)
+    brand = models.CharField(verbose_name="brand",default=None, max_length=60,null=True,blank=True)
     # type = models.CharField(verbose_name="type",default=None, max_length=100,null=True,blank=True)
     # price = models.DecimalField("price", max_digits=50,default=0, decimal_places=2,null=True,blank=True)
     date = models.DateField("date", auto_now=False, auto_now_add=True)
@@ -214,7 +214,7 @@ class Suit(Product_Abstract):
     sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
     breasted = models.CharField(verbose_name="breasted",default=None, max_length=25,null=True,blank=True)
     button = models.CharField(verbose_name="button",default=None, max_length=25,null=True,blank=True)
-    pics = models.CharField(verbose_name="pics",default=None, max_length=45,null=True,blank=True)
+    pcs = models.CharField(verbose_name="pcs",default=None, max_length=45,null=True,blank=True)
     golden_button = models.CharField(verbose_name="golden button",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
@@ -332,6 +332,11 @@ class Foot_Wear(Product_Abstract):
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="foot_wear_sizes", blank=True)
     sole_color = models.CharField(verbose_name="Sole Color",default=None, max_length=25,null=True,blank=True)
+    binding = models.CharField(verbose_name="binding",default=None, max_length=60,null=True,blank=True)
+    body_design = models.CharField(verbose_name="body_design",default=None, max_length=60,null=True,blank=True)
+    top_design = models.CharField(verbose_name="top_design",default=None, max_length=40,null=True,blank=True)
+    sole_type = models.CharField(verbose_name="sole_type",default=None, max_length=30,null=True,blank=True)
+    stock = models.CharField(verbose_name="brand",default=None, max_length=5,null=True,blank=True)
     
     def get_meta(self):
         return self.__dict__
