@@ -4,7 +4,7 @@ from knox import views as KnoxView
 
 from api.views import (Get_All, Get_Branch,processSalesView,
                        LoginUser,creditPaymentView,addProductView,
-                       addStockView)
+                       addStockView,PublishView)
 router = routers.DefaultRouter()
 
 app_name = 'api'
@@ -17,7 +17,8 @@ urlpatterns = [
     path('login', LoginUser.as_view(), name="login"),
     path('creditpayment',creditPaymentView.as_view(),name='creditPayment'),
     path('addproduct',addProductView.as_view(),name='addProductView'),
-    path('addstock',addStockView.as_view(),name='addstockView')
+    path('addstock',addStockView.as_view(),name='addstockView'),
+    path('publish',PublishView.as_view(),name='PublishView')
     
            
 ]

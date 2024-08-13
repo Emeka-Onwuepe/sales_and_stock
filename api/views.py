@@ -171,6 +171,27 @@ class creditPaymentView(generics.GenericAPIView):
         
         return Response({'id':data['id']})
     
+class PublishView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        # user = request.user
+        data = request.data
+        if data['action'] == 'publish':
+            for model in [Product,Suit,Top,Foot_Wear]:
+                products = model.objects.all()
+                for product in products:
+                    product.publish = True
+                    product.save()
+        elif data['action'] == 'unpublish':
+            for model in [Product,Suit,Top,Foot_Wear]:
+                products = model.objects.all()
+                for product in products:
+                    product.publish = False
+                    product.save()
+        
+        return Response({'status':'success'})
+    
 class addProductView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
