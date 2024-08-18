@@ -112,7 +112,7 @@
 
                     {% for category in sorted_categories %}
                     <div id='catgorylist'>
-                        <div class="innercategory">
+                        <div class="innercategory" >
                             <a id="catlink" class="catlink" href="{% url 'frontview:categoryView' category.name 'default' 'default' %}"> {{category}}s</a>
                             <a id="catlink2" class="catlink2" href="{% url 'frontview:categoryView' category.name 'default' 'default' %}">Shop Category</a>
                             <img src="{{category.image.url}}" alt="{{category.name}} image" />
@@ -157,7 +157,6 @@
                     
                     {% for products,sizes in products_list %}
                     {% for product in products %} 
-                    
                     {% if sizes %}
                         {% include "frontview/product_template.html" %} 
                     {% endif %}

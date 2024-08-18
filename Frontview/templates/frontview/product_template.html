@@ -12,7 +12,7 @@
     <p>Type: {{product.type}}</p>
     <p style="text-transform:capitalize;">Color: {{product.color}} </p> {% endcomment %}
     
-    {% if sizes > 1 %}
+    {% if sizes|length > 1 %}
         <div id='{{product.id}}-{{product.product_type.p_group}};selectBox' class="selectBox">
         <select>
         <option>Select size(s)</option>
@@ -29,8 +29,8 @@
     </div>
     {% else %}
     <div id='{{product.id}}-{{product.product_type.p_group}}checkboxes'>
-        
         {% for size in sizes %}
+        <p>{{sizes|length}}</p>
              <input type="checkbox" checked name="{{product.id}}-{{product.product_type.p_group}}checkbox" 
             id={{size.id}} data-data={{size.id}};{{size.price}};{{size.size}} style="display: none;" />
             <p> Size: {{size.size}} - &#8358 <span class="amount">{{size.price}}</span></p>
@@ -44,10 +44,13 @@
     
     
     {% comment %} <p>{{product.description}}</p> {% endcomment %}
+    
+    {% if product.get_details %}
     <p style="font-weight:600;font-size: 12px">Product Meta: </p>
     <p id='{{product.id}}-{{product.product_type.p_group}}-dis'
              style="margin-top: -11px; font-size: 14px;
             text-transform: capitalize; text-align: justify;">{{product.get_details}}</p>
+     {% endif %}
     <p id='{{product.id}}-{{product.product_type.p_group}}-other' style="display: none"> {{product.product_type.name}};{{product.product_type.category}}</p>
     <p class="product_meta" id='{{product.id}}-{{product.product_type.p_group}}-meta'  style="display: none">{{product.get_meta}}</p>
     {% comment %} <p class="meta" style="margin-top: -11px; font-size: 14px; display: none;"></p> {% endcomment %}

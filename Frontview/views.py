@@ -41,7 +41,7 @@ def homeView(request):
                 for size in product.sizes.all():
                     qty =  pgroup[2].objects.get(branch_instance=branch_product,
                                                         size = size).current_qty
-                    if qty:
+                    if qty >= 0:
                         filtered_sizes.append(size)
                 sizes.append(filtered_sizes)
         
@@ -89,7 +89,7 @@ def categoryView(request,cat,brand,p_type):
             for size in product.sizes.all():
                 qty =  mapper[pgroup][2].objects.get(branch_instance=branch_product,
                                                         size = size).current_qty
-                if qty:
+                if qty <=0:
                     filtered_sizes.append(size)
             sizes.append(filtered_sizes)
     

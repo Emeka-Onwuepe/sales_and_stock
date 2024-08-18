@@ -9,7 +9,7 @@ class Category(models.Model):
 
     # TODO: Define fields here
     name = models.CharField("Category",max_length = 150,null=False,blank=False)
-    image = models.ImageField(verbose_name="image", default="image",null=True,blank=True)
+    image = models.ImageField(verbose_name="image", default="suits2.jpg",null=True,blank=True)
     class Meta:
         """Meta definition for Category."""
 
@@ -125,7 +125,7 @@ class Product_Abstract(models.Model):
     # sizes = models.ManyToManyField(
     #     Size, verbose_name="sizes", related_name="sizes", blank=True)
     color = models.CharField("color",max_length = 50,null=False,blank=False)
-    image = models.ImageField(verbose_name="image", default="image",null=True,blank=True)
+    # image = models.ImageField(verbose_name="image", default="image",null=True,blank=True)
     gender = models.CharField(
         max_length=2,
         choices=GENDER,
@@ -154,6 +154,7 @@ class Product_Abstract(models.Model):
     
 class Product(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="product_type")
+    image = models.ImageField(verbose_name="image", default="trousers.jpg",null=True,blank=True)
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="product_sizes", blank=True)
     
@@ -193,7 +194,7 @@ class Product(Product_Abstract):
                     continue
                 
                 details += f'{key.lower()} : {value},  '
-        return details[0:-2]
+        return details[0:-3]
     
     class Meta:
         """Meta definition for Product."""
@@ -209,6 +210,7 @@ class Product(Product_Abstract):
         
 class Suit(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="suit_product_type")
+    image = models.ImageField(verbose_name="image", default="suits.jpg",null=True,blank=True)
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="sizes", blank=True)
     sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
@@ -257,7 +259,7 @@ class Suit(Product_Abstract):
                     continue
                 
                 details += f'{key.lower()} : {value},  '
-        return details[0:-2]
+        return details[0:-3]
     
     class Meta:
         """Meta definition for Suit."""
@@ -274,6 +276,7 @@ class Suit(Product_Abstract):
 
 class Top(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="top_product_type")
+    image = models.ImageField(verbose_name="image", default="shirts.jpg",null=True,blank=True)
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="top_sizes", blank=True)
     sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
@@ -314,7 +317,7 @@ class Top(Product_Abstract):
                     continue
                 
                 details += f'{key.lower()} : {value},  '
-        return details[0:-2]
+        return details[0:-3]
     
     class Meta:
         """Meta definition for Top."""
@@ -329,6 +332,7 @@ class Top(Product_Abstract):
     
 class Foot_Wear(Product_Abstract):
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="foot_wear_product_type")
+    image = models.ImageField(verbose_name="image", default="shoes.jpg",null=True,blank=True)
     sizes = models.ManyToManyField(
         Size, verbose_name="sizes", related_name="foot_wear_sizes", blank=True)
     sole_color = models.CharField(verbose_name="Sole Color",default=None, max_length=25,null=True,blank=True)
@@ -374,7 +378,7 @@ class Foot_Wear(Product_Abstract):
                     continue
                 
                 details += f'{key.lower()} : {value},  '
-        return details[0:-2]
+        return details[0:-3]
     
     class Meta:
         """Meta definition for Foot_Wear."""
