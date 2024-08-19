@@ -109,7 +109,7 @@ def salesProductView(request,productTypeId,pgroup,brand='default'):
             for size in product.sizes.all():
                 qty =  mapper[pgroup][3].objects.get(branch_instance=branch_product,
                                                      size = size).current_qty
-                if qty:
+                if qty >= 0:
                     filtered_sizes.append(size)
             sizes.append(filtered_sizes)
         

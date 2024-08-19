@@ -179,7 +179,8 @@ class Product(Product_Abstract):
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
                    'publish','brand','color','date',
-                   'product_type_id','_state','image'
+                   'product_type_id','_state','image',
+                   'type'
                    ]
         
         for key,value in data.items():
@@ -244,7 +245,8 @@ class Suit(Product_Abstract):
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
                    'publish','brand','color','date',
-                   'product_type_id','_state','image'
+                   'product_type_id','_state','image',
+                   'type'
                    ]
         
         for key,value in data.items():
@@ -302,7 +304,8 @@ class Top(Product_Abstract):
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
                    'publish','brand','color','date',
-                   'product_type_id','_state','image'
+                   'product_type_id','_state','image',
+                   'type'
                    ]
         
         for key,value in data.items():
@@ -363,7 +366,7 @@ class Foot_Wear(Product_Abstract):
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
                    'publish','brand','color','date',
-                   'product_type_id','_state','image'
+                   'product_type_id','_state','image','type'
                    ]
         
         for key,value in data.items():

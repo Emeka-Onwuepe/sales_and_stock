@@ -114,7 +114,7 @@ def categoryView(request,cat,brand,p_type):
     #     if product_type not in sorted_product_types:
     #         sorted_product_types.append(product_type) 
             
-            
+    print(brand)
     return render(request,'frontview/category.html',{"category":category,
                                                      "products":zip(products,sizes),
                                                      'brands' :brands,

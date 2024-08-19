@@ -32,13 +32,12 @@
         <select style="text-transform: capitalize;" name="brands" id="brands_options">
             <option value="default">Brands</option>
             {% for brand in brands %}
-                
-                {% if brand == brand_ %}
+
+                {% if brand|lower == brand_|lower %}
                 <option  value="{{brand}}" selected >{{brand}}</option>
                 {% else %}
                 <option  value="{{brand}}">{{brand}}</option>
                 {% endif %}
-                    
                 
             {% endfor %}
         </select>    

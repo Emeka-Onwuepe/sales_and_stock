@@ -70,7 +70,7 @@
 }
 
 #product button {
-  margin-left: 71.5px;
+  margin-left: 29%;
   margin-top: 7px;
   padding: 6px;
   background-color: #9e612c;
@@ -258,7 +258,7 @@ select {
      height: auto;
   } */
 
-  #product button {
+  /* #product button {
     margin-left: 80px;
-  }
+  } */
 }
