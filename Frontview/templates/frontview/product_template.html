@@ -5,8 +5,11 @@
     <div style="display: flex; flex-wrap: wrap;margin-bottom: 10px;">
         <div style="text-transform:capitalize;width: 49%; text-align: left;"><b>Category:</b> <br/> {{product.product_type.name}}  </div>
         <div style="text-transform:capitalize;width: 49%; text-align: center"><b>Type:</b> <br/> {{product.type}}</div>
-        <div style="text-transform:capitalize;width: 100%; text-align: center;margin-top:3px;"><b> Color:</b> {{product.color}} </div>
-    
+        
+        {% if product.color %}
+        <div style="text-transform:capitalize;width: 100%; text-align: center;margin-top:3px;"><b> Color:</b> {{product.color}} </div> 
+        {% endif %}
+            
     </div>
     {% comment %} <p>Brand: {{product.brand}}</p>
     <p>Type: {{product.type}}</p>
