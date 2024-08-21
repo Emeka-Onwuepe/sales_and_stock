@@ -47,7 +47,7 @@ const getsales = (e) => {
         alert("Please make sure that start and end dates are not empty")
     } else {
         if (start_date == end_date) {
-            window.location.href = `/sales/${start_date}/${branch}/analysis`
+            window.location.href = `/sales/analysis/${branch}/${start_date}`
         } else {
             window.location.href = `/sales/${start_date}/${end_date}/${branch}/rangeanalysis`
         }

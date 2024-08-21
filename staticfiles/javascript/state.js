@@ -7,11 +7,13 @@ const ADD_TO_USER_CART = "ADD_TO_USER_CART";
 const UPDATE_USER_CART = "UPDATE_USER_CART";
 const PROCESS_ORDER = "PROCESS_ORDER";
 const ADD_LATEST_ORDER = "ADD_LATEST_ORDER";
-const rootUrl = "https://smbclassic.com.ng";
+// const rootUrl = "https://smbclassic.com.ng";
+const rootUrl = "http://127.0.0.1:8000";
 const LOADED = "LOADED";
 const LOADING = "LOADING";
 const ADD_ERROR = "ADD_ERROR";
 const ADD_CUSTOMER = "ADD_CUSTOMER";
+const ADD_PRODUCT = "ADD_PRODUCT";
 
 const addToCart = (data, action = "cart") => {
     if (action == 'cart') {
@@ -70,6 +72,13 @@ const addCustomer = (data) => {
     }
 }
 
+const addProduct = (data) => {
+    return {
+        type: ADD_PRODUCT,
+        data: data
+    }
+}
+
 const load = (type) => {
     return {
         type: type
@@ -77,7 +86,7 @@ const load = (type) => {
 }
 
 const getState = () => {
-    const localdata = localStorage.getItem("storestate");
+    const localdata = localStorage.getItem("appstorestate");
     let finaldata = ""
     if (localdata) {
         const jsonify = JSON.parse(localdata)
@@ -85,6 +94,8 @@ const getState = () => {
             // User: "",
             loading: false,
             // logged: false,
+            products:[],
+            pgroup:'',
             cart: [],
             user_cart: [],
             latestOrder: { "purchase_id": "", "type": "" },
@@ -106,6 +117,8 @@ const getState = () => {
             loading: false,
             // logged: false,
             user_cart: [],
+            products:[],
+            pgroup:'',
             cart: [],
             latestOrder: { "purchase_id": "", "type": "" },
             customer: { address: "", email: "", name: "", id: "", phone_number: "" },
@@ -176,6 +189,19 @@ const storeReducer = (action) => {
                 loading: false,
             }
 
+        case ADD_PRODUCT:
+            console.log('add product ran')
+           action.data.products.forEach(product => {
+            product['meta'] = getDetails(product)
+           });
+            
+                return {
+                    ...state,
+                    products: action.data.products,
+                    pgroup : action.data.pgroup,
+                    loading: false,
+                }
+
         case ADD_LATEST_ORDER:
             return {
                 ...state,
@@ -203,8 +229,20 @@ const storeReducer = (action) => {
     }
 }
 
-const setState = (storestate) => {
-    localStorage.setItem("storestate", JSON.stringify(storestate))
+const get_product = (id)=>{
+    let stateData = getState()
+    let products = stateData.products
+    let pgroup = stateData.pgroup
+    for (const product of products) {
+        if (product.id == id){
+            product.pgroup = pgroup
+            return product
+        }  
+    }
+}
+
+const setState = (appstorestate) => {
+    localStorage.setItem("appstorestate", JSON.stringify(appstorestate))
 }
 
 const ProcessOrder = async(data, token, url = '/sales/process') => {
@@ -301,6 +339,43 @@ const convertToFloat = (input) => {
 
 }
 
+const getDetails = (data) =>{
+    details = ''
+    for (const [key,value] of Object.entries(data)) {
+        if(key !='id' && key !='product_type' 
+        && key !='sizes' && key != 'description' ){
+            details += `${key}:${value} -- `
+        } 
+    }
+     
+    return details.slice(0,-3)
+
+}
+
+const get_details = (data) =>{
+    let gender = {u:"unisex",
+                  f: 'female', m:'male' } 
+    let age_group = {a:'adult',c:'children'}
+    let details = ''
+    for (let [key,value] of Object.entries(data)) {
+        if(key !='id' && key !='product_type' 
+        && key !='sizes' && key != 'description'  &&
+        key != 'publish' && key != 'brand' && 
+        key != 'color' &&
+        key != 'type' && key != 'product_type_id'){
+            if(key == 'age_group'){
+                value = age_group[value.toLowerCase()]
+            }
+            if(key == 'gender'){
+                value = gender[value.toLowerCase()]
+            }
+            details += `${key.toLowerCase()} : ${value} , `
+        } 
+    }
+     
+    return details.slice(0,-2)
+
+}
 
 
 //   const getHours = (time) => {

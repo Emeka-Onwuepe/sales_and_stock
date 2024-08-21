@@ -21,10 +21,13 @@ for (const product of user_cart) {
     let div = document.createElement("div")
     div.className = 'productDiv'
     div.id = product.Id
-    let productData = `<h3>${product.product_type}</h3>
+    let productData = `<h3>${product.name}</h3>
+                        <p>Category: ${product.product_type}</p>
                         <p>Color: ${product.color}</p>
                         <p>Size: ${product.size}</p>
                         <p>Price:  &#8358 <span class="amount" id="price;${product.Id}">${product.price}</span></p>
+                        <p style='font-size:10px;text-transform: capitalize;
+                         text-align: justify;width:150px'>Meta: <br/> ${product.meta} </p>
                         <p>Qty: <span  id="qty;${product.Id}"> ${product.qty} </span> </p>
                         <p><strong>Total:  &#8358 <span class="amount" id="total;${product.Id}">${product.productTotal}</span></strong></p>
                         <button class="increment" id="incremet;${product.Id}">+</button>
