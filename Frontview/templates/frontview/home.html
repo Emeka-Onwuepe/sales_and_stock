@@ -270,6 +270,7 @@
             data = data.replace(/True/g,"true")
             data = data.replace(/False/g,"false")
             data = data.replace(/None/g,'"None"')
+            console.log(data)
             data = JSON.parse(data)
             meta.innerHTML = JSON.stringify(data)
           //  meta.nextSibling.nextSibling.innerHTML = get_details(data)

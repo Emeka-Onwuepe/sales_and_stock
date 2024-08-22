@@ -166,7 +166,12 @@ class Product(Product_Abstract):
         Size, verbose_name="sizes", related_name="product_sizes", blank=True)
     
     def get_meta(self):
-        return self.__dict__
+        meta = {}
+        for key,value in self.__dict__.items():
+            if key not in ['image','_state','publish',
+                           'date']:
+                meta[key] = value
+        return meta
 
     
     def name(self):
@@ -217,7 +222,12 @@ class Suit(Product_Abstract):
     golden_button = models.CharField(verbose_name="golden button",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
-        return self.__dict__
+        meta = {}
+        for key,value in self.__dict__.items():
+            if key not in ['image','_state','publish',
+                           'date']:
+                meta[key] = value
+        return meta
 
     
     def name(self):
@@ -270,7 +280,12 @@ class Top(Product_Abstract):
     sleeve = models.CharField(verbose_name="sleeve",default=None, max_length=25,null=True,blank=True)
     
     def get_meta(self):
-        return self.__dict__
+        meta = {}
+        for key,value in self.__dict__.items():
+            if key not in ['image','_state','publish',
+                           'date']:
+                meta[key] = value
+        return meta
   
     
     def name(self):
@@ -322,7 +337,12 @@ class Foot_Wear(Product_Abstract):
     stock = models.CharField(verbose_name="brand",default=None, max_length=5,null=True,blank=True)
     
     def get_meta(self):
-        return self.__dict__
+        meta = {}
+        for key,value in self.__dict__.items():
+            if key not in ['image','_state','publish',
+                           'date']:
+                meta[key] = value
+        return meta
        
     
     def name(self):
