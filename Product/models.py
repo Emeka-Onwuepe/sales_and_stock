@@ -15,6 +15,9 @@ class Category(models.Model):
 
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+        
+    def name_slug(self):
+        return self.name.replace(' ','_')
 
     def __str__(self):
         """Unicode representation of Category."""

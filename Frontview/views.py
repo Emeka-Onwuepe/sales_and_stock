@@ -53,9 +53,9 @@ def cartView(request):
                                                  "locations":locations})
 
 def categoryView(request,cat,brand,p_type):
-    brand = brand.replace('-',' ').replace('%20',' ').strip()
-    p_type = p_type.replace('-',' ').replace('%20',' ').strip()
-    cat = cat.replace('-',' ').replace('%20',' ').strip()
+    brand = brand.replace('_',' ').replace('%20',' ').replace('-',' ').strip()
+    p_type = p_type.replace('_',' ').replace('%20',' ').replace('-',' ').strip()
+    cat = cat.replace('_',' ').replace('%20',' ').replace('-',' ').strip()
     sizes = []
     
     if brand == 'None':
@@ -116,7 +116,6 @@ def categoryView(request,cat,brand,p_type):
     #     if product_type not in sorted_product_types:
     #         sorted_product_types.append(product_type) 
             
-    print(brand)
     return render(request,'frontview/category.html',{"category":category,
                                                      "products":zip(products,sizes),
                                                      'brands' :brands,
