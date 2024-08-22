@@ -67,13 +67,14 @@ class Size(models.Model):
     CHILDREN = 'children'
 
 
-    GENDER = {FEMALE:'female',
-              MALE:"male",
-              UNISEX:'unisex',
-              }
-    AGE_GROUP = {ADULT:'adult',
-                 CHILDREN:'children'
-                 }
+    GENDER = [(FEMALE,FEMALE),
+              (MALE,MALE),
+              (UNISEX,UNISEX)
+                ]
+    
+    AGE_GROUP = [(ADULT,ADULT),
+                 (CHILDREN,CHILDREN)
+    ]
     
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE,related_name="size_product_type")
     size = models.CharField(verbose_name="size", max_length=150)
@@ -110,13 +111,14 @@ class Product_Abstract(models.Model):
     ADULT = 'adult'
     CHILDREN = 'children'
 
-    GENDER = {FEMALE:'female',
-              MALE:"male",
-              UNISEX:'unisex',
-              }
-    AGE_GROUP = {ADULT:'adult',
-                 CHILDREN:'children'
-                 }
+    GENDER = [(FEMALE,FEMALE),
+              (MALE,MALE),
+              (UNISEX,UNISEX)
+                ]
+    
+    AGE_GROUP = [(ADULT,ADULT),
+                 (CHILDREN,CHILDREN)
+    ]
     
     
     
