@@ -352,10 +352,8 @@ const getDetails = (data) =>{
 
 }
 
-const get_details = (data) =>{
-    let gender = {u:"unisex",
-                  f: 'female', m:'male' } 
-    let age_group = {a:'adult',c:'children'}
+const get_details = (data) => {
+    
     let details = ''
     for (let [key,value] of Object.entries(data)) {
         if(key !='id' && key !='product_type' 
@@ -363,12 +361,6 @@ const get_details = (data) =>{
         key != 'publish' && key != 'brand' && 
         key != 'color' &&
         key != 'type' && key != 'product_type_id'){
-            if(key == 'age_group'){
-                value = age_group[value.toLowerCase()]
-            }
-            if(key == 'gender'){
-                value = gender[value.toLowerCase()]
-            }
             details += `${key.toLowerCase()} : ${value} , `
         } 
     }

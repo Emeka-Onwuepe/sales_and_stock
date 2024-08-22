@@ -60,30 +60,30 @@ class Product_Type(models.Model):
 class Size(models.Model):
     """Model definition for Size."""
     
-    FEMALE = 'F'
-    MALE = 'M'
-    UNISEX = 'U'
-    ADULT = 'A'
-    CHILDREN = 'C'
+    FEMALE = 'female'
+    MALE = 'male'
+    UNISEX = 'unisex'
+    ADULT = 'adult'
+    CHILDREN = 'children'
 
 
-    GENDER = {FEMALE:'Female',
-              MALE:"Male",
-              UNISEX:'Unisex',
+    GENDER = {FEMALE:'female',
+              MALE:"male",
+              UNISEX:'unisex',
               }
-    AGE_GROUP = {ADULT:'Adult',
-                 CHILDREN:'Children'
+    AGE_GROUP = {ADULT:'adult',
+                 CHILDREN:'children'
                  }
     
     product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE,related_name="size_product_type")
     size = models.CharField(verbose_name="size", max_length=150)
     gender = models.CharField(
-        max_length=2,
+        max_length=6,
         choices=GENDER,
         default=UNISEX,
     )
     age_group = models.CharField(
-        max_length=2,
+        max_length=8,
         choices=AGE_GROUP,
         default=ADULT,
     )
@@ -104,19 +104,21 @@ class Size(models.Model):
 class Product_Abstract(models.Model):
     """Model definition for Product."""
     
-    FEMALE = 'F'
-    MALE = 'M'
-    UNISEX = 'U'
-    ADULT = 'A'
-    CHILDREN = 'C'
+    FEMALE = 'female'
+    MALE = 'male'
+    UNISEX = 'unisex'
+    ADULT = 'adult'
+    CHILDREN = 'children'
 
-    GENDER = {FEMALE:'Female',
-              MALE:"Male",
-              UNISEX:'Unisex',
+    GENDER = {FEMALE:'female',
+              MALE:"male",
+              UNISEX:'unisex',
               }
-    AGE_GROUP = {ADULT:'Adult',
-                 CHILDREN:'Children'
+    AGE_GROUP = {ADULT:'adult',
+                 CHILDREN:'children'
                  }
+    
+    
     
     # TODO: Define fields here
     # product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE, related_name="product_type")
@@ -127,12 +129,12 @@ class Product_Abstract(models.Model):
     color = models.CharField("color",max_length = 50,null=False,blank=False)
     # image = models.ImageField(verbose_name="image", default="image",null=True,blank=True)
     gender = models.CharField(
-        max_length=2,
+        max_length=6,
         choices=GENDER,
         default=UNISEX,
     )
     age_group = models.CharField(
-        max_length=2,
+        max_length=8,
         choices=AGE_GROUP,
         default=ADULT,
     )
@@ -170,11 +172,6 @@ class Product(Product_Abstract):
             return f'{self.product_type.name} {self.product_type.category.name}'
     
     def get_details(self):
-        gender = {'u':"unisex",
-                  'f': 'female', 
-                  'm':'male'  } 
-                    
-        age_group = {'a':'adult','c':'children'}
         details = ''
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
@@ -185,12 +182,6 @@ class Product(Product_Abstract):
         
         for key,value in data.items():
             if key not in exclude:
-                if key == 'age_group':
-                    value = age_group[value.lower()]
-                
-                if key == 'gender':
-                    value = gender[value.lower()]
-                    
                 if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
@@ -236,11 +227,6 @@ class Suit(Product_Abstract):
         
     
     def get_details(self):
-        gender = {'u':"unisex",
-                  'f': 'female', 
-                  'm':'male'  } 
-                    
-        age_group = {'a':'adult','c':'children'}
         details = ''
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
@@ -251,12 +237,7 @@ class Suit(Product_Abstract):
         
         for key,value in data.items():
             if key not in exclude:
-                if key == 'age_group':
-                    value = age_group[value.lower()]
-                
-                if key == 'gender':
-                    value = gender[value.lower()]
-                    
+
                 if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
                 
@@ -295,11 +276,6 @@ class Top(Product_Abstract):
             return f'{self.product_type.name} {self.product_type.category.name}'
     
     def get_details(self):
-        gender = {'u':"unisex",
-                  'f': 'female', 
-                  'm':'male'  } 
-                    
-        age_group = {'a':'adult','c':'children'}
         details = ''
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
@@ -310,11 +286,6 @@ class Top(Product_Abstract):
         
         for key,value in data.items():
             if key not in exclude:
-                if key == 'age_group':
-                    value = age_group[value.lower()]
-                
-                if key == 'gender':
-                    value = gender[value.lower()]
                     
                 if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
@@ -357,11 +328,6 @@ class Foot_Wear(Product_Abstract):
             return f'{self.product_type.name} {self.product_type.category.name}'
         
     def get_details(self):
-        gender = {'u':"unisex",
-                  'f': 'female', 
-                  'm':'male'  } 
-                    
-        age_group = {'a':'adult','c':'children'}
         details = ''
         data = self.__dict__
         exclude = ['id','product_type' ,'sizes','description',
@@ -371,11 +337,6 @@ class Foot_Wear(Product_Abstract):
         
         for key,value in data.items():
             if key not in exclude:
-                if key == 'age_group':
-                    value = age_group[value.lower()]
-                
-                if key == 'gender':
-                    value = gender[value.lower()]
                 
                 if not value or value.lower() in ['adult','no','none','normal','male','single']:
                     continue
