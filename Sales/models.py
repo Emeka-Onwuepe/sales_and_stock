@@ -14,11 +14,11 @@ class Items(models.Model):
     TOP = 'top'
     PRODUCT = 'product'
 
-    P_GROUP = {SUIT:'suit',
-               FOOT_WEAR:'foot_wear',
-               TOP :'top',
-               PRODUCT :'product',
-                } 
+    P_GROUP = [(SUIT,SUIT),
+               (FOOT_WEAR,FOOT_WEAR),
+               (TOP,TOP),
+               (PRODUCT ,PRODUCT)
+                ]
     
     p_group = models.CharField(
         max_length=10,
