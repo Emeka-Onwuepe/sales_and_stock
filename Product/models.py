@@ -29,11 +29,11 @@ class Product_Type(models.Model):
     TOP = 'top'
     PRODUCT = 'product'
 
-    P_GROUP = {SUITS:'suits',
-               FOOT_WEAR:'foot_wear',
-               TOP :'top',
-               PRODUCT :'product',
-                } 
+    P_GROUP = [(SUITS,SUITS),
+               (FOOT_WEAR,FOOT_WEAR),
+               (TOP,TOP),
+               (PRODUCT ,PRODUCT)
+                ]
 
     # TODO: Define fields here
     name = models.CharField("name",max_length = 200,null=False,blank=False)
