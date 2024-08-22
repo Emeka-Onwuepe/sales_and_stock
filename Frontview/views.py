@@ -53,8 +53,9 @@ def cartView(request):
                                                  "locations":locations})
 
 def categoryView(request,cat,brand,p_type):
-    brand = brand.replace('-',' ')
-    p_type = p_type.replace('-',' ') 
+    brand = brand.replace('-',' ').replace('%20',' ').strip()
+    p_type = p_type.replace('-',' ').replace('%20',' ').strip()
+    cat = cat.replace('-',' ').replace('%20',' ').strip()
     sizes = []
     
     if brand == 'None':
@@ -71,10 +72,11 @@ def categoryView(request,cat,brand,p_type):
         brand = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type = p_type.id)[0]
         brand = brand.brand
     elif brand != 'default' and p_type != 'default':
-        p_type = Product_Type.objects.get(name=p_type)
+        p_type = Product_Type.objects.get(name=p_type,category = category)
        
     elif  p_type != 'default':
-        p_type = Product_Type.objects.get(name=p_type)
+        p_type = Product_Type.objects.get(name=p_type,category = category)
+        
         brand = mapper[pgroup][0].objects.filter(publish=True,product_type__category=category,product_type = p_type.id)[0]
         brand = brand.brand
     elif brand != 'default':
