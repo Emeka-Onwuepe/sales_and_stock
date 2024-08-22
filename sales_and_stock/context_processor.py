@@ -27,8 +27,13 @@ def context_processor(request):
         for category in pgroups:
             if category not in sorted_categories:
                 sorted_categories.append(category)
+                
+    p_groups = []
+    for group in Product_Type.P_GROUP:
+        p_groups.append(group[0])
+    
     return {"branches": branches, "categories":categories,
             "sorted_categories":sorted_categories,
-            'product_groups':Product_Type.P_GROUP.keys(),
+            'product_groups':p_groups,
             'age_groups': Product.AGE_GROUP,
             'genders':Product.GENDER}
