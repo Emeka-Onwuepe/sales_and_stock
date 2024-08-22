@@ -216,7 +216,6 @@ const addOrder = (e) => {
             product.mini = parseFloat(price)
             product.Id = `${product.id}_${Id}`
             product.qty = 1
-            product.qty = 1
             product.productTotal = parseFloat(price)
             product.expected = parseFloat(price)
             productList.push(product)
