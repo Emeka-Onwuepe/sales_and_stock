@@ -341,7 +341,7 @@ try {
 
 const get_category = (e,type) =>{
     let selected = e.target.value
-    selected = selected.replace(' ','-')
+    selected = selected.replace(' ','_').trim()
     let path = window.location.pathname
     path = path.split('/')
     path[0] = '/'
