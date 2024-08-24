@@ -85,7 +85,7 @@
                     <a href="javascript:void(0)" id="close" class="close">&times;</a>
                     <nav>
                         {% for category in sorted_categories %}
-                        <a href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}"> {{category}}s</a>
+                        <a  class="checkplural" href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}"> {{category}}s</a>
                          {% endfor %}
 
                     </nav>
@@ -111,13 +111,17 @@
                 <section class="category_items">
 
                     {% for category in sorted_categories %}
+                    
                     <div id='catgorylist'>
                         <div class="innercategory" >
-                            <a id="catlink" class="catlink" href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}"> {{category}}s</a>
-                            <a id="catlink2" class="catlink2" href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}">Shop Category</a>
+                            <a id="catlink" class="catlink checkplural" href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}"> {{category}}s</a>
+                            {% comment %} <a id="catlink2" class="catlink2" href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}">Shop Category</a> {% endcomment %}
+                           <a  style='display: inline;width: 100%; height: 100%;' href="{% url 'frontview:categoryView' category.name_slug 'default' 'default' %}"> 
                             <img src="{{category.image.url}}" alt="{{category.name}} image" />
+                           </a>
                         </div>
                     </div>
+                    
                     {% endfor %}
                 </section>
 
@@ -270,13 +274,19 @@
             data = data.replace(/True/g,"true")
             data = data.replace(/False/g,"false")
             data = data.replace(/None/g,'"None"')
-            console.log(data)
             data = JSON.parse(data)
             meta.innerHTML = JSON.stringify(data)
           //  meta.nextSibling.nextSibling.innerHTML = get_details(data)
            
           
         })
+
+        checkplural = document.querySelectorAll('.checkplural')
+        checkplural.forEach(title =>{
+            title.innerHTML = title.innerHTML.replace('ss','s')
+
+        })
+
     </script>
 
 </body>

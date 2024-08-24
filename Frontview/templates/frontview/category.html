@@ -7,7 +7,7 @@
 <meta name="keywords" content="{%  for product_type in sorted_product_types%}{{product_type.name}},{% endfor %}" />
 {% endblock keywords %}
 {% block banner %}{% endblock banner %} {% block main %}
-<h1>{{category.name}}s</h1>
+<h1 class="checkplural">{{category.name}}s</h1>
 
 <input type="text" placeholder="Filter products by name" id="filterInput">
 <div class="filters">

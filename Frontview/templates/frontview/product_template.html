@@ -58,5 +58,7 @@
     <p id='{{product.id}}-{{product.product_type.p_group}}-other' style="display: none"> {{product.product_type.name}};{{product.product_type.category}}</p>
     <p class="product_meta" id='{{product.id}}-{{product.product_type.p_group}}-meta'  style="display: none">{{product.get_meta}}</p>
     {% comment %} <p class="meta" style="margin-top: -11px; font-size: 14px; display: none;"></p> {% endcomment %}
-    <button class="addToCartButton addbutton" id='{{product.id}}-{{product.product_type.p_group}}'>Add to Cart</button>
+    <div class="addbuttondiv" style="display: flex;justify-content: center;">
+        <button class="addToCartButton addbutton" id='{{product.id}}-{{product.product_type.p_group}}'>Add to Cart</button>
+    </div>
 </div>
