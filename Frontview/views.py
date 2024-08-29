@@ -30,7 +30,7 @@ def homeView(request):
     products_list = []   
     sizes = []
     for pgroup in mapper.values():
-        products = pgroup[0].objects.filter(publish=True)[:20]
+        products = pgroup[0].objects.filter(publish=True)[:10]
         if products:
             products_list.append(products)
             
